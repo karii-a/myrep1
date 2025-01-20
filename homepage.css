@@ -83,7 +83,7 @@ nav {
 }
 
 .nav-link i {
-    font-size: 1.5rem;
+    font-size: 2rem;
     background: linear-gradient(45deg, #FFB7D1, #FF85AD);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
