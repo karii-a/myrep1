@@ -92,7 +92,7 @@ nav {
 
 .nav-link span {
     font-size: 0.9rem;
-    font-weight: 500;
+    font-weight: 800;
     opacity: 0;
     transform: translateY(-10px);
     transition: all 0.3s ease;
@@ -104,7 +104,7 @@ nav {
 }
 
 .nav-link:hover i {
-    transform: scale(1.2);
+    transform: scale(1.5);
 }
 
 .nav-link:hover span {
