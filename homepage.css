@@ -212,7 +212,7 @@ nav {
 
 .social-links {
     display: flex;
-    gap: 1.2rem;
+    gap: 1.5rem;
     justify-content: center;
     margin: 1.5rem 0;
 }
