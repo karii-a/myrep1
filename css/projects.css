@@ -1,0 +1,212 @@
+/* ============================================================
+   projects.css — Projects page styles
+   ============================================================ */
+
+/* ── FILTER BAR ── */
+.filter-bar {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-block-end: 2.5rem;
+}
+
+.filter-btn {
+  padding: 0.55rem 1.4rem;
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--color-primary-pale);
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.filter-btn:hover,
+.filter-btn.is-active {
+  background: var(--color-primary);
+  color: var(--color-white);
+  border-color: var(--color-primary);
+}
+
+/* ── PROJECTS GRID ── */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform var(--transition), box-shadow var(--transition), opacity 0.4s ease;
+}
+
+.project-card.is-hidden {
+  display: none;
+}
+
+/* ── THUMBNAIL ── */
+.project-thumb {
+  position: relative;
+  height: 185px;
+  background: linear-gradient(135deg, var(--color-primary-pale), var(--color-bg));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.project-thumb i {
+  font-size: 3.5rem;
+  color: var(--color-primary-mid);
+  transition: transform var(--transition);
+}
+
+.project-card:hover .project-thumb i {
+  transform: scale(1.1);
+}
+
+/* Overlay with links */
+.project-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(201, 104, 138, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+
+.project-card:hover .project-overlay {
+  opacity: 1;
+}
+
+.overlay-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--color-white);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  transition: transform var(--transition);
+}
+
+.overlay-btn:hover {
+  transform: scale(1.15);
+}
+
+/* Coming soon thumb */
+.coming-thumb {
+  background: var(--color-bg);
+}
+
+.coming-thumb i {
+  color: var(--color-border);
+  font-size: 3rem;
+}
+
+/* ── CARD BODY ── */
+.project-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.project-meta {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-block-end: 0.6rem;
+}
+
+.project-tag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  background: var(--color-primary-pale);
+  padding: 0.2rem 0.7rem;
+  border-radius: var(--radius-pill);
+}
+
+.project-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-block-end: 0.5rem;
+}
+
+.project-desc {
+  font-size: 0.88rem;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+  flex: 1;
+  margin-block-end: 1.1rem;
+}
+
+.project-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-block-end: 1.1rem;
+}
+
+.project-stack span {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+  padding: 0.15rem 0.6rem;
+  border-radius: var(--radius-pill);
+}
+
+.project-links {
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.project-link {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  transition: transform var(--transition), opacity var(--transition);
+}
+
+.project-link:hover {
+  transform: translateX(3px);
+  opacity: 0.8;
+}
+
+/* ── CTA SECTION ── */
+.cta-section {
+  text-align: center;
+}
+
+.cta-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.cta-title {
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.cta-sub {
+  font-size: 1rem;
+  color: var(--color-text-muted);
+}

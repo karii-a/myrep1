@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="About Kareena Acharya – frontend developer and UI/UX designer based in Kathmandu, Nepal." />
+
+  <title>About | Kareena Acharya</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/about.css" />
+</head>
+<body>
+
+  <div class="flower-canvas" aria-hidden="true"></div>
+
+  <main class="page-main" id="main-content">
+
+    <!-- Banner -->
+    <div class="page-banner">
+      <div class="container">
+        <h1 class="page-banner__title">About Me</h1>
+        <p class="page-banner__breadcrumb">
+          <a href="index.html">Home</a> / About
+        </p>
+      </div>
+    </div>
+
+    <!-- ── BIO ── -->
+    <section class="section" aria-labelledby="bio-heading">
+      <div class="container about-grid">
+
+        <div class="about-photo reveal">
+          <div class="photo-frame">
+            <!--
+              Replace with your image:
+              <img src="assets/kareena.jpg" alt="Kareena Acharya" width="400" height="480" />
+            -->
+            <div class="photo-placeholder" aria-label="Photo of Kareena Acharya">
+              <i class="fas fa-user" aria-hidden="true"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-content">
+          <h2 id="bio-heading" class="section-title reveal" style="text-align:left;">
+            Hello, I'm Kareena!
+          </h2>
+          <p class="about-text reveal reveal-delay-1">
+            I'm a frontend developer and UI/UX design enthusiast based in Kathmandu, Nepal.
+            I build web experiences that feel intuitive, look beautiful, and mean something —
+            blending art, technology, and ethics in every project I take on.
+          </p>
+          <p class="about-text reveal reveal-delay-2">
+            My journey started with curiosity: why do some websites feel effortless while
+            others feel like a chore? That question led me to study design principles,
+            dive deep into code, and never stop asking "how can this be better?"
+          </p>
+          <p class="about-text reveal reveal-delay-3">
+            When I'm not coding, you'll find me exploring Kathmandu's hidden cafés,
+            sketching interface ideas, or scrolling design inspiration at 2 AM.
+          </p>
+
+          <div class="about-actions reveal">
+            <a href="contact.html" class="btn btn-primary">
+              <i class="fas fa-paper-plane" aria-hidden="true"></i> Say Hello
+            </a>
+            <a href="projects.html" class="btn btn-outline">
+              <i class="fas fa-rocket" aria-hidden="true"></i> See My Work
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── STATS ── -->
+    <section class="section section--alt" aria-labelledby="stats-heading">
+      <div class="container">
+        <div class="section-header">
+          <h2 id="stats-heading" class="section-title reveal">By the Numbers</h2>
+        </div>
+        <ul class="stats-grid" role="list">
+          <li class="stat-card card reveal">
+            <span class="stat-number">2+</span>
+            <span class="stat-label">Projects Completed</span>
+          </li>
+          <li class="stat-card card reveal reveal-delay-1">
+            <span class="stat-number">3</span>
+            <span class="stat-label">Core Skill Areas</span>
+          </li>
+          <li class="stat-card card reveal reveal-delay-2">
+            <span class="stat-number">25</span>
+            <span class="stat-label">Languages I Can Say Hello In</span>
+          </li>
+          <li class="stat-card card reveal reveal-delay-3">
+            <span class="stat-number">∞</span>
+            <span class="stat-label">Cups of Coffee</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ── TIMELINE ── -->
+    <section class="section" aria-labelledby="timeline-heading">
+      <div class="container">
+        <div class="section-header">
+          <h2 id="timeline-heading" class="section-title reveal">My Journey</h2>
+          <p class="section-subtitle reveal">Where I've been, and where I'm going.</p>
+        </div>
+        <ol class="timeline" role="list">
+          <li class="timeline-item reveal">
+            <div class="timeline-dot" aria-hidden="true"></div>
+            <div class="timeline-body card">
+              <time class="timeline-date">2022</time>
+              <h3>Discovered Web Development</h3>
+              <p>Wrote my first HTML file and immediately knew this was it.</p>
+            </div>
+          </li>
+          <li class="timeline-item reveal reveal-delay-1">
+            <div class="timeline-dot" aria-hidden="true"></div>
+            <div class="timeline-body card">
+              <time class="timeline-date">2023</time>
+              <h3>Dived into Design</h3>
+              <p>Started learning Figma and UI principles — realising design and code are inseparable.</p>
+            </div>
+          </li>
+          <li class="timeline-item reveal reveal-delay-2">
+            <div class="timeline-dot" aria-hidden="true"></div>
+            <div class="timeline-body card">
+              <time class="timeline-date">2024</time>
+              <h3>Launched First Portfolio</h3>
+              <p>Built and shipped my personal site — the project you're looking at right now.</p>
+            </div>
+          </li>
+          <li class="timeline-item reveal reveal-delay-3">
+            <div class="timeline-dot" aria-hidden="true"></div>
+            <div class="timeline-body card">
+              <time class="timeline-date">Next</time>
+              <h3>Open to Opportunities</h3>
+              <p>Actively looking for internships, freelance work, and collaborations.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="js/components.js" defer></script>
+  <script src="js/main.js"       defer></script>
+</body>
+</html>
