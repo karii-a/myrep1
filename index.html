@@ -1,235 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kareena Acharya | Portfolio</title>
-    <meta name="description" content="Portfolio of Kareena Acharya - Code Artist, Design Enthusiast, and Problem Solver">
-    <link rel="stylesheet" href="homepage.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Kareena Acharya – Code Artist, Design Enthusiast, and Problem Solver based in Kathmandu, Nepal." />
+  <meta property="og:title"       content="Kareena Acharya | Portfolio" />
+  <meta property="og:description" content="Code Artist · Design Enthusiast · Problem Solver" />
+  <meta property="og:type"        content="website" />
+  <title>Kareena Acharya | Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/home.css" />
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="nav-left">
-                <a href="#" class="logo">
-                    <img src="logo.png" alt="Logo" class="logo-img">
-                </a>
+  <div class="flower-canvas" aria-hidden="true"></div>
+  <main class="page-main" id="main-content">
+    <section class="hero" aria-label="Introduction">
+      <div class="hero-inner">
+        <article class="profile-card" aria-label="Kareena Acharya profile card">
+          <span class="blob blob--1" aria-hidden="true"></span>
+          <span class="blob blob--2" aria-hidden="true"></span>
+          <span class="blob blob--3" aria-hidden="true"></span>
+          <span class="blob blob--4" aria-hidden="true"></span>
+          <div class="profile-avatar-wrap">
+            <img
+              src="myimg.jpg"
+              alt="Kareena Acharya"
+              width="150" height="150"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+            />
+            <div class="avatar-fallback" aria-label="Profile photo placeholder">
+              <i class="fas fa-user" aria-hidden="true"></i>
             </div>
-            <div class="nav-right">
-                <a href="#about" class="nav-link">
-                    <i class="fas fa-user-astronaut"></i>
-                    <span>About</span>
-                </a>
-                <a href="#skills" class="nav-link">
-                    <i class="fas fa-wand-magic-sparkles"></i>
-                    <span>Skills</span>
-                </a>
-                <a href="#projects" class="nav-link">
-                    <i class="fas fa-rocket"></i>
-                    <span>Projects</span>
-                </a>
-                <a href="#contact" class="nav-link">
-                    <i class="fas fa-paper-plane"></i>
-                    <span>Contact</span>
-                </a>
-            </div>
-        </nav>
-    </header>
+          </div>
+          <p id="js-greeting" class="greeting-text" aria-live="polite" aria-label="Greeting in various languages"></p>
+          <p class="intro-label" aria-hidden="true">I'M</p>
+          <h1 class="profile-name">Kareena Acharya</h1>
+          <p class="profile-bio">
+            Blending art, technology, and ethics, I create solutions
+            that are both meaningful and make a real difference.
+          </p>
+          <ul class="tag-list" aria-label="Roles">
+            <li class="tag tag--1"><i class="fas fa-code"        aria-hidden="true"></i> Code Artist</li>
+            <li class="tag tag--2"><i class="fas fa-paint-brush" aria-hidden="true"></i> Design Enthusiast</li>
+            <li class="tag tag--3"><i class="fas fa-lightbulb"   aria-hidden="true"></i> Problem Solver</li>
+          </ul>
+        </article>
 
-    <section class="hero">
-        <div class="flower-container"></div>
-        <div class="hero-content">
-            <div class="profile-wrapper">
-                <div class="profile-image">
-                    <img src="myimg.jpg" alt="Kareena Acharya" loading="lazy">
-                </div>
-                <div class="name-section">
-                    <h1 class="greeting-text"></h1>
-                    <h1 class="intro">I'M</h1>
-                    <h1 class="profile-name">Kareena Acharya</h1>
-                </div>
-                <p class="profile-bio">
-                    Blending art, technology, and ethics, I create solutions that are both meaningful and make a real difference.
-                </p>
-                <div class="floating-shapes">
-                    <div class="shape shape-1"></div>
-                    <div class="shape shape-2"></div>
-                    <div class="shape shape-3"></div>
-                    <div class="shape shape-4"></div>
-                </div>
-                <div class="profile-tags">
-                    <span class="tag animate-tag"><i class="fas fa-code"></i> Code Artist</span>
-                    <span class="tag animate-tag"><i class="fas fa-paint-brush"></i> Design Enthusiast</span>
-                    <span class="tag animate-tag"><i class="fas fa-lightbulb"></i> Problem Solver</span>
-                </div>
-               
-            </div>
-            <div class="social-links">
-                    <a href="https://github.com/karii-a" target="_blank" class="social-link github">
-                        <i class="fab fa-github"></i>
-                    </a>
-                    <a href="https://www.linkedin.com/in/kareena-acharya-bb0757289/" target="_blank" class="social-link linkedin">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                    
-                    <a href="https://www.instagram.com/not_me_1306/" target="_blank" class="social-link instagram">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-            </div>
-            <div class="cta-container">
-                <a href="#contact" class="cta-button filled mouse-tracking">Get In Touch</a>
-                <a href="#projects" class="cta-button outlined mouse-tracking">View My Work</a>
-            </div>
+        <ul class="social-row" aria-label="Social media links">
+          <li>
+            <a href="https://github.com/karii-a" target="_blank" rel="noopener noreferrer"
+               class="social-btn" aria-label="GitHub">
+              <i class="fab fa-github" aria-hidden="true"></i>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.linkedin.com/in/kareena-acharya-bb0757289/" target="_blank" rel="noopener noreferrer"
+               class="social-btn" aria-label="LinkedIn">
+              <i class="fab fa-linkedin-in" aria-hidden="true"></i>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.instagram.com/not_me_1306/" target="_blank" rel="noopener noreferrer"
+               class="social-btn" aria-label="Instagram">
+              <i class="fab fa-instagram" aria-hidden="true"></i>
+            </a>
+          </li>
+        </ul>
+
+        <div class="cta-row">
+          <a href="contact.html"  class="btn btn-primary">Get In Touch</a>
+          <a href="projects.html" class="btn btn-outline">View My Work</a>
         </div>
+      </div>
     </section>
-
-    <section id="about" class="about">
-        <div class="container">
-            <h2>About Me</h2>
-            <div class="about-content">
-                <p>Hello! I'm a passionate developer who loves creating beautiful and functional web experiences. I specialize in front-end development and UI/UX design, always striving to create intuitive and engaging interfaces.</p>
-                <div class="about-stats">
-                    <div class="stat">
-                        <span class="stat-number">0</span>
-                        <span class="stat-label">years Experience</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">2</span>
-                        <span class="stat-label">Projects Completed</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">Yet to make</span>
-                        <span class="stat-label">Happy Clients</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="skills" class="skills">
-        <div class="container">
-            <h2>My Skills</h2>
-            <div class="skills-grid">
-                <div class="skill-card">
-                    <i class="fas fa-code"></i>
-                    <h3>Frontend Development</h3>
-                    <div class="skill-tags">
-                        <span>HTML</span>
-                        <span>CSS</span>
-                        <span>JavaScript</span>
-                        <span>React</span>
-                    </div>
-                </div>
-                <div class="skill-card">
-                    <i class="fas fa-paint-brush"></i>
-                    <h3>UI/UX Design</h3>
-                    <div class="skill-tags">
-                        <span>Figma</span>
-                        <span>Adobe XD</span>
-                        <span>Photoshop</span>
-                    </div>
-                </div>
-                <div class="skill-card">
-                    <i class="fas fa-database"></i>
-                    <h3>Backend Development</h3>
-                    <div class="skill-tags">
-                        <span>R</span>
-                        <span>Python</span>
-                        <span>MongoDB</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="projects" class="projects">
-        <div class="container">
-            <h2>Featured Projects</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="project1.jpg" alt="Project 1">
-                    </div>
-                    <div class="project-content">
-                        <h3>Cafe</h3>
-                        <p>yet to do.</p>
-                        <div class="project-links">
-                            <a href="#" class="https://github.com/karii-a/myrep"><i class="fas fa-external-link-alt"></i> Live Demo</a>
-                            <a href="#" class="project-link"><i class="fab fa-github"></i> Source Code</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="project2.jpg" alt="Project 2">
-                    </div>
-                    <div class="project-content">
-                        <h3>my portfolio website</h3>
-                        <p>this is my first launched website.</p>
-                        <div class="project-links">
-                            <a href="#" class="kareenaacharya.com"><i class="fas fa-external-link-alt"></i> Live Demo</a>
-                            <a href="#" class="https://github.com/karii-a/myrep1"><i class="fab fa-github"></i> Source Code</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="contact">
-        <div class="container">
-            <h2>Get In Touch</h2>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <a href="mailto:kareenaacharya13@gmail.com">kareeenaacharya13@gmail.com</a>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>Kathmandu, Nepal</span>
-                    </div>
-                </div>
-                <form class="contact-form">
-                    <div class="form-group">
-                        <input type="text" placeholder="Your Name" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" placeholder="Your Email" required>
-                    </div>
-                    <div class="form-group">
-                        <textarea placeholder="Your Message" required></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn">Send Message</button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <section class="pink-section">
-    </section>
-
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <img src="logo.png" alt="Logo" class="footer-logo-img">
-                </div>
-                <div class="footer-social">
-                    <a href="https://github.com/karii-a"><i class="fab fa-github"></i></a>
-                    <a href="https://www.linkedin.com/in/kareena-acharya-bb0757289/"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="https://www.instagram.com/not_me_1306/"><i class="fab fa-instagram"></i></a>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 Kareena Acharya. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script src="home.js"></script>
+  </main>
+  <script src="js/components.js" defer></script>
+  <script src="js/main.js"       defer></script>
+  <script src="js/home.js"       defer></script>
 </body>
 </html>
