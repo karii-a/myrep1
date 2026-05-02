@@ -1,0 +1,4939 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IS/IT Complete Study Guide — All Modules</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap");
+
+      :root {
+        --bg: #0d0f14;
+        --surface: #161922;
+        --surface2: #1e2230;
+        --surface3: #232840;
+        --border: #2a2f42;
+        --accent1: #e8a838;
+        --accent2: #5b8af0;
+        --accent3: #e05c6b;
+        --accent4: #4ecba0;
+        --accent5: #b06ef5;
+        --text: #dce3f0;
+        --muted: #7a85a0;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Source Sans 3", sans-serif;
+        font-weight: 300;
+        line-height: 1.8;
+      }
+
+      /* ── NAV ── */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: rgba(13, 15, 20, 0.97);
+        backdrop-filter: blur(16px);
+        border-bottom: 1px solid var(--border);
+        padding: 0 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0;
+        height: 54px;
+        z-index: 200;
+        overflow-x: auto;
+      }
+      nav::-webkit-scrollbar {
+        display: none;
+      }
+      nav a {
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+        white-space: nowrap;
+        padding: 0 0.85rem;
+        height: 54px;
+        display: flex;
+        align-items: center;
+        border-bottom: 2px solid transparent;
+        transition:
+          color 0.2s,
+          border-color 0.2s;
+      }
+      nav a:hover {
+        color: var(--text);
+        border-color: var(--accent1);
+      }
+
+      /* ── HERO ── */
+      .hero {
+        margin-top: 54px;
+        padding: 6rem 2rem 5rem;
+        text-align: center;
+        background: linear-gradient(160deg, #111520 0%, #0d0f14 100%);
+        border-bottom: 1px solid var(--border);
+        position: relative;
+        overflow: hidden;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(
+            ellipse 70% 50% at 30% 0%,
+            rgba(91, 138, 240, 0.1),
+            transparent
+          ),
+          radial-gradient(
+            ellipse 50% 40% at 80% 100%,
+            rgba(232, 168, 56, 0.07),
+            transparent
+          );
+      }
+      .hero-badge {
+        display: inline-block;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent2);
+        border: 1px solid rgba(91, 138, 240, 0.3);
+        background: rgba(91, 138, 240, 0.08);
+        padding: 0.3rem 1rem;
+        border-radius: 999px;
+        margin-bottom: 1.5rem;
+        position: relative;
+      }
+      .hero h1 {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(2.4rem, 6vw, 4.2rem);
+        font-weight: 900;
+        line-height: 1.08;
+        position: relative;
+      }
+      .hero h1 em {
+        font-style: italic;
+        color: var(--accent1);
+      }
+      .hero p {
+        color: var(--muted);
+        font-size: 1.05rem;
+        margin-top: 1rem;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+      }
+      .pill-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        justify-content: center;
+        margin-top: 2.5rem;
+        position: relative;
+      }
+      .pill {
+        padding: 0.3rem 0.9rem;
+        border-radius: 999px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+      .pill-a {
+        background: rgba(232, 168, 56, 0.12);
+        color: var(--accent1);
+        border: 1px solid rgba(232, 168, 56, 0.25);
+      }
+      .pill-b {
+        background: rgba(91, 138, 240, 0.12);
+        color: var(--accent2);
+        border: 1px solid rgba(91, 138, 240, 0.25);
+      }
+      .pill-c {
+        background: rgba(224, 92, 107, 0.12);
+        color: var(--accent3);
+        border: 1px solid rgba(224, 92, 107, 0.25);
+      }
+      .pill-d {
+        background: rgba(78, 203, 160, 0.12);
+        color: var(--accent4);
+        border: 1px solid rgba(78, 203, 160, 0.25);
+      }
+      .pill-e {
+        background: rgba(176, 110, 245, 0.12);
+        color: var(--accent5);
+        border: 1px solid rgba(176, 110, 245, 0.25);
+      }
+
+      /* ── LAYOUT ── */
+      main {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 3.5rem 1.5rem 8rem;
+      }
+
+      /* ── MODULE ── */
+      .module {
+        margin-bottom: 6rem;
+      }
+      .anchor {
+        scroll-margin-top: 72px;
+      }
+
+      .module-header {
+        display: flex;
+        align-items: flex-start;
+        gap: 1.2rem;
+        margin-bottom: 3rem;
+        padding-bottom: 1.2rem;
+        border-bottom: 1px solid var(--border);
+      }
+      .module-number {
+        width: 46px;
+        height: 46px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Playfair Display", serif;
+        font-size: 1.15rem;
+        font-weight: 900;
+        flex-shrink: 0;
+        margin-top: 0.2rem;
+      }
+      .num-a {
+        background: rgba(232, 168, 56, 0.15);
+        color: var(--accent1);
+        border: 1px solid rgba(232, 168, 56, 0.3);
+      }
+      .num-b {
+        background: rgba(91, 138, 240, 0.15);
+        color: var(--accent2);
+        border: 1px solid rgba(91, 138, 240, 0.3);
+      }
+      .num-c {
+        background: rgba(224, 92, 107, 0.15);
+        color: var(--accent3);
+        border: 1px solid rgba(224, 92, 107, 0.3);
+      }
+      .num-d {
+        background: rgba(78, 203, 160, 0.15);
+        color: var(--accent4);
+        border: 1px solid rgba(78, 203, 160, 0.3);
+      }
+      .num-e {
+        background: rgba(176, 110, 245, 0.15);
+        color: var(--accent5);
+        border: 1px solid rgba(176, 110, 245, 0.3);
+      }
+
+      .module-header h2 {
+        font-family: "Playfair Display", serif;
+        font-size: 1.75rem;
+        font-weight: 700;
+        line-height: 1.2;
+      }
+      .module-header .sub {
+        font-size: 0.76rem;
+        color: var(--muted);
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        display: block;
+        margin-top: 0.25rem;
+      }
+
+      h3 {
+        font-family: "Playfair Display", serif;
+        font-size: 1.22rem;
+        font-weight: 700;
+        margin: 2.8rem 0 1.1rem;
+        color: var(--text);
+      }
+      h4 {
+        font-size: 0.9rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin: 1.8rem 0 0.8rem;
+      }
+      p {
+        margin-bottom: 1rem;
+        color: var(--text);
+      }
+
+      /* ── CARDS ── */
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 1.3rem 1.5rem;
+        margin-bottom: 1rem;
+        transition: border-color 0.2s;
+      }
+      .card:hover {
+        border-color: #3a4058;
+      }
+      .card-title {
+        font-weight: 700;
+        font-size: 0.93rem;
+        margin-bottom: 0.5rem;
+      }
+      .card p {
+        font-size: 0.91rem;
+        color: var(--muted);
+        margin: 0;
+        line-height: 1.65;
+      }
+
+      .card-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+      .card-row-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      /* ── HIGHLIGHT ── */
+      .highlight {
+        border-left: 3px solid;
+        padding: 1rem 1.4rem;
+        background: var(--surface);
+        border-radius: 0 10px 10px 0;
+        margin: 1.5rem 0;
+        font-size: 0.93rem;
+        line-height: 1.7;
+      }
+      .hl-a {
+        border-color: var(--accent1);
+      }
+      .hl-b {
+        border-color: var(--accent2);
+      }
+      .hl-c {
+        border-color: var(--accent3);
+      }
+      .hl-d {
+        border-color: var(--accent4);
+      }
+      .hl-e {
+        border-color: var(--accent5);
+      }
+      .highlight strong {
+        font-weight: 700;
+      }
+
+      /* ── QUADRANT ── */
+      .quadrant-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin: 1.5rem 0;
+      }
+      .quad {
+        border-radius: 10px;
+        padding: 1.2rem 1.4rem;
+        border: 1px solid var(--border);
+      }
+      .quad-label {
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 0.3rem;
+      }
+      .quad-title {
+        font-weight: 700;
+        font-size: 0.98rem;
+        margin-bottom: 0.35rem;
+      }
+      .quad-desc {
+        font-size: 0.84rem;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+      .quad-i {
+        background: rgba(91, 138, 240, 0.07);
+      }
+      .quad-ii {
+        background: rgba(224, 92, 107, 0.07);
+      }
+      .quad-iii {
+        background: rgba(78, 203, 160, 0.07);
+      }
+      .quad-iv {
+        background: rgba(232, 168, 56, 0.07);
+      }
+
+      /* ── TABLE ── */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.5rem 0;
+        font-size: 0.87rem;
+      }
+      th {
+        background: var(--surface2);
+        text-align: left;
+        padding: 0.75rem 1rem;
+        font-weight: 700;
+        border-bottom: 2px solid var(--border);
+        font-size: 0.75rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      td {
+        padding: 0.65rem 1rem;
+        border-bottom: 1px solid var(--border);
+        vertical-align: top;
+        line-height: 1.65;
+      }
+      tr:last-child td {
+        border: none;
+      }
+      tr:hover td {
+        background: var(--surface);
+      }
+
+      /* ── STEPS ── */
+      .steps {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        margin: 1.5rem 0;
+      }
+      .step {
+        display: flex;
+        gap: 1.1rem;
+        align-items: flex-start;
+        padding: 0.9rem 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .step:last-child {
+        border: none;
+      }
+      .step-num {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.78rem;
+        font-weight: 700;
+        flex-shrink: 0;
+        margin-top: 0.1rem;
+      }
+      .step-content strong {
+        display: block;
+        font-weight: 600;
+        font-size: 0.95rem;
+        margin-bottom: 0.2rem;
+      }
+      .step-content span {
+        font-size: 0.87rem;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      /* ── CALLOUT ── */
+      .callout {
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 1.4rem 1.6rem;
+        margin: 1.5rem 0;
+      }
+      .callout-head {
+        font-weight: 700;
+        font-size: 0.8rem;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+        margin-bottom: 0.7rem;
+      }
+      .callout p {
+        font-size: 0.91rem;
+        margin-bottom: 0.5rem;
+      }
+      .callout p:last-child {
+        margin: 0;
+      }
+
+      /* ── TAG ── */
+      .tag {
+        display: inline-block;
+        padding: 0.15rem 0.6rem;
+        border-radius: 4px;
+        font-size: 0.68rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-right: 0.3rem;
+        margin-bottom: 0.3rem;
+      }
+      .tag-a {
+        background: rgba(232, 168, 56, 0.15);
+        color: var(--accent1);
+      }
+      .tag-b {
+        background: rgba(91, 138, 240, 0.15);
+        color: var(--accent2);
+      }
+      .tag-c {
+        background: rgba(224, 92, 107, 0.15);
+        color: var(--accent3);
+      }
+      .tag-d {
+        background: rgba(78, 203, 160, 0.15);
+        color: var(--accent4);
+      }
+      .tag-e {
+        background: rgba(176, 110, 245, 0.15);
+        color: var(--accent5);
+      }
+
+      /* ── DIVIDER ── */
+      hr {
+        border: none;
+        border-top: 1px solid var(--border);
+        margin: 3.5rem 0;
+      }
+
+      /* ── MONO ── */
+      code {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.82rem;
+        background: var(--surface2);
+        padding: 0.1rem 0.4rem;
+        border-radius: 4px;
+        color: var(--accent1);
+      }
+
+      /* ── BIG STAT ── */
+      .stat-row {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin: 1.5rem 0;
+      }
+      .stat {
+        flex: 1;
+        min-width: 140px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 1.2rem 1.4rem;
+        text-align: center;
+      }
+      .stat-num {
+        font-family: "Playfair Display", serif;
+        font-size: 2rem;
+        font-weight: 900;
+        display: block;
+      }
+      .stat-label {
+        font-size: 0.75rem;
+        color: var(--muted);
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      /* ── PORTER MATRIX ── */
+      .matrix {
+        display: grid;
+        grid-template-columns: auto 1fr 1fr;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        margin: 1.5rem 0;
+        font-size: 0.88rem;
+      }
+      .mat-header {
+        background: var(--surface2);
+        padding: 0.7rem 1rem;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--muted);
+        border-bottom: 1px solid var(--border);
+        border-right: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .mat-cell {
+        padding: 1rem 1.2rem;
+        border-bottom: 1px solid var(--border);
+        border-right: 1px solid var(--border);
+      }
+      .mat-cell:last-child {
+        border-right: none;
+      }
+      .mat-cell strong {
+        display: block;
+        margin-bottom: 0.3rem;
+        font-size: 0.92rem;
+      }
+      .mat-cell p {
+        font-size: 0.82rem;
+        color: var(--muted);
+        margin: 0;
+      }
+      .mat-side {
+        background: var(--surface2);
+        padding: 0.8rem;
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+        transform: rotate(180deg);
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+        border-right: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 1px solid var(--border);
+      }
+
+      /* ── FORCE CARD ── */
+      .force-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1.5rem 1.6rem;
+        margin-bottom: 1.2rem;
+      }
+      .force-header {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        margin-bottom: 0.8rem;
+      }
+      .force-num {
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 0.9rem;
+        flex-shrink: 0;
+      }
+      .force-title {
+        font-weight: 700;
+        font-size: 1.05rem;
+      }
+      .force-desc {
+        font-size: 0.9rem;
+        color: var(--muted);
+        margin-bottom: 1rem;
+        line-height: 1.65;
+      }
+      .force-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.8rem;
+      }
+      .force-col {
+        background: var(--surface2);
+        border-radius: 8px;
+        padding: 0.8rem 1rem;
+      }
+      .force-col-title {
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+        margin-bottom: 0.4rem;
+      }
+      .force-col ul {
+        list-style: none;
+        padding: 0;
+      }
+      .force-col ul li {
+        font-size: 0.83rem;
+        color: var(--muted);
+        padding: 0.15rem 0;
+        line-height: 1.55;
+      }
+      .force-col ul li::before {
+        content: "— ";
+        color: var(--border);
+      }
+
+      /* ── SWOT ── */
+      .swot-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin: 1.5rem 0;
+      }
+      .swot-cell {
+        border-radius: 10px;
+        padding: 1.2rem 1.4rem;
+        border: 1px solid var(--border);
+      }
+      .swot-label {
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 0.6rem;
+      }
+      .swot-cell ul {
+        list-style: none;
+        padding: 0;
+      }
+      .swot-cell ul li {
+        font-size: 0.85rem;
+        color: var(--muted);
+        padding: 0.2rem 0;
+        line-height: 1.55;
+      }
+      .swot-cell ul li::before {
+        content: "• ";
+      }
+
+      @media (max-width: 640px) {
+        .card-row-2,
+        .quadrant-grid,
+        .force-grid,
+        .swot-grid {
+          grid-template-columns: 1fr;
+        }
+        .matrix {
+          font-size: 0.78rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a href="#is-strategy">IS Strategy</a>
+      <a href="#porter5">Porter's 5 Forces</a>
+      <a href="#competitive">Competitive Strategies</a>
+      <a href="#scm1">Supply Chain I</a>
+      <a href="#global">Global Systems</a>
+      <a href="#bullwhip">Bullwhip Effect</a>
+      <a href="#scm2">Supply Chain II</a>
+      <a href="#sysec">System Security</a>
+      <a href="#mansec">Managing Security</a>
+      <a href="#ecom">e-Commerce</a>
+    </nav>
+
+    <div class="hero">
+      <div class="hero-badge">Techspire College — IS/IT Complete Reference</div>
+      <h1>The <em>Ultimate</em> Study Guide</h1>
+      <p>
+        All 10 topics merged into one detailed, exam-ready reference — from IS
+        Strategy to e-Commerce.
+      </p>
+      <div class="pill-row">
+        <span class="pill pill-b">IS Strategy</span>
+        <span class="pill pill-a">Porter's 5 Forces</span>
+        <span class="pill pill-c">Competitive Strategies</span>
+        <span class="pill pill-d">Supply Chain I</span>
+        <span class="pill pill-e">Global Systems</span>
+        <span class="pill pill-a">Bullwhip Effect</span>
+        <span class="pill pill-b">Supply Chain II</span>
+        <span class="pill pill-c">System Security</span>
+        <span class="pill pill-d">Managing Security</span>
+        <span class="pill pill-a">e-Commerce</span>
+      </div>
+    </div>
+
+    <main>
+      <!-- ═══════════ MODULE 1: IS STRATEGY ═══════════ -->
+      <div class="module anchor" id="is-strategy">
+        <div class="module-header">
+          <div class="module-number num-b">1</div>
+          <div>
+            <h2>Information Systems Strategy</h2>
+            <span class="sub"
+              >IS vs IT · Strategic Objectives · Worldwide Changes · IS
+              Constraints</span
+            >
+          </div>
+        </div>
+
+        <h3>What is Strategy?</h3>
+        <p>
+          A strategy is a deliberate course of action and a specification of the
+          resources required to achieve a specific objective. It sets the
+          overall direction for an entire business — determining which markets
+          to enter, how to deal with rivals, and what capabilities to build.
+        </p>
+
+        <h3>IS vs IT — The Critical Distinction</h3>
+        <div class="highlight hl-b">
+          <strong>The Car and the Road Analogy:</strong> Information Systems
+          (IS) = the <em>car</em> — the vehicle that creates value and defines
+          WHAT the business needs. Information Technology (IT) = the
+          <em>road</em> — the infrastructure that answers HOW to deliver it.
+        </div>
+
+        <div class="card-row-2">
+          <div class="card" style="border-color: rgba(91, 138, 240, 0.35)">
+            <div class="card-title" style="color: var(--accent2)">
+              Information Systems (IS) — The WHAT
+            </div>
+            <p>
+              A collection of hardware, software, data, people, and processes
+              that work together to produce quality information for
+              decision-making. IS defines what the business team wants to
+              achieve. It is business-focused — creating value, supporting
+              processes, enabling decisions.
+            </p>
+          </div>
+          <div class="card" style="border-color: rgba(78, 203, 160, 0.35)">
+            <div class="card-title" style="color: var(--accent4)">
+              Information Technology (IT) — The HOW
+            </div>
+            <p>
+              The underlying technology — hardware, software, networks,
+              operating systems, and data management — that makes IS possible.
+              IT is the technical foundation: skills to deploy infrastructure
+              and build apps. IT answers how to supply what the business team
+              needs.
+            </p>
+          </div>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>IS Example</th>
+              <th>The Logic (IS)</th>
+              <th>The Tools (IT)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Grocery Store</td>
+              <td>Inventory & Pricing Logic</td>
+              <td>Barcode Scanners & Card Readers</td>
+            </tr>
+            <tr>
+              <td>Online Store</td>
+              <td>The "Suggestions for You" Algorithm</td>
+              <td>Servers, Fibre-optics & Databases</td>
+            </tr>
+            <tr>
+              <td>Hospital</td>
+              <td>Patient History & Allergy Alerts</td>
+              <td>Hospital WiFi & Doctors' Tablets</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>IS/IT Alignment</h3>
+        <p>
+          <strong>IS/IT Alignment</strong> refers to the degree to which an
+          organization's IS/IT department understands the business goals and
+          uses its resources to support those goals. Misalignment = wasted
+          investment and missed opportunities.
+        </p>
+        <div class="card-row">
+          <div class="card">
+            <div class="card-title">Business Model</div>
+            <p>
+              The method of doing business — who your customers are, how you
+              capture profit, and what value you offer. Defines the "why" behind
+              IS investment.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title">Business Strategy</div>
+            <p>
+              Sets overall direction — which market to enter, how to deal with
+              rivals. The big-picture plan IS must support.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title">IS Strategy (What)</div>
+            <p>
+              What systems, information, and IT structure does the business need
+              to succeed and gain competitive advantage?
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title">IT Strategy (How)</div>
+            <p>
+              How the organization will deliver and manage technology,
+              infrastructure, and IT services to support IS and business
+              strategies.
+            </p>
+          </div>
+        </div>
+
+        <h3>Four Worldwide Changes Affecting Business</h3>
+        <div class="steps">
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(91, 138, 240, 0.2); color: var(--accent2)"
+            >
+              1
+            </div>
+            <div class="step-content">
+              <strong>Emergence of the Global Economy</strong
+              ><span
+                >Markets are no longer local. Companies compete internationally
+                and must coordinate globally. A product designed in the US may
+                be assembled in China and sold in Nepal.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(91, 138, 240, 0.2); color: var(--accent2)"
+            >
+              2
+            </div>
+            <div class="step-content">
+              <strong>Transformation of Industrial Economies</strong
+              ><span
+                >A shift from manufacturing-heavy economies to information-heavy
+                value creation. Knowledge workers, data analytics, and digital
+                products generate more value than physical goods alone.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(91, 138, 240, 0.2); color: var(--accent2)"
+            >
+              3
+            </div>
+            <div class="step-content">
+              <strong>Transformation of the Business Enterprise</strong
+              ><span
+                >How companies are structured and managed has changed — flatter
+                hierarchies, remote work, digital collaboration, and
+                decentralised decision-making are now common.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(91, 138, 240, 0.2); color: var(--accent2)"
+            >
+              4
+            </div>
+            <div class="step-content">
+              <strong>The Emerging Digital Firm</strong
+              ><span
+                >The new standard for operations. Core business processes
+                completed through digital networks; key assets managed
+                digitally; relationships with customers, suppliers, and
+                employees enabled digitally. Agile across time and space —
+                operates 24/7.</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <h3>Role of IS in Business Today</h3>
+        <div class="card-row">
+          <div class="card">
+            <div class="card-title" style="color: var(--accent2)">
+              Transforming Business
+            </div>
+            <p>
+              Mobile technology as primary business tool. Increasing reliance on
+              large-scale data analysis. Growth in cloud computing. IS enables
+              companies to reinvent how they operate entirely.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent4)">
+              Globalization Opportunities
+            </div>
+            <p>
+              Reduce operational costs using the internet at global scale.
+              Increases in foreign trade and outsourcing. IS presents both
+              challenges (security) and opportunities (market expansion).
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent1)">
+              Digital Firm
+            </div>
+            <p>
+              Major business relationships enabled through digital means. Core
+              processes accomplished through digital networks. Key corporate
+              assets managed digitally. Operates with time-shifting and
+              space-shifting flexibility.
+            </p>
+          </div>
+        </div>
+
+        <h3>Six Strategic Business Objectives of IS</h3>
+        <p>
+          Organizations invest in IS to effectively support and enable the
+          following strategic objectives:
+        </p>
+        <div class="steps">
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(232, 168, 56, 0.2); color: var(--accent1)"
+            >
+              1
+            </div>
+            <div class="step-content">
+              <strong>Operational Excellence</strong
+              ><span
+                >Efficiency improvement for higher profitability. Example:
+                Amazon automates warehouses, tracks inventory in real time, and
+                optimises delivery routes — resulting in faster delivery, lower
+                costs, and higher efficiency.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(232, 168, 56, 0.2); color: var(--accent1)"
+            >
+              2
+            </div>
+            <div class="step-content">
+              <strong>New Products and Services</strong
+              ><span
+                >Enabling innovation and market expansion. Example: Uber's
+                entire service is built on IS (GPS, mobile apps, payment
+                systems) — it created a new service model without owning a
+                single car.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(232, 168, 56, 0.2); color: var(--accent1)"
+            >
+              3
+            </div>
+            <div class="step-content">
+              <strong>Customer and Supplier Intimacy</strong
+              ><span
+                >Serving customers well leads to returning revenue; supplier
+                intimacy lowers costs. Example: Amazon uses customer data to
+                recommend products based on past purchases — leading to better
+                experience and repeat purchases.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(232, 168, 56, 0.2); color: var(--accent1)"
+            >
+              4
+            </div>
+            <div class="step-content">
+              <strong>Improved Decision Making</strong
+              ><span
+                >Eliminating guesswork, overproduction, and resource
+                misallocation. Example: stores use POS sales data to decide
+                exactly how much stock to order — avoiding overstocking or
+                running out of products.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(232, 168, 56, 0.2); color: var(--accent1)"
+            >
+              5
+            </div>
+            <div class="step-content">
+              <strong>Competitive Advantage</strong
+              ><span
+                >Delivering better performance or charging less for superior
+                products. Example: Apple's ecosystem (iPhone, iCloud, App Store)
+                locks users in — giving Apple a durable advantage over other
+                smartphone brands.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(232, 168, 56, 0.2); color: var(--accent1)"
+            >
+              6
+            </div>
+            <div class="step-content">
+              <strong>Survival</strong
+              ><span
+                >Technology as a business necessity due to industry changes or
+                regulations. Example: during COVID, restaurants that adopted
+                online ordering and digital payments survived — those that
+                didn't struggled to stay open.</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <h3>Internet of Things (IoT) — The New Frontier</h3>
+        <p>
+          IoT means everyday devices become "smart" by using sensors, software,
+          and internet connectivity to communicate with each other — without
+          needing constant human involvement. Devices connected to the Internet
+          can collect, send, and receive data and can be controlled remotely
+          (sensors, switches, optical scanners).
+        </p>
+        <div class="stat-row">
+          <div class="stat">
+            <span class="stat-num" style="color: var(--accent2)">22B</span
+            ><span class="stat-label"
+              >Projected devices connected through IoT in 2026</span
+            >
+          </div>
+          <div class="stat">
+            <span class="stat-num" style="color: var(--accent4)">6</span
+            ><span class="stat-label">Strategic IS Business Objectives</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num" style="color: var(--accent1)">4</span
+            ><span class="stat-label">Types of Strategic IS/IT Systems</span>
+          </div>
+        </div>
+
+        <h3>IS Strategy Constraints</h3>
+        <div class="card-row">
+          <div class="card">
+            <div class="card-title" style="color: var(--accent3)">
+              Lack of Awareness
+            </div>
+            <p>
+              Stakeholders don't understand the impact of IS on business
+              outcomes — so they underinvest or misalign technology with goals.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent3)">
+              Credibility Gap
+            </div>
+            <p>
+              Perceived gap in the reliability or actual value of IS —
+              management doesn't trust that IS delivers what it promises.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent3)">
+              Resource Mismanagement
+            </div>
+            <p>
+              Not treating information as a strategic business resource to be
+              actively managed — leading to poor data quality and wasted
+              systems.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent3)">
+              Financial Myopia
+            </div>
+            <p>
+              Demanding immediate financial justification for every IS
+              investment — blocking long-term infrastructure that pays off over
+              years.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent3)">
+              Short-Term Focus
+            </div>
+            <p>
+              Prioritising immediate gains over long-term strategic architecture
+              — systems become outdated, fragmented, and impossible to
+              integrate.
+            </p>
+          </div>
+        </div>
+
+        <h3>Symptoms of an Ineffective IS Strategy</h3>
+        <div class="highlight hl-c">
+          These are warning signs that a company's IS strategy is broken — if
+          you see these in an exam question, you can diagnose the problem
+          immediately.
+        </div>
+        <div class="steps">
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(224, 92, 107, 0.2); color: var(--accent3)"
+            >
+              !
+            </div>
+            <div class="step-content">
+              <strong>Missed Opportunities</strong
+              ><span
+                >Business opportunities left unexploited due to system
+                limitations. No e-commerce = no online sales. Example: a
+                retailer with no online presence loses revenue to competitors
+                who do.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(224, 92, 107, 0.2); color: var(--accent3)"
+            >
+              !
+            </div>
+            <div class="step-content">
+              <strong>Competitors Gain Advantage</strong
+              ><span
+                >Classic example: Britannica relied on printed encyclopaedias;
+                Microsoft launched Encarta digitally. Britannica failed because
+                its IS strategy was frozen in the past.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(224, 92, 107, 0.2); color: var(--accent3)"
+            >
+              !
+            </div>
+            <div class="step-content">
+              <strong>Customers and Suppliers Gain Bargaining Strength</strong
+              ><span
+                >Suppliers discover your inventory system is weak and exploit it
+                by charging higher prices. Customers switch because competitors
+                offer better digital experiences.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(224, 92, 107, 0.2); color: var(--accent3)"
+            >
+              !
+            </div>
+            <div class="step-content">
+              <strong>Unattainable Goals</strong
+              ><span
+                >Business goals become impossible because systems aren't
+                integrated — sales, inventory, and accounts use separate,
+                incompatible systems that cause delays and errors.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(224, 92, 107, 0.2); color: var(--accent3)"
+            >
+              !
+            </div>
+            <div class="step-content">
+              <strong>Constant Shifting Priorities</strong
+              ><span
+                >Plans keep changing because there's no clear IS direction —
+                causing conflict between departments and chronically poor
+                productivity.</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr />
+
+      <!-- ═══════════ MODULE 2: PORTER'S 5 FORCES ═══════════ -->
+      <div class="module anchor" id="porter5">
+        <div class="module-header">
+          <div class="module-number num-a">2</div>
+          <div>
+            <h2>Porter's Five Forces Model</h2>
+            <span class="sub"
+              >Competitive Analysis · Industry Profitability · Strategic
+              Positioning</span
+            >
+          </div>
+        </div>
+
+        <p>
+          Developed in 1979 by Michael Porter at Harvard Business School, this
+          model provides a comprehensive view of the competitive environment. It
+          identifies the five fundamental pressures that shape the fate of a
+          firm and determine an industry's long-term profitability potential.
+          Before choosing how to compete, you must understand what you are
+          competing against.
+        </p>
+
+        <div class="highlight hl-a">
+          <strong>Key Insight:</strong> The goal is not just to analyse industry
+          forces, but to find a strategic position that best defends against
+          them — or better yet, shapes them in your favour. Strategy is about
+          influencing the forces, not just reacting to them.
+        </div>
+
+        <h3>Force 1 — Competitive Rivalry</h3>
+        <div class="force-card">
+          <div class="force-header">
+            <div
+              class="force-num"
+              style="
+                background: rgba(224, 92, 107, 0.15);
+                color: var(--accent3);
+              "
+            >
+              1
+            </div>
+            <div class="force-title">Competitive Rivalry</div>
+          </div>
+          <p class="force-desc">
+            Describes the intensity of competition among existing players. High
+            rivalry erodes profits through price wars, advertising battles, and
+            innovation races. When rivalry is weak, companies can raise prices
+            and earn more. This is the central force — the others all feed into
+            it.
+          </p>
+          <div class="force-grid">
+            <div class="force-col">
+              <div class="force-col-title" style="color: var(--accent3)">
+                🔴 Threat to Profit (High Rivalry)
+              </div>
+              <ul>
+                <li>Numerous competitors</li>
+                <li>Slow industry sales growth</li>
+                <li>Low product differentiation</li>
+                <li>High exit barriers (e.g., specialised equipment)</li>
+                <li>Similar cost structures across firms</li>
+              </ul>
+            </div>
+            <div class="force-col">
+              <div class="force-col-title" style="color: var(--accent4)">
+                🟢 Opportunity to Profit (Low Rivalry)
+              </div>
+              <ul>
+                <li>Few competitors</li>
+                <li>Rapid industry sales growth</li>
+                <li>Significant product differentiation</li>
+                <li>Minimal exit barriers</li>
+                <li>Strong brand identities</li>
+              </ul>
+            </div>
+          </div>
+          <div style="margin-top: 0.8rem">
+            <div
+              class="callout-head"
+              style="color: var(--muted); font-size: 0.72rem"
+            >
+              📌 Case Study
+            </div>
+            <p style="font-size: 0.87rem; color: var(--muted); margin: 0">
+              In the mature smartphone market, Apple and Samsung are locked in
+              constant feature releases and massive marketing spend — both
+              eroding profit gains for both sides. High rivalry = pressure on
+              margins.
+            </p>
+          </div>
+        </div>
+
+        <h3>Force 2 — Threat of New Entrants</h3>
+        <div class="force-card">
+          <div class="force-header">
+            <div
+              class="force-num"
+              style="
+                background: rgba(91, 138, 240, 0.15);
+                color: var(--accent2);
+              "
+            >
+              2
+            </div>
+            <div class="force-title">Threat of New Entrants</div>
+          </div>
+          <p class="force-desc">
+            Measures how easily new competitors can enter your industry and take
+            market share. "Barriers to entry" are the obstacles that protect
+            incumbents. High barriers = low threat = preserved profitability.
+            Low barriers = constant flood of new challengers.
+          </p>
+          <div class="force-grid">
+            <div class="force-col">
+              <div class="force-col-title" style="color: var(--accent3)">
+                🔴 High Threat / Easy Entry
+              </div>
+              <ul>
+                <li>Weak product differentiation</li>
+                <li>Low brand loyalty among customers</li>
+                <li>Minimal switching costs</li>
+                <li>Low start-up capital requirements</li>
+                <li>Common, accessible technology</li>
+              </ul>
+            </div>
+            <div class="force-col">
+              <div class="force-col-title" style="color: var(--accent4)">
+                🟢 Low Threat / Difficult Entry
+              </div>
+              <ul>
+                <li>Strong brand preferences</li>
+                <li>High capital requirements</li>
+                <li>Patents or proprietary technology</li>
+                <li>Economies of scale advantages</li>
+                <li>Government regulation / licencing</li>
+              </ul>
+            </div>
+          </div>
+          <div style="margin-top: 0.8rem">
+            <div
+              class="callout-head"
+              style="color: var(--muted); font-size: 0.72rem"
+            >
+              📌 Case Study
+            </div>
+            <p style="font-size: 0.87rem; color: var(--muted); margin: 0">
+              Airlines vs. App Market: Airlines require billions in capital, FAA
+              approvals, and airport slots — extremely high barriers. The app
+              market needs only a laptop and App Store registration — constant
+              flood of new challengers threatens every incumbent like Microsoft
+              Office.
+            </p>
+          </div>
+        </div>
+
+        <h3>Force 3 — Bargaining Power of Buyers</h3>
+        <div class="force-card">
+          <div class="force-header">
+            <div
+              class="force-num"
+              style="
+                background: rgba(78, 203, 160, 0.15);
+                color: var(--accent4);
+              "
+            >
+              3
+            </div>
+            <div class="force-title">Bargaining Power of Buyers</div>
+          </div>
+          <p class="force-desc">
+            Buyers with strong bargaining power can force prices down, demand
+            higher quality, or require more services — capturing value from
+            suppliers and reducing industry profitability. When buyers are weak,
+            suppliers set terms.
+          </p>
+          <div class="force-grid">
+            <div class="force-col">
+              <div class="force-col-title" style="color: var(--accent3)">
+                🔴 Powerful Buyers (Threat to Suppliers)
+              </div>
+              <ul>
+                <li>Purchases in large volumes</li>
+                <li>Products are standard / undifferentiated</li>
+                <li>Buyer has full price information</li>
+                <li>Low switching costs for the buyer</li>
+                <li>Buyer could produce the product itself</li>
+              </ul>
+            </div>
+            <div class="force-col">
+              <div class="force-col-title" style="color: var(--accent4)">
+                🟢 Weak Buyers (Opportunity for Suppliers)
+              </div>
+              <ul>
+                <li>Purchases in small volumes</li>
+                <li>Products are highly differentiated</li>
+                <li>Buyer has limited market information</li>
+                <li>High switching costs</li>
+                <li>Products are critical to buyer's operation</li>
+              </ul>
+            </div>
+          </div>
+          <div style="margin-top: 0.8rem">
+            <div
+              class="callout-head"
+              style="color: var(--muted); font-size: 0.72rem"
+            >
+              📌 Case Study
+            </div>
+            <p style="font-size: 0.87rem; color: var(--muted); margin: 0">
+              Walmart's immense scale means it can demand dramatically lower
+              prices from suppliers. The retailer's purchase volume gives it
+              enormous leverage in negotiations — suppliers either comply or
+              lose the account entirely.
+            </p>
+          </div>
+        </div>
+
+        <h3>Force 4 — Bargaining Power of Suppliers</h3>
+        <div class="force-card">
+          <div class="force-header">
+            <div
+              class="force-num"
+              style="
+                background: rgba(232, 168, 56, 0.15);
+                color: var(--accent1);
+              "
+            >
+              4
+            </div>
+            <div class="force-title">Bargaining Power of Suppliers</div>
+          </div>
+          <p class="force-desc">
+            Powerful suppliers can raise input prices or reduce quality —
+            driving up costs for producers and squeezing margins. Suppliers have
+            the power to drive costs. This is the mirror of buyer power.
+          </p>
+          <div class="force-grid">
+            <div class="force-col">
+              <div class="force-col-title" style="color: var(--accent3)">
+                🔴 Powerful Suppliers (Threat to Buyers)
+              </div>
+              <ul>
+                <li>Limited number of suppliers exist</li>
+                <li>No real substitute for their product</li>
+                <li>Highly differentiated products</li>
+                <li>High switching costs</li>
+                <li>Supplier could become a competitor</li>
+              </ul>
+            </div>
+            <div class="force-col">
+              <div class="force-col-title" style="color: var(--accent4)">
+                🟢 Weak Suppliers (Opportunity for Buyers)
+              </div>
+              <ul>
+                <li>Many alternative suppliers available</li>
+                <li>Undifferentiated products (commodities)</li>
+                <li>Minimal switching costs</li>
+                <li>Buyer is a major customer for the supplier</li>
+                <li>Easy forward integration not possible</li>
+              </ul>
+            </div>
+          </div>
+          <div style="margin-top: 0.8rem">
+            <div
+              class="callout-head"
+              style="color: var(--muted); font-size: 0.72rem"
+            >
+              📌 Case Study
+            </div>
+            <p style="font-size: 0.87rem; color: var(--muted); margin: 0">
+              TSMC dominates manufacturing of advanced chips for Apple and
+              Nvidia. With no viable alternative fabs and massive capital costs,
+              TSMC has the leverage to influence prices and delivery timelines
+              for even the largest tech companies.
+            </p>
+          </div>
+        </div>
+
+        <h3>Force 5 — Threat of Substitutes</h3>
+        <div class="force-card">
+          <div class="force-header">
+            <div
+              class="force-num"
+              style="
+                background: rgba(176, 110, 245, 0.15);
+                color: var(--accent5);
+              "
+            >
+              5
+            </div>
+            <div class="force-title">Threat of Substitutes</div>
+          </div>
+          <p class="force-desc">
+            Substitutes are products or services from a different industry that
+            offer a similar benefit. They place a ceiling on the prices firms
+            can charge — limiting profits. The threat is not from direct
+            competitors but from alternatives that serve the same need.
+          </p>
+          <div class="force-grid">
+            <div class="force-col">
+              <div class="force-col-title" style="color: var(--accent3)">
+                🔴 High Threat of Substitution
+              </div>
+              <ul>
+                <li>Substitute offers better price-performance</li>
+                <li>Easy for customers to switch</li>
+                <li>Customers have little brand loyalty</li>
+                <li>Switching costs are low</li>
+                <li>Substitute improves rapidly</li>
+              </ul>
+            </div>
+            <div class="force-col">
+              <div class="force-col-title" style="color: var(--accent4)">
+                🟢 Low Threat of Substitution
+              </div>
+              <ul>
+                <li>No good substitutes available</li>
+                <li>Product offers unique benefit</li>
+                <li>High switching costs for customers</li>
+                <li>Strong emotional brand attachment</li>
+                <li>Regulatory or safety barriers</li>
+              </ul>
+            </div>
+          </div>
+          <div style="margin-top: 0.8rem">
+            <div
+              class="callout-head"
+              style="color: var(--muted); font-size: 0.72rem"
+            >
+              📌 Case Study
+            </div>
+            <p style="font-size: 0.87rem; color: var(--muted); margin: 0">
+              Netflix provided a powerful substitute for cable TV. The lower
+              cost, better user experience, and on-demand access led to
+              widespread cord-cutting — completely disrupting the cable industry
+              within a decade.
+            </p>
+          </div>
+        </div>
+
+        <h3>Economies of Scale</h3>
+        <p>
+          A concept critical to understanding barriers to entry and cost
+          leadership. <strong>Economies of scale</strong> is the reduction in
+          per-unit cost of production when production volume increases. Fixed
+          costs get spread over more units.
+        </p>
+        <div class="callout">
+          <div class="callout-head" style="color: var(--accent1)">
+            Worked Example
+          </div>
+          <p>
+            Fixed cost of $1,000 needed to produce 10 units of Pencil A → Cost =
+            <strong>$100 per pencil</strong>.
+          </p>
+          <p>
+            Same $1,000 fixed cost to produce 50 units → Cost =
+            <strong>$20 per pencil</strong>.
+          </p>
+          <p>
+            This means large incumbents can undercut new entrants on price while
+            still making a profit — new entrants simply cannot match the
+            per-unit cost of established players. This is why Economies of Scale
+            are a key barrier to entry.
+          </p>
+        </div>
+
+        <h3>Applying the Framework — 4-Step Process</h3>
+        <div class="steps">
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(232, 168, 56, 0.2); color: var(--accent1)"
+            >
+              1
+            </div>
+            <div class="step-content">
+              <strong>Define the Industry</strong
+              ><span
+                >Clearly specify the industry you're analysing — its scope and
+                boundaries. "Smartphones" vs "consumer electronics" will yield
+                very different analyses.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(232, 168, 56, 0.2); color: var(--accent1)"
+            >
+              2
+            </div>
+            <div class="step-content">
+              <strong>Analyse the Forces</strong
+              ><span
+                >Identify key players (competitors, customers, suppliers),
+                potential substitutes, and entry barriers for the defined
+                industry. Gather evidence for each force.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(232, 168, 56, 0.2); color: var(--accent1)"
+            >
+              3
+            </div>
+            <div class="step-content">
+              <strong>Assess Attractiveness</strong
+              ><span
+                >For each force, determine if factors make the industry easy or
+                difficult. Look at the total picture to conclude about
+                structural profitability — is this industry worth competing
+                in?</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(232, 168, 56, 0.2); color: var(--accent1)"
+            >
+              4
+            </div>
+            <div class="step-content">
+              <strong>Formulate Strategy</strong
+              ><span
+                >Use your analysis to identify opportunities to reduce
+                competitive pressures and find a strategic position where the
+                forces are weakest — then design your competitive strategy
+                accordingly.</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr />
+
+      <!-- ═══════════ MODULE 3: COMPETITIVE STRATEGIES ═══════════ -->
+      <div class="module anchor" id="competitive">
+        <div class="module-header">
+          <div class="module-number num-c">3</div>
+          <div>
+            <h2>Competitive Strategies</h2>
+            <span class="sub"
+              >Porter's Generic Strategies · Six Extended Strategies · SWOT ·
+              First Mover</span
+            >
+          </div>
+        </div>
+
+        <p>
+          Once you understand the forces shaping your industry, you face the
+          most critical question: <em>How will you compete?</em> Success isn't a
+          random accident — it stems from a clear, conscious choice about where
+          to play and how to win.
+        </p>
+
+        <h3>Porter's Generic Strategies — The 2×2 Matrix</h3>
+        <p>
+          Porter's framework asks two questions: Will you win on
+          <strong>cost</strong> or <strong>differentiation</strong>? Will you
+          target a <strong>mass market</strong> or a <strong>niche</strong>? The
+          intersection of these answers gives you four generic strategies.
+        </p>
+
+        <div class="matrix">
+          <div class="mat-header" style="grid-column: 1; grid-row: 1"></div>
+          <div class="mat-header" style="grid-column: 2; grid-row: 1">
+            🟠 LOW COST
+          </div>
+          <div class="mat-header" style="grid-column: 3; grid-row: 1">
+            🟢 DIFFERENTIATION
+          </div>
+          <div class="mat-side" style="grid-column: 1; grid-row: 2">
+            MASS MARKET
+          </div>
+          <div class="mat-cell quad-iv" style="grid-column: 2; grid-row: 2">
+            <strong style="color: var(--accent1)">Cost Leadership</strong>
+            <p>
+              Serve broad market with lowest production cost. Win by being the
+              undisputed cheapest producer. E.g. Walmart, Xiaomi
+            </p>
+          </div>
+          <div class="mat-cell quad-iii" style="grid-column: 3; grid-row: 2">
+            <strong style="color: var(--accent4)"
+              >Differentiation Leadership</strong
+            >
+            <p>
+              Offer unique features the broad market values enough to pay a
+              premium. E.g. Apple, Tesla
+            </p>
+          </div>
+          <div class="mat-side" style="grid-column: 1; grid-row: 3">
+            NICHE MARKET
+          </div>
+          <div
+            class="mat-cell quad-i"
+            style="grid-column: 2; grid-row: 3; border-bottom: none"
+          >
+            <strong style="color: var(--accent2)">Cost Focus</strong>
+            <p>
+              Be cheapest producer within a specific niche. E.g. corporate bulk
+              tote bags, budget airlines on specific routes
+            </p>
+          </div>
+          <div
+            class="mat-cell quad-ii"
+            style="
+              grid-column: 3;
+              grid-row: 3;
+              border-bottom: none;
+              border-right: none;
+            "
+          >
+            <strong style="color: var(--accent3)">Differentiation Focus</strong>
+            <p>
+              Uniquely premium within a specific niche. E.g. Rolls Royce,
+              Titleist golf bags, Peloton
+            </p>
+          </div>
+        </div>
+
+        <h3>Strategy 1 — Cost Leadership</h3>
+        <div class="card" style="border-color: rgba(232, 168, 56, 0.3)">
+          <div class="card-title" style="color: var(--accent1)">
+            Win by Being the Undisputed Low-Cost Producer
+          </div>
+          <p>
+            Serve a broad market with the lowest production cost in the
+            industry. The goal is not to be cheap — it is to achieve the lowest
+            <em>cost structure</em> relative to rivals, which allows you to
+            either undercut on price or earn higher margins at the same price.
+            Achieved through economies of scale, process efficiency, technology
+            investment, and tight supply chain control.
+          </p>
+          <p style="margin-top: 0.6rem">
+            <span class="tag tag-a">Walmart</span
+            ><span class="tag tag-a">Xiaomi</span
+            ><span class="tag tag-a">Ryanair</span
+            ><span class="tag tag-a">Amazon (logistics)</span>
+          </p>
+        </div>
+
+        <h3>Strategy 2 — Differentiation</h3>
+        <div class="card" style="border-color: rgba(78, 203, 160, 0.3)">
+          <div class="card-title" style="color: var(--accent4)">
+            Win by Being Uniquely Valuable to Your Customer
+          </div>
+          <p>
+            Offer unique features that a broad market values and is willing to
+            pay a premium price for. Differentiation creates customer loyalty
+            and isolates the firm from competitive rivalry — if customers
+            believe no other product is quite like yours, they'll pay more and
+            switch less. The key is that uniqueness must be
+            <em>perceived</em> and <em>valued</em> by the customer — not just
+            technically superior.
+          </p>
+          <p style="margin-top: 0.6rem">
+            <span class="tag tag-d">Apple</span
+            ><span class="tag tag-d">Tesla</span
+            ><span class="tag tag-d">Dyson</span
+            ><span class="tag tag-d">Starbucks</span>
+          </p>
+        </div>
+
+        <h3>Strategy 3 — Focus / Niche</h3>
+        <div class="card" style="border-color: rgba(91, 138, 240, 0.3)">
+          <div class="card-title" style="color: var(--accent2)">
+            Win by Being the Unique Expert for a Niche
+          </div>
+          <p>
+            Serve a narrow market segment with a highly tailored offering. Can
+            be either cost focus (cheapest within niche) or differentiation
+            focus (most premium within niche). The idea is that by focusing
+            intensely, you understand your niche customers better than any broad
+            competitor can — and therefore serve them more effectively.
+          </p>
+          <p style="margin-top: 0.5rem">
+            Rolls Royce (ultra-luxury niche) · IKEA corporate bulk (cost niche)
+            · Titleist (golf equipment niche)
+          </p>
+        </div>
+
+        <h3>The Extended Strategies (Beyond Porter)</h3>
+
+        <div class="steps">
+          <div class="step">
+            <div
+              class="step-num"
+              style="
+                background: rgba(176, 110, 245, 0.2);
+                color: var(--accent5);
+              "
+            >
+              4
+            </div>
+            <div class="step-content">
+              <strong>Innovation — Win by Being Innovative</strong
+              ><span
+                >Continuously develop new products, processes, or business
+                models to stay ahead. Companies invest in R&D to create
+                breakthrough products or models that disrupt competitors and
+                create entirely new demand. Netflix: shifted from DVD rental →
+                streaming → original content production, rethinking the entire
+                model at each stage.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div
+              class="step-num"
+              style="
+                background: rgba(176, 110, 245, 0.2);
+                color: var(--accent5);
+              "
+            >
+              5
+            </div>
+            <div class="step-content">
+              <strong>Growth — Win by Being Relentless in Expansion</strong
+              ><span
+                >Expand market share through organic growth (new markets, new
+                products) or inorganic methods (acquisitions, mergers). Growth
+                expands scale, boosting revenues and economies of scale. Amazon:
+                books → e-commerce → AWS cloud → logistics → healthcare. Nepal's
+                Chaudhary Group: Wai Wai noodles → banking → telecom (CG
+                Digital) → retail.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div
+              class="step-num"
+              style="
+                background: rgba(176, 110, 245, 0.2);
+                color: var(--accent5);
+              "
+            >
+              6
+            </div>
+            <div class="step-content">
+              <strong
+                >Alliance — Win by Being Powerful Through Strategic
+                Partnership</strong
+              ><span
+                >Form strategic partnerships, joint ventures, or networks to
+                access resources, markets, or capabilities without the full cost
+                of ownership. Alliances pool resources via partnerships to
+                access new capabilities, markets, or spread risk. Samsung +
+                Google: share platforms and innovation to strengthen the Android
+                ecosystem without merging. OpenAI + Microsoft: access advanced
+                capabilities through alliance rather than internal
+                development.</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <h3>SWOT Analysis</h3>
+        <p>
+          SWOT analysis is a strategic planning framework that evaluates an
+          organisation's internal strengths and weaknesses alongside external
+          opportunities and threats. Businesses use it to inform decision-making
+          and strategy development.
+        </p>
+
+        <div class="swot-grid">
+          <div class="swot-cell" style="background: rgba(78, 203, 160, 0.07)">
+            <div class="swot-label" style="color: var(--accent4)">
+              S — Strengths (Internal)
+            </div>
+            <ul>
+              <li>What does the company do well?</li>
+              <li>Is the company strong in its market?</li>
+              <li>Does the company have a strong culture?</li>
+              <li>Unique resources, patents, brand loyalty</li>
+              <li>Cost advantages, superior technology</li>
+            </ul>
+          </div>
+          <div class="swot-cell" style="background: rgba(224, 92, 107, 0.07)">
+            <div class="swot-label" style="color: var(--accent3)">
+              W — Weaknesses (Internal)
+            </div>
+            <ul>
+              <li>What does the company do poorly?</li>
+              <li>What problems could be avoided?</li>
+              <li>Does the company have serious financial liabilities?</li>
+              <li>Lack of skills, limited capacity</li>
+              <li>Poor IS integration, outdated systems</li>
+            </ul>
+          </div>
+          <div class="swot-cell" style="background: rgba(91, 138, 240, 0.07)">
+            <div class="swot-label" style="color: var(--accent2)">
+              O — Opportunities (External)
+            </div>
+            <ul>
+              <li>Are industry trends moving upward?</li>
+              <li>Do new markets exist for products/services?</li>
+              <li>Are there new technologies to exploit?</li>
+              <li>Competitor weaknesses to exploit</li>
+              <li>Government incentives, policy changes</li>
+            </ul>
+          </div>
+          <div class="swot-cell" style="background: rgba(232, 168, 56, 0.07)">
+            <div class="swot-label" style="color: var(--accent1)">
+              T — Threats (External)
+            </div>
+            <ul>
+              <li>What are competitors doing well?</li>
+              <li>What obstacles does the company face?</li>
+              <li>Troubling changes in regulations or technology?</li>
+              <li>New entrants disrupting the market</li>
+              <li>Supply chain disruptions, economic shifts</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout">
+          <div class="callout-head" style="color: var(--accent4)">
+            Nepal Startup Example — "NepalChain Hub"
+          </div>
+          <p>
+            <span class="tag tag-d">Strength</span> User-friendly app with
+            real-time GPS tracking. Strong local partnerships with firms like
+            DHL Nepal.
+          </p>
+          <p>
+            <span class="tag tag-c">Weakness</span> Dependence on inconsistent
+            internet in rural areas. Small dev team limits AI forecasting
+            features.
+          </p>
+          <p>
+            <span class="tag tag-b">Opportunity</span> Boom in e-commerce
+            post-2025 (Daraz, Sastodeal). Government incentives for IT startups
+            in Bagmati Province.
+          </p>
+          <p>
+            <span class="tag tag-a">Threat</span> Competition from global giants
+            entering South Asia. Supply chain disruptions from monsoons and
+            regional regulations.
+          </p>
+        </div>
+
+        <h3>First Mover Advantage</h3>
+        <p>
+          A <strong>first mover</strong> is an organisation that is the first to
+          bring a new product innovation to the marketplace or to use a new
+          process innovation. Being first allows it to capture market share,
+          build brand loyalty, and establish barriers before rivals arrive.
+        </p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Advantages</th>
+              <th>Disadvantages</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                Reputation for being innovative — brand becomes synonymous with
+                the category
+              </td>
+              <td>
+                High uncertainty over exact direction technology will take
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Cost leader benefits from moving along experience curve first
+              </td>
+              <td>
+                Risk of competitors imitating innovations (free-rider effect —
+                they copy at lower cost)
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Control over scarce assets (prime shelf space, key suppliers,
+                patents) preventing others
+              </td>
+              <td>
+                High financial and strategic risks — may invest heavily in the
+                wrong direction
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Opportunity to build customer relationships and loyalty before
+                rivals exist
+              </td>
+              <td>
+                High development costs — later entrants learn from your mistakes
+                for free
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="highlight hl-a">
+          <strong>Classic Example:</strong> Coca-Cola entered the cola market
+          first in 1886. More than a century later, it still dominates — its
+          brand loyalty and global distribution network remain nearly impossible
+          to replicate.
+        </div>
+      </div>
+
+      <hr />
+
+      <!-- ═══════════ MODULE 4: SUPPLY CHAIN I ═══════════ -->
+      <div class="module anchor" id="scm1">
+        <div class="module-header">
+          <div class="module-number num-d">4</div>
+          <div>
+            <h2>Supply Chain Management I</h2>
+            <span class="sub"
+              >What is a Supply Chain · SCM Objectives · Uncertainty · Enablers
+              · ESG</span
+            >
+          </div>
+        </div>
+
+        <h3>What is a Supply Chain?</h3>
+        <p>
+          A <strong>Supply Chain</strong> (also called a supply network or
+          supply web) is the entire network of individuals, organisations,
+          resources, activities, and technology involved in the creation and
+          sale of a product. It spans everything from the delivery of source
+          materials from the supplier to the manufacturer, through to its
+          eventual delivery to the end user.
+        </p>
+
+        <div class="highlight hl-d">
+          <strong>Simple Examples:</strong><br />
+          Fridge: Raw materials → manufacturers → transporters → retailers →
+          customer.<br />
+          Jeans: Cotton farms → textile mills → garment factories → distributors
+          → retail stores.<br />
+          Dell: sources components from Intel, assembles PCs, delivers directly
+          to customers via UPS.
+        </div>
+
+        <h3>Supply Chain Tiers</h3>
+        <p>
+          Supply chains are structured in tiers — each tier is further from the
+          end customer:
+        </p>
+        <div class="card-row">
+          <div class="card">
+            <div class="card-title" style="color: var(--accent4)">
+              Tier 1 (Closest to Customer)
+            </div>
+            <p>
+              Direct suppliers and retailers who interact most closely with the
+              end consumer. In denim jeans: the garment assembly factory and the
+              retail store.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent2)">
+              Tier 2 (Components)
+            </div>
+            <p>
+              Suppliers to Tier 1 — they make components used in assembly. In
+              denim jeans: the textile mill that makes the denim fabric from
+              cotton.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent1)">
+              Tier 3 (Raw Materials)
+            </div>
+            <p>
+              The furthest upstream — source of raw materials. In denim jeans:
+              cotton farms in the US and India, indigo dye producers in China.
+            </p>
+          </div>
+        </div>
+
+        <h3>Supply Chain Activities</h3>
+        <div class="card-row-2">
+          <div class="card">
+            <div class="card-title" style="color: var(--accent2)">
+              Primary Activities (Value-Creating)
+            </div>
+            <p>
+              <strong>1. Inbound Logistics</strong> — receiving and storing raw
+              materials<br />
+              <strong>2. Operations</strong> — manufacturing, testing,
+              assembly<br />
+              <strong>3. Outbound Logistics</strong> — storage and
+              distribution<br />
+              <strong>4. Marketing and Sales</strong> — branding, pricing,
+              promotion<br />
+              <strong>5. Service</strong> — after-sales support, returns
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent4)">
+              Support Activities (Enabling)
+            </div>
+            <p>
+              <strong>1. Firm Infrastructure</strong> — accounting and
+              finance<br />
+              <strong>2. Human Resources</strong> — hiring, training,
+              development<br />
+              <strong>3. Technology Development</strong> — use of IT/IS
+              systems<br />
+              <strong>4. Procurement</strong> — negotiation, supplier selection,
+              buying
+            </p>
+          </div>
+        </div>
+
+        <h3>Supply Chain Management — Core Definition</h3>
+        <div class="highlight hl-d">
+          <strong>SCM</strong> is about making sure information moves so well
+          that the company can give customers exactly what they want, exactly
+          when they want it, without wasting money on excess inventory. It
+          coordinates the flow of products, information, and finances across the
+          entire chain.
+        </div>
+
+        <h3>Four Keys to Effective SCM</h3>
+        <div class="card-row">
+          <div class="card">
+            <div class="card-title" style="color: var(--accent1)">
+              1. Information
+            </div>
+            <p>
+              What and how much to produce. Need data regarding inventory
+              levels, customer orders, delivery status. Without accurate
+              information, companies over-produce or under-produce — both are
+              expensive.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent2)">
+              2. Cooperation
+            </div>
+            <p>
+              Working together toward a common goal — aligning production
+              schedules, helping suppliers improve their processes, and sharing
+              risk. A chain is only as strong as its weakest link.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent4)">
+              3. Communication
+            </div>
+            <p>
+              Exchange of information between all parties — suppliers,
+              logistics, and retailers. The right information must reach the
+              right party at the right time to prevent costly disruptions.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent5)">4. Trust</div>
+            <p>
+              All parties must act in good faith, keep their word, and share
+              data without exploiting each other. Without trust, every
+              transaction requires verification — dramatically increasing cost
+              and slowing response.
+            </p>
+          </div>
+        </div>
+
+        <h3>Supply Chain Objectives</h3>
+        <div class="steps">
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(78, 203, 160, 0.2); color: var(--accent4)"
+            >
+              ①
+            </div>
+            <div class="step-content">
+              <strong>Customer Satisfaction First</strong
+              ><span
+                >The customer is the ONLY source of actual cash entering the
+                supply chain. Every payment between SC partners is simply
+                redistribution of that same money. Satisfying the end customer
+                is the only way new cash enters the system.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(78, 203, 160, 0.2); color: var(--accent4)"
+            >
+              ②
+            </div>
+            <div class="step-content">
+              <strong>Maximize Overall Value Generated</strong
+              ><span
+                >Supply Chain Value = What the customer pays − Total costs
+                across ALL stages. A chain generating high value is an efficient
+                chain. High value means maximum surplus is created and retained
+                across the system.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(78, 203, 160, 0.2); color: var(--accent4)"
+            >
+              ③
+            </div>
+            <div class="step-content">
+              <strong>Share Profitability Across Partners</strong
+              ><span
+                >Profitability should be shared among all partners — suppliers,
+                shippers, retailers — so the whole system stays healthy and
+                motivated. A chain where only the retailer profits will
+                eventually lose its suppliers.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(78, 203, 160, 0.2); color: var(--accent4)"
+            >
+              ④
+            </div>
+            <div class="step-content">
+              <strong>Measure Total SC Profitability — Not One Stage</strong
+              ><span
+                >Never judge a supply chain by one stage's success. If the
+                shipping department saves money using a slow boat, but the
+                retail store loses customers because the product is out of stock
+                — the TOTAL supply chain has failed, even if shipping looks
+                great on its own.</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <h3>Supply Chain Uncertainty Factors</h3>
+        <div class="card-row">
+          <div class="card">
+            <div class="card-title" style="color: var(--accent3)">
+              1. Inaccurate Demand Forecasting
+            </div>
+            <p>
+              Most common issue. If you forecast 100 units but customers buy 10
+              — you're stuck with waste. If they buy 200 — you run out. Both are
+              costly in different ways.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent3)">
+              2. Long / Variable Lead Times
+            </div>
+            <p>
+              The gap between ordering a part and receiving it. If a supplier
+              says "5 to 10 days," that 5-day window makes perfect production
+              scheduling impossible — you must pad everything with buffer time.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent3)">
+              3. Late Deliveries & Incomplete Shipments
+            </div>
+            <p>
+              Even short lead times mean nothing if deliveries are unreliable. A
+              truck arriving late or with half the order can stop an entire
+              assembly line.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent3)">
+              4. Price Fluctuations
+            </div>
+            <p>
+              Sudden changes in raw material costs (fuel, steel, cotton) make
+              budgeting impossible and force reactive pricing decisions that
+              damage customer trust.
+            </p>
+          </div>
+        </div>
+
+        <h3>Supply Chain Uncertainty — Impacts</h3>
+        <div class="card-row-2">
+          <div class="card">
+            <div class="card-title" style="color: var(--accent1)">
+              Lateness and Incomplete Orders
+            </div>
+            <p>
+              End customers get frustrated when they don't receive what they
+              ordered on time. This directly damages brand reputation and drives
+              customers to competitors — a chain reaction that costs far more
+              than the missed delivery itself.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent1)">
+              Safety Stock (Inventory Insurance)
+            </div>
+            <p>
+              Companies keep "extra" inventory just in case — called Safety
+              Stock. While it prevents stockouts, it is very expensive: it ties
+              up cash, requires warehouse space, and risks obsolescence if
+              demand changes.
+            </p>
+          </div>
+        </div>
+
+        <h3>SC Enablers — Technologies That Make SCM Efficient</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Technology</th>
+              <th>What It Does</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>E-Business</strong></td>
+              <td>
+                Direct, instant communication platforms for customers and
+                suppliers. Run e-commerce and operations management together.
+              </td>
+              <td>Amazon Seller Central</td>
+            </tr>
+            <tr>
+              <td><strong>EDI (Electronic Data Interchange)</strong></td>
+              <td>
+                Moving away from paper-based documents to standardised
+                electronic documents — orders, invoices, shipping notices.
+              </td>
+              <td>Walmart requiring EDI from all suppliers</td>
+            </tr>
+            <tr>
+              <td><strong>Barcodes & POS</strong></td>
+              <td>
+                Triggering immediate upstream signals from point-of-sale data —
+                when a product sells, the signal flows up the chain
+                automatically.
+              </td>
+              <td>Supermarket checkout systems</td>
+            </tr>
+            <tr>
+              <td><strong>RFID</strong></td>
+              <td>
+                Radio Frequency Identification — uses radio waves to track
+                objects, people, animals without line-of-sight scanning. More
+                powerful than barcodes.
+              </td>
+              <td>Access cards, toll collections, library books</td>
+            </tr>
+            <tr>
+              <td><strong>Internet</strong></td>
+              <td>
+                Instant communication for digital firms — enables real-time data
+                sharing across the entire chain regardless of geography.
+              </td>
+              <td>Cloud ERP systems accessible worldwide</td>
+            </tr>
+            <tr>
+              <td><strong>AI</strong></td>
+              <td>
+                Intelligent logistics management — predictive demand
+                forecasting, route optimisation, anomaly detection.
+              </td>
+              <td>Amazon's anticipatory shipping algorithm</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Benefits of Integrating IS/IT into SCM</h3>
+        <div class="card-row">
+          <div class="card">
+            <div class="card-title" style="color: var(--accent4)">
+              Cost Savings
+            </div>
+            <p>
+              Reduced operational costs through automation, elimination of
+              intermediaries, and optimised inventory levels across the chain.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent4)">
+              Faster Response
+            </div>
+            <p>
+              Shortening SC response and transaction times — orders processed in
+              seconds instead of days, enabling same-day fulfillment.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent4)">
+              Global Access
+            </div>
+            <p>
+              Gaining access to global markets, suppliers, and distribution
+              channels that would be impossible without digital systems.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent4)">
+              Better Data
+            </div>
+            <p>
+              Collection and analysis of vast amounts of customer data and
+              preferences — enabling personalised offers and smarter inventory
+              decisions.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent4)">
+              Fraud Protection
+            </div>
+            <p>
+              Electronic payments are easier to audit and monitor — reducing
+              theft, fraud, and error compared to paper-based systems.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent4)">
+              Competitive Bidding
+            </div>
+            <p>
+              Easier to obtain competitive bid information — simpler to
+              negotiate price and delivery terms with multiple suppliers
+              simultaneously.
+            </p>
+          </div>
+        </div>
+
+        <h3>Duties, Tariffs & Trade</h3>
+        <div class="card-row-2">
+          <div class="card">
+            <div class="card-title">Duty vs Tariff</div>
+            <p>
+              <strong>Duty</strong> = the actual tax paid on goods as they enter
+              a country.<br /><strong>Tariff / Customs Duty</strong> = the rate
+              or schedule that tells how much duty to charge.<br /><strong
+                >Trade Agreements</strong
+              >
+              = groups of nations agree to uniform tariffs, creating internal
+              competitive advantages between member nations. Examples: EU,
+              ASEAN, NAFTA.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title">Global Trade Specialists</div>
+            <p>
+              Professionals who support international trade operations:<br />
+              • <strong>Freight Forwarders</strong> — arrange physical
+              transportation<br />
+              • <strong>Customs House Brokers</strong> — handle import/export
+              regulations<br />
+              • <strong>Export Packers</strong> — specialist packaging for
+              international shipping<br />
+              • <strong>Export Management Companies</strong> — manage entire
+              export process
+            </p>
+          </div>
+        </div>
+
+        <h3>ESG in Supply Chain Management</h3>
+        <div class="card-row">
+          <div class="card">
+            <div class="card-title" style="color: var(--accent4)">
+              Environmental
+            </div>
+            <p>
+              Carbon footprint assessment — tracking greenhouse gas emissions
+              across transportation, manufacturing, and energy usage. Resource
+              use evaluation — water, energy, and raw materials. Sustainable
+              packaging and reverse logistics for returns.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent2)">Social</div>
+            <p>
+              Fair labour practices across the entire supply chain — not just
+              within the company but verifying suppliers' working conditions.
+              Community impact assessments for manufacturing locations.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent1)">
+              Governance
+            </div>
+            <p>
+              Ethical business practices — ensuring ethical conduct and
+              integrity in all aspects of SC including anti-corruption measures
+              and compliance with laws and regulations. Transparent supplier
+              auditing.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <hr />
+
+      <!-- ═══════════ MODULE 5: GLOBAL SYSTEMS ═══════════ -->
+      <div class="module anchor" id="global">
+        <div class="module-header">
+          <div class="module-number num-e">5</div>
+          <div>
+            <h2>Managing Global Systems</h2>
+            <span class="sub"
+              >Globalization · Org Structures · Global Strategies · BI · GIS
+              Challenges</span
+            >
+          </div>
+        </div>
+
+        <h3>What is Globalization?</h3>
+        <p>
+          Globalization is a process by which businesses develop international
+          influence or start operating on an international scale. Advances in
+          transportation and telecommunications infrastructure — including the
+          rise of the Internet — are major factors, generating further
+          interdependence of economic and cultural activities.
+        </p>
+        <div class="highlight hl-e">
+          <strong>Key Insight:</strong> Globalization isn't just a business
+          choice — it's a result of cultural evolution. Because we talk, travel,
+          and think more alike than ever before, businesses are practically
+          forced to coordinate their operations on a global scale to remain
+          competitive.
+        </div>
+
+        <h3>Factors Driving Internationalization</h3>
+        <div class="card-row-2">
+          <div class="card">
+            <div class="card-title" style="color: var(--accent5)">
+              General Cultural Factors
+            </div>
+            <p>
+              • Global communication and transportation technologies<br />•
+              Development of a global culture (shared tastes, media, brands)<br />•
+              Emergence of global social norms<br />• Political stability in key
+              regions<br />• Global knowledge base and education
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent5)">
+              Specific Business Factors
+            </div>
+            <p>
+              • Access to global markets and customers<br />• Global production
+              and operations<br />• Global coordination and logistics<br />•
+              Access to global workforce and talent<br />• Global economies of
+              scale
+            </p>
+          </div>
+        </div>
+
+        <h3>Three Organisational Structures</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>Centralized (Global)</th>
+              <th>Decentralized (Multidomestic)</th>
+              <th>Coordinated (Transnational)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>HQ Role</td>
+              <td>Dictates everything</td>
+              <td>Financial investor only</td>
+              <td>Collaborates and guides</td>
+            </tr>
+            <tr>
+              <td>Product</td>
+              <td>Identical worldwide</td>
+              <td>Unique to each country</td>
+              <td>Core design + local tweaks</td>
+            </tr>
+            <tr>
+              <td>Information</td>
+              <td>One global system</td>
+              <td>Fragmented local systems</td>
+              <td>Shared / linked systems</td>
+            </tr>
+            <tr>
+              <td>Slogan</td>
+              <td>"One size fits all"</td>
+              <td>"Think local, act local"</td>
+              <td>"Think global, act local"</td>
+            </tr>
+            <tr>
+              <td>Example</td>
+              <td>Intel CPU (same chip globally)</td>
+              <td>Nestlé (local recipes)</td>
+              <td>Starbucks / KFC</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Four Global Business Strategies</h3>
+        <div class="card-row">
+          <div class="card">
+            <div class="card-title" style="color: var(--accent1)">
+              Domestic Exporter
+            </div>
+            <p>
+              Heavy centralisation — all corporate activities focused in the
+              home country. Products are made at home and simply shipped to
+              foreign markets with minimal local adaptation. Low risk, low
+              global presence.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent2)">
+              Multinational
+            </div>
+            <p>
+              Financial management and control are dispersed to local units to
+              adapt to specific markets. Each country unit operates with
+              significant autonomy — adapting products, marketing, and strategy
+              to local conditions.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent4)">
+              Franchiser
+            </div>
+            <p>
+              Business models created at home are copied exactly in foreign
+              locations. The core product and processes are standardised
+              globally, but delivery is local. Example: KFC, McDonald's — the
+              menu and cooking process are the same, but local operators run the
+              stores.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent5)">
+              Transnational
+            </div>
+            <p>
+              All units participate as equals in a value-adding partnership.
+              Knowledge, resources, and capabilities flow across the whole
+              network. Example: Ford/GM — shared and standardised engines
+              developed collaboratively across countries.
+            </p>
+          </div>
+        </div>
+
+        <h3>Four System Configurations (Technical Setup)</h3>
+        <div class="steps">
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(232, 168, 56, 0.2); color: var(--accent1)"
+            >
+              1
+            </div>
+            <div class="step-content">
+              <strong>Centralized</strong
+              ><span
+                >Development and operations occur totally at the domestic home
+                base. Example: every branch globally must log into a single
+                server in New York to process any data. Maximum control, single
+                point of failure.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(91, 138, 240, 0.2); color: var(--accent2)"
+            >
+              2
+            </div>
+            <div class="step-content">
+              <strong>Duplicated</strong
+              ><span
+                >Development occurs at home base, but operations are handed to
+                autonomous units in foreign locations. Example: HQ builds
+                billing software and sends a copy to Brazil to run
+                independently. Same software, local operation.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(78, 203, 160, 0.2); color: var(--accent4)"
+            >
+              3
+            </div>
+            <div class="step-content">
+              <strong>Decentralized</strong
+              ><span
+                >Each foreign unit designs its own solutions entirely. Example:
+                the German branch uses one payroll system, Singapore uses a
+                completely different one that fits their local laws better.
+                Maximum local fit, minimum standardisation.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div
+              class="step-num"
+              style="
+                background: rgba(176, 110, 245, 0.2);
+                color: var(--accent5);
+              "
+            >
+              4
+            </div>
+            <div class="step-content">
+              <strong>Networked</strong
+              ><span
+                >Development and operations occur in a coordinated fashion
+                across ALL units. Example: a global team of developers from
+                various countries working together on a single cloud platform
+                used by the entire firm. Best for transnational
+                strategies.</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <h3>Global IS Challenges</h3>
+        <div class="card-row">
+          <div class="card">
+            <div class="card-title" style="color: var(--accent3)">
+              Agreeing on Common Requirements
+            </div>
+            <p>
+              Challenge: an ERP rollout fails because local managers feel it was
+              forced upon them by HQ without understanding their workflow.
+              Solution: allow local input into design — invite country CEOs to
+              vote on layouts and processes.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent3)">
+              Changing Business Processes
+            </div>
+            <p>
+              Challenge: US has Sales Tax, Nepal has VAT — the same system must
+              handle both. Solution: create a short list of core business
+              processes with a global customer ID, but allow change in the tax
+              field based on country.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent3)">
+              Coordinating App Development
+            </div>
+            <p>
+              Challenge: launching a massive all-in-one global platform at once
+              causes crashes and data loss. Solution: incremental steps — reduce
+              transnational systems to a minimum and expand carefully.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent3)">
+              Coordinating Software Releases
+            </div>
+            <p>
+              Challenge: Nepal is on Version 2.0, US is on Version 1.5 — files
+              are incompatible. Solution: enforce simultaneous global updates —
+              all operating units upgrade at the same time.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent3)">
+              Cooptation
+            </div>
+            <p>
+              Strategy for managing resistance: bring the opposition into the
+              design and implementation process without giving up control over
+              direction. Example: the manager who hates the new HR system
+              becomes the "Lead Consultant for European Rollout" — he feels
+              empowered, but central team keeps control.
+            </p>
+          </div>
+        </div>
+
+        <h3>Global IT Challenges</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Area</th>
+              <th>Challenge</th>
+              <th>Solution</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Computing Platforms</strong></td>
+              <td>
+                Determining how new core systems fit with existing applications
+                developed globally by different divisions. Establishing uniform
+                standards for data, interfaces, and software.
+              </td>
+              <td>Standardisation policies, phased integration roadmap</td>
+            </tr>
+            <tr>
+              <td><strong>Connectivity</strong></td>
+              <td>
+                The public internet does not guarantee specific service levels
+                or uptime. Infrastructure gaps — low PC penetration, outdated
+                networks in developing regions.
+              </td>
+              <td>Private networks, VPNs, satellite connectivity</td>
+            </tr>
+            <tr>
+              <td><strong>Software</strong></td>
+              <td>
+                Legacy system integration. Human interface design issues.
+                Multi-language support. Software must comply with local laws,
+                tax codes, and cultural norms.
+              </td>
+              <td>
+                Software Localisation — converting software to operate
+                effectively in a second language/local context
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Business Intelligence (BI)</h3>
+        <p>
+          Business Intelligence refers to software that analyses large datasets
+          to extract insights that support better decision-making. Organisations
+          leverage it to identify optimal global systems for revenue generation.
+        </p>
+
+        <div class="card-row">
+          <div class="card">
+            <div class="card-title" style="color: var(--accent2)">
+              ① Reporting
+            </div>
+            <p>
+              Processing data via filtering and sorting to create formatted
+              summaries. Example: a monthly PDF report sent to the CFO showing
+              total sales in Europe vs. Asia, sorted by product category.
+              Provides insights to inform decisions.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent1)">
+              ② Data Mining
+            </div>
+            <p>
+              Software that searches through data using complex statistical
+              calculations — finding trends, patterns, correlations. Example: an
+              algorithm discovers customers who buy coffee are 40% more likely
+              to buy a specific brand of biscuits → new bundle deal created.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent4)">
+              ③ Knowledge Management
+            </div>
+            <p>
+              Creating value from intellectual property by sharing knowledge
+              across the organisation. Example: an internal Wiki where engineers
+              in Singapore share how they solved a machinery breakdown so
+              engineers in Mexico can fix it faster next time.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent5)">
+              ④ Expert Systems
+            </div>
+            <p>
+              Intelligent systems with a Knowledge Base and Inference Engine to
+              assist in decision-making. Example: a medical diagnostic tool that
+              asks a doctor about symptoms and uses a database of medical rules
+              to suggest the most likely illness.
+            </p>
+          </div>
+        </div>
+
+        <h3>ESG in Global Systems</h3>
+        <div class="card-row">
+          <div class="card">
+            <div class="card-title" style="color: var(--accent4)">
+              Environmental
+            </div>
+            <p>
+              <strong>Green Computing:</strong> energy-efficient cooling in data
+              centres. <strong>Server Consolidation:</strong> consolidating 50
+              physical servers into 5 virtual ones to reduce electricity
+              consumption. <strong>Energy Efficient Hardware:</strong> cloud
+              infrastructure reduces carbon emissions vs. on-premise.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent2)">Social</div>
+            <p>
+              <strong>Accessibility:</strong> ensuring technology is usable by
+              everyone regardless of physical ability or geographic location.
+              Example: developing a "Lite" version of software that runs on low
+              bandwidth for students in remote areas with poor internet.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent1)">
+              Governance
+            </div>
+            <p>
+              <strong>Ethical Data Governance:</strong> transparent data
+              collection and compliance with protection laws.
+              <strong>Cybersecurity Governance:</strong> mandatory MFA for all
+              global employees to protect sensitive intellectual property.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <hr />
+
+      <!-- ═══════════ MODULE 6: BULLWHIP EFFECT ═══════════ -->
+      <div class="module anchor" id="bullwhip">
+        <div class="module-header">
+          <div class="module-number num-a">6</div>
+          <div>
+            <h2>The Bullwhip Effect</h2>
+            <span class="sub"
+              >SC Coordination Failure · Causes · Cascading Impact ·
+              Solutions</span
+            >
+          </div>
+        </div>
+
+        <h3>What is the Bullwhip Effect?</h3>
+        <p>
+          The <strong>Bullwhip Effect</strong> (also called the Whiplash Effect)
+          is the phenomenon where small, relatively stable changes in customer
+          demand at the retail end of a supply chain get progressively
+          <em>amplified</em> as you move upstream — from retailer → wholesaler →
+          distributor → manufacturer — resulting in massive, wasteful production
+          swings at the factory despite calm end-consumer demand.
+        </p>
+
+        <div class="highlight hl-a">
+          <strong>The Analogy:</strong> Think of cracking a bullwhip. A tiny
+          flick of your wrist (the handle = end-consumer demand) creates a
+          dramatic, violent snap at the tip (the factory). That tiny wrist
+          movement = 5% more pasta bought by consumers. The violent snap =
+          manufacturer ramping up production 40%.
+        </div>
+
+        <h3>Step-by-Step: How It Happens</h3>
+        <div class="steps">
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(78, 203, 160, 0.2); color: var(--accent4)"
+            >
+              1
+            </div>
+            <div class="step-content">
+              <strong>Consumer Level — Small Signal</strong
+              ><span
+                >Customers buy 5% more pasta than usual this week. Actual demand
+                change: small and temporary.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(232, 168, 56, 0.2); color: var(--accent1)"
+            >
+              2
+            </div>
+            <div class="step-content">
+              <strong>Retailer Level — First Amplification</strong
+              ><span
+                >The retailer sees the 5% increase and, fearing a stockout,
+                orders 10% more from the wholesaler "just to be safe." The order
+                signal has already doubled in size.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(91, 138, 240, 0.2); color: var(--accent2)"
+            >
+              3
+            </div>
+            <div class="step-content">
+              <strong>Wholesaler Level — Second Amplification</strong
+              ><span
+                >The wholesaler sees the retailer's 10% increase and orders 20%
+                more from the manufacturer — because they're also worried about
+                future spikes and want their own safety buffer.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(224, 92, 107, 0.2); color: var(--accent3)"
+            >
+              4
+            </div>
+            <div class="step-content">
+              <strong>Manufacturer Level — Full Amplification</strong
+              ><span
+                >The manufacturer sees this massive spike — a 20% increase in
+                orders — and ramps up production by 40%, hiring extra staff and
+                buying enormous quantities of raw materials. A 5% consumer
+                change caused a 40% factory swing.</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <h3>Root Causes</h3>
+        <div class="card-row">
+          <div class="card">
+            <div class="card-title" style="color: var(--accent3)">
+              Order Batching
+            </div>
+            <p>
+              Instead of ordering little and often, companies batch orders
+              weekly or monthly. This creates artificial demand spikes that
+              don't reflect real underlying consumer purchasing patterns.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent3)">
+              Demand Forecasting Errors
+            </div>
+            <p>
+              Each link in the chain adds its own safety buffer on top of the
+              last layer's already-inflated estimate. Errors compound
+              exponentially as you move upstream.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent3)">
+              Price Fluctuations
+            </div>
+            <p>
+              Promotions and discounts encourage "forward buying" — customers
+              buy in bulk during sales, artificially inflating demand signals
+              that cause upstream overproduction.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent3)">
+              Shortage Gaming
+            </div>
+            <p>
+              When products are scarce, buyers over-order to guarantee supply.
+              Then when the shortage ends, they cancel orders — creating a
+              sudden crash in apparent demand that is just as disruptive as the
+              spike.
+            </p>
+          </div>
+        </div>
+
+        <h3>Impact Table — What Lack of Coordination Does</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Performance Measure</th>
+              <th>Impact of Lack of Coordination</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Manufacturing cost</td>
+              <td style="color: var(--accent3)">
+                📈 Increases — overtime, emergency production runs
+              </td>
+            </tr>
+            <tr>
+              <td>Inventory cost</td>
+              <td style="color: var(--accent3)">
+                📈 Increases — safety stock, warehousing costs
+              </td>
+            </tr>
+            <tr>
+              <td>Replenishment lead time</td>
+              <td style="color: var(--accent3)">
+                📈 Increases — suppliers overwhelmed by spikes
+              </td>
+            </tr>
+            <tr>
+              <td>Transportation cost</td>
+              <td style="color: var(--accent3)">
+                📈 Increases — emergency air freight, rush shipments
+              </td>
+            </tr>
+            <tr>
+              <td>Shipping and receiving cost</td>
+              <td style="color: var(--accent3)">
+                📈 Increases — irregular, unpredictable volumes
+              </td>
+            </tr>
+            <tr>
+              <td>Level of product availability</td>
+              <td style="color: var(--accent4)">
+                📉 Decreases — stockouts despite overproduction elsewhere
+              </td>
+            </tr>
+            <tr>
+              <td>Profitability</td>
+              <td style="color: var(--accent4)">
+                📉 Decreases — entire chain loses value simultaneously
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>The Only Real Source of Cash</h3>
+        <div class="highlight hl-a">
+          The <strong>end customer</strong> is the only source of real cash
+          entering the entire supply chain. Every payment between partners is
+          simply redistribution of that same pool of money. No new cash is
+          created by moving goods between partners. This is why the Bullwhip
+          Effect is so damaging — it creates costs without creating any new
+          customer value.
+        </div>
+
+        <h3>How to Control the Bullwhip Effect</h3>
+        <div class="steps">
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(78, 203, 160, 0.2); color: var(--accent4)"
+            >
+              1
+            </div>
+            <div class="step-content">
+              <strong>Demand Visibility — Point-of-Sale Data Sharing</strong
+              ><span
+                >Share real POS data with all upstream partners so everyone
+                reacts to actual consumer demand, not distorted orders. Example:
+                Kimberly-Clark and Walmart share live sales data — the
+                manufacturer knows exactly how many diapers sold yesterday and
+                adjusts production accordingly.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(78, 203, 160, 0.2); color: var(--accent4)"
+            >
+              2
+            </div>
+            <div class="step-content">
+              <strong>Vendor-Managed Inventory (VMI)</strong
+              ><span
+                >Let the supplier manage replenishment directly based on real
+                inventory data — cutting out order distortion entirely. The
+                supplier monitors your warehouse levels and ships automatically
+                when thresholds are reached.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(78, 203, 160, 0.2); color: var(--accent4)"
+            >
+              3
+            </div>
+            <div class="step-content">
+              <strong
+                >CPFR — Collaborative Planning, Forecasting &
+                Replenishment</strong
+              ><span
+                >Joint forecasting across all supply chain partners to align
+                production with true demand. Partners share past sales, current
+                inventory, and upcoming promotions — then build one shared
+                forecast everyone works from.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(78, 203, 160, 0.2); color: var(--accent4)"
+            >
+              4
+            </div>
+            <div class="step-content">
+              <strong>Smaller, More Frequent Orders</strong
+              ><span
+                >Reduce order batching to prevent demand spikes from forming.
+                Instead of one large monthly order, place smaller weekly orders.
+                This reflects real consumption patterns much more
+                accurately.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(78, 203, 160, 0.2); color: var(--accent4)"
+            >
+              5
+            </div>
+            <div class="step-content">
+              <strong>Stable Pricing Policies</strong
+              ><span
+                >Eliminate promotions that cause "forward buying" and artificial
+                demand surges. Everyday low pricing (EDLP) — as used by Walmart
+                — removes the incentive to stockpile during sales.</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr />
+
+      <!-- ═══════════ MODULE 7: SCM II ═══════════ -->
+      <div class="module anchor" id="scm2">
+        <div class="module-header">
+          <div class="module-number num-b">7</div>
+          <div>
+            <h2>Supply Chain Management II</h2>
+            <span class="sub"
+              >Strategic Fit · CPFR · Transportation · Sourcing · Global SCM ·
+              Risk</span
+            >
+          </div>
+        </div>
+
+        <h3>Why Supply Chain Strategy Matters</h3>
+        <p>
+          All functional areas — product development, marketing, and supply
+          chain — must work together as one coordinated strategy. A company that
+          promises fast delivery but runs a slow, cost-efficiency-focused supply
+          chain will fail because its processes don't match its promises to
+          customers.
+        </p>
+
+        <div class="card-row">
+          <div class="card">
+            <div class="card-title" style="color: var(--accent2)">
+              Competitive Strategy
+            </div>
+            <p>
+              Defines which customer needs to satisfy — cheapest, fastest,
+              highest quality, most convenient. This is the north star that all
+              other strategies must align to.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent2)">
+              Product Development Strategy
+            </div>
+            <p>
+              What products to create to fulfil the competitive promise. Must
+              consider supply chain feasibility — can we actually make and
+              deliver what we're promising?
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent2)">
+              Marketing & Sales Strategy
+            </div>
+            <p>
+              How to segment markets, price, and promote products. Must be
+              aligned with what the supply chain can actually deliver
+              consistently.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent2)">
+              Supply Chain Strategy
+            </div>
+            <p>
+              The operational "how-to": procurement, transportation,
+              manufacturing, distribution. Must match the competitive strategy
+              exactly — this is where strategic fit either exists or doesn't.
+            </p>
+          </div>
+        </div>
+
+        <h3>Strategic Fit</h3>
+        <div class="highlight hl-b">
+          <strong>Strategic Fit</strong> = when Competitive Strategy and Supply
+          Chain Strategy have aligned goals. Amazon's competitive strategy is
+          fast, affordable delivery — its supply chain strategy (massive
+          warehouses, own logistics, same-day delivery) is perfectly aligned.
+          That's strategic fit. A company fails when its processes do not match
+          its promises.
+        </div>
+
+        <h3>Supply Chain Integration — Two Pillars</h3>
+        <div class="card-row-2">
+          <div class="card">
+            <div class="card-title" style="color: var(--accent4)">
+              Information Sharing
+            </div>
+            <p>
+              Partners (suppliers, manufacturers, retailers) share real-time
+              data — inventory levels, sales data, production schedules.
+              Benefits: reduces bullwhip effect, enables early problem
+              detection, builds trust, allows quick response to market changes.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent4)">
+              Coordinated Workflow
+            </div>
+            <p>
+              Partners align production, procurement, and operations schedules.
+              Benefits: production efficiencies, no costly delays, fewer
+              defects, faster time to market. Both pillars together = a truly
+              integrated supply chain.
+            </p>
+          </div>
+        </div>
+
+        <h3>CPFR — Collaborative Planning, Forecasting & Replenishment</h3>
+        <p>
+          CPFR is the process where two or more supply chain companies
+          synchronise their demand forecasts into a single shared plan. All
+          partners work from the same data — eliminating the information
+          distortion that causes the Bullwhip Effect.
+        </p>
+
+        <div class="card-row">
+          <div class="card">
+            <div class="card-title">Past Sales Trends</div>
+            <p>
+              Historical data to identify seasonal patterns, growth trends, and
+              demand cycles shared across all partners.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title">Point-of-Sale Data</div>
+            <p>
+              Real-time consumer purchase data from the cash register — the most
+              accurate signal of actual demand in the system.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title">On-Hand Inventory</div>
+            <p>
+              Current stock levels at all partners in the chain — prevents
+              ordering when stock already exists.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title">Scheduled Promotions</div>
+            <p>
+              Upcoming sales events that will spike demand — warning all
+              partners in advance so they can prepare without panic ordering.
+            </p>
+          </div>
+        </div>
+
+        <h3>Transportation — Modes Compared</h3>
+        <p>
+          Transportation is the physical link between supply chain stages.
+          Faster modes = more responsive but less efficient (higher cost). The
+          right mode depends on the product's value, perishability, and urgency.
+        </p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Mode</th>
+              <th>Best For</th>
+              <th>Pros</th>
+              <th>Cons</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Rail</strong></td>
+              <td>Bulk goods, raw materials, high-density cargo</td>
+              <td>Low cost for large volumes; reliable scheduling</td>
+              <td>
+                Slow, inflexible, not economical for small loads, limited routes
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Trucking</strong></td>
+              <td>Small loads, point-to-point delivery, last-mile</td>
+              <td>Flexible routes, reliable, less damage to goods</td>
+              <td>
+                More expensive than rail for long distances, traffic delays
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Air</strong></td>
+              <td>High-value, perishable, urgent goods</td>
+              <td>Fastest mode, least theft, global reach</td>
+              <td>Most expensive by far, weight limits</td>
+            </tr>
+            <tr>
+              <td><strong>Water / Sea</strong></td>
+              <td>International bulk shipping, containers</td>
+              <td>Lowest cost per unit, massive capacity</td>
+              <td>Slowest mode, port dependency, weather risk</td>
+            </tr>
+            <tr>
+              <td><strong>Pipeline</strong></td>
+              <td>Oil, gas, liquids</td>
+              <td>Low operating cost, reliable, long operational life</td>
+              <td>High capital cost, limited to liquid/gas, fixed routes</td>
+            </tr>
+            <tr>
+              <td><strong>Intermodal</strong></td>
+              <td>Long-distance + last-mile combination</td>
+              <td>Combines efficiency of sea/rail with truck flexibility</td>
+              <td>Complex logistics coordination, container handling costs</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Sourcing: In-House vs Outsource</h3>
+        <div class="card-row-2">
+          <div class="card">
+            <div class="card-title" style="color: var(--accent2)">
+              In-House (Make)
+            </div>
+            <p>
+              Choose when: outsourcing risk is significant, OR when the activity
+              is a <strong>core competency</strong> that defines your
+              competitive advantage and you don't want competitors to access it.
+              Also when quality control is critical and cannot be trusted to a
+              third party.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent4)">
+              Outsource (Buy)
+            </div>
+            <p>
+              Choose when: you need to increase efficiency, OR when you need
+              specialised expertise that isn't your core skill. Outsourcing
+              non-core activities frees resources to focus on what you do best —
+              and reduces fixed costs.
+            </p>
+          </div>
+        </div>
+
+        <h3>Global Supply Chain — Big Risk, Big Reward</h3>
+        <p>
+          A global supply chain is the international network used to source raw
+          materials, manufacture products, and deliver to customers across
+          countries.
+        </p>
+
+        <div class="callout">
+          <div class="callout-head" style="color: var(--accent3)">
+            Top Global SC Risk Factors (Ranked by Frequency)
+          </div>
+          <p>
+            <span class="tag tag-c">38%</span> Performance of supply chain
+            partners
+          </p>
+          <p><span class="tag tag-c">37%</span> Volatility of fuel prices</p>
+          <p><span class="tag tag-c">35%</span> Natural disasters</p>
+          <p>
+            <span class="tag tag-c">33%</span> Logistics capacity and complexity
+          </p>
+          <p>
+            <span class="tag tag-c">30%</span> Forecasting and planning accuracy
+          </p>
+          <p><span class="tag tag-c">29%</span> Currency fluctuation</p>
+        </div>
+
+        <h3>Risk Mitigation Strategies</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Strategy</th>
+              <th>How It Works</th>
+              <th>When to Use</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Increase Capacity</strong></td>
+              <td>
+                Decentralised capacity near demand markets for predictable
+                demand; centralised for unpredictable demand where economies of
+                scale matter.
+              </td>
+              <td>When supply disruption risk is high</td>
+            </tr>
+            <tr>
+              <td><strong>Redundant Suppliers</strong></td>
+              <td>
+                Multiple suppliers for high-volume products; fewer for
+                low-volume. Reduces dependency on any single source — if one
+                fails, others fill the gap.
+              </td>
+              <td>When single-supplier dependency is a risk</td>
+            </tr>
+            <tr>
+              <td><strong>Increase Responsiveness</strong></td>
+              <td>
+                Favour cost over responsiveness for commodity products; favour
+                responsiveness for short-lifecycle products (fashion, gadgets)
+                where being late = zero sales.
+              </td>
+              <td>Product-specific decision</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <hr />
+
+      <!-- ═══════════ MODULE 8: SYSTEM SECURITY ═══════════ -->
+      <div class="module anchor" id="sysec">
+        <div class="module-header">
+          <div class="module-number num-c">8</div>
+          <div>
+            <h2>System Security</h2>
+            <span class="sub"
+              >CIA Triad · Threats · Malware · Online Crime · Security
+              Tools</span
+            >
+          </div>
+        </div>
+
+        <h3>Origin of Computer Security</h3>
+        <p>
+          Computer security was originally engineered by the US Department of
+          Defense to protect military intelligence. As machines evolved from
+          isolated machines to interconnected networks, with more users
+          accessing systems, the vulnerability and risk increased dramatically.
+          Today computers are the backbone of the economy — processing financial
+          payments, purchase orders, and legal authorisations — making security
+          a global concern, not just a technical one.
+        </p>
+
+        <h3>Key Security Terminology</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Term</th>
+              <th>Definition</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Computer Security</strong></td>
+              <td>
+                Protection of computer assets from unauthorised access, use,
+                alteration, or destruction.
+              </td>
+              <td>Firewalls, encrypted databases, off-site backups</td>
+            </tr>
+            <tr>
+              <td><strong>Physical Security</strong></td>
+              <td>Tangible protection methods for hardware and premises.</td>
+              <td>Alarms, security guards, fences, bombproof server rooms</td>
+            </tr>
+            <tr>
+              <td><strong>Logical Security</strong></td>
+              <td>
+                Protection of digital (non-physical) assets through software and
+                procedures.
+              </td>
+              <td>
+                Multi-factor authentication, complex passwords, access controls
+              </td>
+            </tr>
+            <tr>
+              <td><strong>System Vulnerability</strong></td>
+              <td>
+                A state that allows attackers to execute commands or access
+                restricted data.
+              </td>
+              <td>
+                Outdated OS, unpatched software, default passwords left
+                unchanged
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Computer Security Risk</strong></td>
+              <td>
+                Anything that could lead to data theft, damage, or system
+                disruption.
+              </td>
+              <td>Phishing links, weak passwords, unencrypted wi-fi</td>
+            </tr>
+            <tr>
+              <td><strong>Countermeasure</strong></td>
+              <td>
+                A procedure to recognise, reduce, and eliminate threats before
+                or after they occur.
+              </td>
+              <td>Installing antivirus, training staff, enabling MFA</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>The CIA Triad — Three Pillars of Security</h3>
+        <div class="card-row">
+          <div class="card" style="border-color: rgba(91, 138, 240, 0.35)">
+            <div class="card-title" style="color: var(--accent2)">
+              🔒 Confidentiality
+            </div>
+            <p>
+              Data is accessible ONLY to authorised individuals. Includes
+              <strong>Privacy</strong> (the user controls what information is
+              collected about them) and <strong>Secrecy</strong> (hiding
+              sensitive data from unauthorised parties using encryption and
+              access controls).
+            </p>
+          </div>
+          <div class="card" style="border-color: rgba(78, 203, 160, 0.35)">
+            <div class="card-title" style="color: var(--accent4)">
+              ✔ Integrity
+            </div>
+            <p>
+              Data received is exactly what was sent — not altered by
+              unauthorised parties during transmission or storage. Example:
+              preventing an attacker from changing a $100 payment authorisation
+              to $1,000 in transit.
+            </p>
+          </div>
+          <div class="card" style="border-color: rgba(232, 168, 56, 0.35)">
+            <div class="card-title" style="color: var(--accent1)">
+              ⚡ Necessity (Availability)
+            </div>
+            <p>
+              Authorised users have reliable access to systems and data when
+              they need it. Example: preventing denial-of-service attacks that
+              block legitimate users from accessing their banking app or online
+              store.
+            </p>
+          </div>
+        </div>
+
+        <h3>Confidentiality Threats</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Threat</th>
+              <th>How It Works</th>
+              <th>Solution</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Sniffer Program</strong></td>
+              <td>
+                Software (e.g., Wireshark) that captures network packets on
+                unencrypted channels like public Wi-Fi — reads your data as it
+                travels.
+              </td>
+              <td>Encryption, VPN, detect unauthorised programs on network</td>
+            </tr>
+            <tr>
+              <td><strong>Backdoor</strong></td>
+              <td>
+                Electronic holes that allow access without authentication —
+                often installed by malware like Netcat. The attacker enters
+                without any login.
+              </td>
+              <td>
+                Firewalls, access controls, isolate systems for confidential
+                data
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Corporate Info Theft</strong></td>
+              <td>
+                Stealing trade secrets, customer databases via malware,
+                phishing, or physical theft by insiders or outsiders.
+              </td>
+              <td>
+                Security training, physical protections (server room access),
+                DLP software
+              </td>
+            </tr>
+            <tr>
+              <td><strong>IP Address Exposure</strong></td>
+              <td>
+                Your IP address, browser type, and version are automatically
+                revealed when browsing — can be used to identify and target you.
+              </td>
+              <td>VPN (paid, strong encryption) masks your true IP address</td>
+            </tr>
+            <tr>
+              <td><strong>E-Commerce Threat</strong></td>
+              <td>
+                Users unknowingly share location, credentials, and app
+                permissions on fake or poorly secured sites.
+              </td>
+              <td>
+                MFA, check privacy settings and permissions, HTTPS verification
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Integrity Threats</h3>
+        <div class="card-row">
+          <div class="card">
+            <div class="card-title" style="color: var(--accent3)">
+              Active vs Passive Wiretapping
+            </div>
+            <p>
+              <strong>Active:</strong> altering message streams — changing $100
+              to $1,000 during transmission. <strong>Passive:</strong> listening
+              only, without altering data — still a confidentiality breach but
+              not an integrity attack.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent3)">
+              Cyber Vandalism
+            </div>
+            <p>
+              Damaging or destroying digital property — hacking a website and
+              replacing its content with the attacker's own content, images, or
+              messages. Causes reputational damage.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent3)">
+              Masquerading / Spoofing
+            </div>
+            <p>
+              Attacker pretends to be someone else. Includes DNS spoofing:
+              substituting a fake website address for the real one — users think
+              they're on their bank's site but they're on the attacker's copy.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent3)">Phishing</div>
+            <p>
+              Tricking victims into revealing confidential information through
+              fake emails or texts. Creates urgency ("Your account will be
+              closed!"), asks for passwords, or installs malware via
+              attachments.
+            </p>
+          </div>
+        </div>
+
+        <h3>Necessity / Availability Threats</h3>
+        <div class="card-row-2">
+          <div class="card">
+            <div class="card-title" style="color: var(--accent1)">
+              DoS — Denial of Service
+            </div>
+            <p>
+              Attack from <strong>one computer</strong> sending millions of fake
+              requests so real users can't access the service. The server is
+              overwhelmed handling fake traffic. Example: fake login requests
+              blocking real customers from accessing banking.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent1)">
+              DDoS — Distributed Denial of Service
+            </div>
+            <p>
+              Same concept but uses
+              <strong>thousands of hijacked devices</strong> (a botnet)
+              simultaneously from around the world. Dramatically harder to block
+              because traffic comes from millions of legitimate-looking IP
+              addresses.
+            </p>
+          </div>
+        </div>
+
+        <h3>Malware Types — Detailed</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>How It Spreads</th>
+              <th>Primary Goal</th>
+              <th>Distinguishing Feature</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Virus</strong></td>
+              <td>
+                Attaches itself to a legitimate file — needs human action
+                (opening an email attachment) to activate and spread.
+              </td>
+              <td>Corrupt or delete data</td>
+              <td>Requires human trigger to activate</td>
+            </tr>
+            <tr>
+              <td><strong>Worm</strong></td>
+              <td>
+                Spreads automatically across networks without any human help —
+                copies itself repeatedly from machine to machine.
+              </td>
+              <td>Consume bandwidth, crash systems</td>
+              <td>Self-propagating — no human action needed</td>
+            </tr>
+            <tr>
+              <td><strong>Trojan Horse</strong></td>
+              <td>
+                Disguises itself as something useful (free game, useful
+                software) and gets installed willingly by the user — then
+                activates its malicious payload.
+              </td>
+              <td>Create a backdoor for hackers to enter</td>
+              <td>Appears legitimate — social engineering</td>
+            </tr>
+            <tr>
+              <td><strong>Spyware</strong></td>
+              <td>
+                Usually bundled silently with other software downloads —
+                installs itself and begins collecting user information without
+                their knowledge.
+              </td>
+              <td>Steal passwords, track browsing, harvest credentials</td>
+              <td>Silent, invisible — user unaware it's running</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Online Crime Terminology</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Term</th>
+              <th>Meaning</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Computer Crime</strong></td>
+              <td>
+                Illegal act where a computer is used as a tool to commit the
+                crime.
+              </td>
+              <td>Printing counterfeit money using a computer and printer</td>
+            </tr>
+            <tr>
+              <td><strong>Cyber Crime</strong></td>
+              <td>
+                Criminal activities carried out via the internet. Computer +
+                Network + Crime.
+              </td>
+              <td>Online scams, identity theft, online fraud</td>
+            </tr>
+            <tr>
+              <td><strong>Cyber War</strong></td>
+              <td>
+                A country's critical information systems paralysed by massive
+                destructive software attacks from a hostile state.
+              </td>
+              <td>
+                Attacks on power grids, financial systems, military networks
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Cyber Terrorism</strong></td>
+              <td>
+                Politically motivated internet attacks designed to cause
+                disruption, fear, or damage in society — targeting
+                infrastructure.
+              </td>
+              <td>Attacking a country's water treatment control systems</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <hr />
+
+      <!-- ═══════════ MODULE 9: MANAGING SECURITY ═══════════ -->
+      <div class="module anchor" id="mansec">
+        <div class="module-header">
+          <div class="module-number num-d">9</div>
+          <div>
+            <h2>Managing Systems Security</h2>
+            <span class="sub"
+              >IT Risk Management · Security Policy · Cryptography · SSL ·
+              Forensics</span
+            >
+          </div>
+        </div>
+
+        <h3>IT Risk Management</h3>
+        <p>
+          IT Risk Management is the process of identifying, assessing,
+          mitigating, and monitoring information technology systems, networks,
+          and data security risks. The core formula is:
+        </p>
+        <div class="highlight hl-d">
+          <code>Risk = Probability × Impact (Cost)</code>
+          <br /><br />A risk with low probability but catastrophic impact (like
+          a server fire) and a risk with high probability but low impact (like a
+          minor system hiccup) require very different management strategies.
+        </div>
+
+        <h3>The IT Risk Management Model — Four Quadrants</h3>
+        <div class="quadrant-grid">
+          <div class="quad quad-i">
+            <div class="quad-label" style="color: var(--accent2)">
+              Quadrant I — High Probability, Low Impact
+            </div>
+            <div class="quad-title">Contain &amp; Control</div>
+            <div class="quad-desc">
+              Happens frequently but isn't devastating. Manage through standard
+              operating procedures and monitoring to keep frequency and cost
+              under control. Example: minor system slow-downs during peak usage.
+            </div>
+          </div>
+          <div class="quad quad-ii">
+            <div class="quad-label" style="color: var(--accent3)">
+              Quadrant II — High Probability, High Impact
+            </div>
+            <div class="quad-title">Prevent at All Costs</div>
+            <div class="quad-desc">
+              Most critical category — both likely AND catastrophic. Must take
+              active, expensive measures to stop these from occurring at all.
+              Example: frequent DDoS attacks on a financial services site.
+            </div>
+          </div>
+          <div class="quad quad-iii">
+            <div class="quad-label" style="color: var(--accent4)">
+              Quadrant III — Low Probability, Low Impact
+            </div>
+            <div class="quad-title">Ignore (Accept)</div>
+            <div class="quad-desc">
+              Unlikely and low damage. The cost of implementing complex security
+              often outweighs any benefit. Accepted as a cost of doing business.
+              Example: minor website defacement in a low-profile niche industry.
+            </div>
+          </div>
+          <div class="quad quad-iv">
+            <div class="quad-label" style="color: var(--accent1)">
+              Quadrant IV — Low Probability, High Impact
+            </div>
+            <div class="quad-title">Insurance or Disaster Plan</div>
+            <div class="quad-desc">
+              Catastrophic if it happens, but unlikely. Transfer risk via
+              insurance or ensure fast recovery through disaster recovery and
+              business continuity plans. Example: a regional earthquake
+              destroying the data centre.
+            </div>
+          </div>
+        </div>
+
+        <div class="callout">
+          <div class="callout-head" style="color: var(--accent4)">
+            Real-World Example — Tornadoes in Japan
+          </div>
+          <p>
+            <strong>Yokohama</strong> (frequent tornadoes): Computer systems
+            must be actively protected →
+            <span class="tag tag-c">Quadrant II — Prevent</span>
+          </p>
+          <p>
+            <strong>Tottori</strong> (rare tornadoes): Insurance and a backup
+            plan suffices →
+            <span class="tag tag-a">Quadrant IV — Insurance</span>
+          </p>
+        </div>
+
+        <h3>Security Policy</h3>
+        <p>
+          A Security Policy is a formal, enforceable document that outlines how
+          an organisation will protect its information assets. Its main goal is
+          to protect three things:
+          <strong>Confidentiality | Integrity | Availability (Necessity)</strong
+          >.
+        </p>
+
+        <h3>Elements of a Security Policy</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Element</th>
+              <th>What It Covers</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Assets Identification</strong></td>
+              <td>
+                A clear inventory of all hardware, software, and data assets,
+                plus justification for protection based on the Risk Model. You
+                can't protect what you haven't catalogued.
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Protection Responsibility</strong></td>
+              <td>
+                Who is responsible for the security of specific systems —
+                defining ownership, accountability, and chain of command for
+                security incidents.
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Behaviour Standards</strong></td>
+              <td>
+                What is acceptable (strong passwords, locked screens) and what
+                is unacceptable (sharing credentials, installing unauthorised
+                software). Written rules employees must follow.
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Technical &amp; Operational Controls</strong></td>
+              <td>
+                Access authorisations, virus protection tools, physical security
+                (locked server rooms), and disaster recovery plans. The
+                implementation of the policy in actual systems.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Information Classification</h3>
+        <div class="card-row-2">
+          <div class="card">
+            <div class="card-title" style="color: var(--accent4)">
+              Public Information
+            </div>
+            <p>
+              Information that can be shared externally without harm to the
+              organisation. Examples: press releases, product brochures, annual
+              reports. Requires minimal protection — it's meant to be seen.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent3)">
+              Company Confidential
+            </div>
+            <p>
+              Sensitive information like strategic plans, financial projections,
+              internal processes, and employee data that could harm the company
+              if leaked. Requires strict access controls and encryption.
+            </p>
+          </div>
+        </div>
+
+        <h3>Steps to Create a Security Policy</h3>
+        <div class="steps">
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(78, 203, 160, 0.2); color: var(--accent4)"
+            >
+              1
+            </div>
+            <div class="step-content">
+              <strong>Determine Assets and Threats</strong
+              ><span
+                >Know what is valuable — data, hardware, software, intellectual
+                property, brand reputation — and identify what could threaten
+                each asset. This forms the foundation of the entire
+                policy.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(78, 203, 160, 0.2); color: var(--accent4)"
+            >
+              2
+            </div>
+            <div class="step-content">
+              <strong>Determine Access Needs</strong
+              ><span
+                >Define who — employees, contractors, partners — needs access to
+                what systems to do their jobs. Apply the principle of least
+                privilege: give only the access needed, nothing more.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(78, 203, 160, 0.2); color: var(--accent4)"
+            >
+              3
+            </div>
+            <div class="step-content">
+              <strong>Identify Protection Resources</strong
+              ><span
+                >Decide on the tools needed: firewalls, antivirus software,
+                encryption, physical access controls, staff training programmes.
+                Match resources to risk level from the quadrant model.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(78, 203, 160, 0.2); color: var(--accent4)"
+            >
+              4
+            </div>
+            <div class="step-content">
+              <strong>Develop Written Security Policy</strong
+              ><span
+                >Formalise all rules, procedures, and expectations into an
+                official document. Must be clear, specific, and enforceable —
+                vague policies are useless policies.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(78, 203, 160, 0.2); color: var(--accent4)"
+            >
+              5
+            </div>
+            <div class="step-content">
+              <strong>Commit Resources</strong
+              ><span
+                >Provide the budget, time, and leadership support to actually
+                implement and enforce it. A security policy that exists only on
+                paper and is never enforced provides zero protection.</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <h3>Digital Certificate, Cryptography & PKI</h3>
+        <div class="card-row">
+          <div class="card">
+            <div class="card-title" style="color: var(--accent2)">
+              Cryptography
+            </div>
+            <p>
+              The process of hiding or encoding information using mathematical
+              techniques so only the intended recipient — with the correct key —
+              can read it. The message is scrambled into ciphertext for
+              transmission and unscrambled at the destination.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent2)">
+              PKI — Public Key Infrastructure
+            </div>
+            <p>
+              A system for creating, storing, and distributing digital
+              certificates. Contains the policies, hardware, software, and
+              procedures needed to manage public-key encryption. The backbone of
+              internet security.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent2)">
+              Certification Authority (CA)
+            </div>
+            <p>
+              The organisation that issues digital certificates and vouches for
+              their authenticity. Analogy: CA = Passport Office; Digital
+              Certificate = Your Passport. Without a trusted CA, you cannot
+              verify who you're actually talking to online.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent5)">
+              Digital Certificate
+            </div>
+            <p>
+              An electronic "passport" that proves the authenticity of a user,
+              device, or server. Contains the owner's public key, identity
+              information, and the CA's digital signature. Used in HTTPS, email
+              signing, and software verification.
+            </p>
+          </div>
+        </div>
+
+        <h3>Steganography</h3>
+        <div class="highlight hl-b">
+          <strong>Steganography</strong> is the art of hiding information
+          <em>within</em> other, non-secret data. Unlike cryptography (which
+          scrambles a message so it can't be read), steganography hides the very
+          <em>existence</em> of the message. The secret message is invisible to
+          anyone who doesn't know to look for it. Example: embedding a copyright
+          watermark invisibly within a digital photograph — only special
+          software reveals it.
+        </div>
+
+        <h3>Hash Coding</h3>
+        <p>
+          A <strong>hash code</strong> is a fixed-size string generated from
+          data using a hash function — acting as a unique digital fingerprint to
+          ensure data integrity. Hash functions are one-way: you can generate
+          the hash from data, but you cannot reverse-engineer the data from the
+          hash.
+        </p>
+        <div class="card-row-2">
+          <div class="card">
+            <div class="card-title" style="color: var(--accent1)">
+              Key Properties of Hash Functions
+            </div>
+            <p>
+              • One-way process — cannot be reversed like encryption<br />• Even
+              a single character change produces a completely different hash<br />•
+              Websites store hashed passwords, not actual passwords<br />• Used
+              to verify file integrity after download or transmission
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent1)">
+              Example — SHA-256 in Action
+            </div>
+            <p>
+              "HELLO" → generates hash <code>52</code><br />"HELLP" → generates
+              hash <code>53</code><br />One letter changed = completely
+              different fingerprint. If someone tampers with data in transit,
+              the hash will not match and the tampering is detected immediately.
+            </p>
+          </div>
+        </div>
+
+        <h3>SSL — Secure Sockets Layer Protocol</h3>
+        <p>
+          SSL creates an encrypted link between a web server and a browser,
+          ensuring data privacy, authentication, and integrity during
+          transmission. The core concept is the <strong>"Handshake."</strong>
+        </p>
+        <div class="highlight hl-d">
+          <strong>Analogy:</strong> Without SSL, sending data over the internet
+          is like writing on a postcard — anyone handling it can read it. SSL
+          turns that postcard into a sealed, tamper-proof, encrypted envelope
+          that only the recipient can open.
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(78, 203, 160, 0.2); color: var(--accent4)"
+            >
+              1
+            </div>
+            <div class="step-content">
+              <strong>Client Hello</strong
+              ><span
+                >Browser announces to the server what encryption algorithms it
+                supports and what key lengths it can handle.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(78, 203, 160, 0.2); color: var(--accent4)"
+            >
+              2
+            </div>
+            <div class="step-content">
+              <strong>Server Responds + Sends Certificate</strong
+              ><span
+                >Server replies and sends its Digital Certificate (containing
+                its public key) to prove its identity. Client verifies the
+                certificate was signed by a trusted CA.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(78, 203, 160, 0.2); color: var(--accent4)"
+            >
+              3
+            </div>
+            <div class="step-content">
+              <strong>Client Creates and Sends Session Key</strong
+              ><span
+                >Client generates a Session Key (a one-time symmetric key for
+                this session only), encrypts it with the server's public key,
+                and sends it. Only the server's private key can decrypt
+                this.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(78, 203, 160, 0.2); color: var(--accent4)"
+            >
+              4
+            </div>
+            <div class="step-content">
+              <strong>Secure Session Begins</strong
+              ><span
+                >Both sides now communicate using the shared session key. All
+                data is encrypted — anyone intercepting the traffic sees only
+                meaningless gibberish. Session key is discarded when the session
+                ends.</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Term</th>
+              <th>Meaning</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>HTTP</strong></td>
+              <td>
+                HyperText Transfer Protocol — sends data in plain text.
+                Completely insecure for sensitive information.
+              </td>
+            </tr>
+            <tr>
+              <td><strong>HTTPS</strong></td>
+              <td>
+                HTTP Secure — uses SSL/TLS certificate. All data is encrypted in
+                both directions.
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Session Key</strong></td>
+              <td>
+                Temporary, one-time-use symmetric key for encrypting a single
+                web session. Discarded when you close the connection.
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Protocol</strong></td>
+              <td>
+                A set of rules for formatting and processing data so that
+                different computers can understand each other.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Other Security Tools</h3>
+        <div class="card-row">
+          <div class="card">
+            <div class="card-title" style="color: var(--accent2)">
+              Access Control
+            </div>
+            <p>
+              Defines who can access the computer and what actions they are
+              authorised to take. Based on identity, role, and need-to-know.
+              Prevents unauthorised users from reaching sensitive systems.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent2)">
+              Audit Trail
+            </div>
+            <p>
+              Records all access attempts: who logged in, at what time, from
+              which IP address, and which files they accessed. Essential for
+              forensic investigation and compliance reporting.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent2)">
+              Intrusion Detection
+            </div>
+            <p>
+              Analyses network traffic in real time, assesses vulnerabilities,
+              and identifies suspicious behaviour patterns. Triggers alerts when
+              something unusual is detected — like a login at 3am from a foreign
+              country.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent2)">Firewall</div>
+            <p>
+              A security barrier (hardware, software, or both) that controls
+              which network packets are allowed in or out. All traffic must pass
+              through it; only authorised traffic passes; designed to be immune
+              to penetration itself.
+            </p>
+          </div>
+        </div>
+
+        <h3>Computer Forensics &amp; Ethical Hacking</h3>
+        <div class="card-row-2">
+          <div class="card">
+            <div class="card-title" style="color: var(--accent3)">
+              Computer Forensics
+            </div>
+            <p>
+              Using investigative techniques to identify, collect, preserve, and
+              analyse evidence from computer devices — often for use in court.
+              Must follow strict chain-of-custody procedures to ensure evidence
+              is admissible. Responsible for collection, preservation, and
+              analysis of computer-related evidence after a security incident.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent4)">
+              Ethical Hacking (White Hat)
+            </div>
+            <p>
+              Testing computer systems, networks, or applications to find
+              security vulnerabilities — using the same tools and techniques as
+              malicious hackers but with the legal owner's explicit permission.
+              Companies hire ethical hackers ("White Hats") to find weaknesses
+              before the "Black Hats" do.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <hr />
+
+      <!-- ═══════════ MODULE 10: E-COMMERCE ═══════════ -->
+      <div class="module anchor" id="ecom">
+        <div class="module-header">
+          <div class="module-number num-a">10</div>
+          <div>
+            <h2>Electronic Commerce (e-Commerce)</h2>
+            <span class="sub"
+              >e-Business · Categories · Business Models · Barriers ·
+              Technologies · Security</span
+            >
+          </div>
+        </div>
+
+        <h3>e-Business vs e-Commerce — The Critical Distinction</h3>
+        <div class="card-row-2">
+          <div class="card" style="border-color: rgba(232, 168, 56, 0.35)">
+            <div class="card-title" style="color: var(--accent1)">
+              e-Business (The Broader Term)
+            </div>
+            <p>
+              Conducting <em>all business activities</em> using
+              telecommunications networks — especially the Internet. This
+              includes servicing customers online, collaborating with partners
+              and suppliers, managing internal operations digitally, and R&D.
+              e-Business is much more than just buying and selling — it's the
+              digitalisation of the entire enterprise.
+            </p>
+          </div>
+          <div class="card" style="border-color: rgba(232, 168, 56, 0.35)">
+            <div class="card-title" style="color: var(--accent1)">
+              e-Commerce (The Subset)
+            </div>
+            <p>
+              Conducting <em>commerce specifically</em> — buying and selling —
+              electronically using the Internet. e-Commerce is one specific
+              aspect of e-Business. All e-Commerce is e-Business, but not all
+              e-Business is e-Commerce.
+            </p>
+          </div>
+        </div>
+
+        <h3>Business Models</h3>
+        <div class="card-row">
+          <div class="card">
+            <div class="card-title" style="color: var(--accent4)">
+              Dot-Com (Pure Online)
+            </div>
+            <p>
+              Business operating ONLY online with no physical stores. Lower
+              overhead costs but dependent entirely on digital infrastructure.
+              Example: early Amazon (books only), eBay, Booking.com.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent2)">
+              Bricks and Clicks (Hybrid)
+            </div>
+            <p>
+              Business operating BOTH online AND via physical stores — the best
+              of both worlds. Example: modern Amazon (online + Amazon Go
+              stores), Walmart (stores + Walmart.com), most banks.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent3)">
+              Bricks and Mortar (Pure Physical)
+            </div>
+            <p>
+              Business operating ONLY via physical stores with no meaningful
+              online presence. Increasingly rare and vulnerable to digital
+              disruption. Example: small local shops without websites.
+            </p>
+          </div>
+        </div>
+
+        <h3>Categories of e-Commerce</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Description</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>B2C</strong> — Business to Consumer</td>
+              <td>
+                Businesses selling directly to individual consumers via the web.
+                The most visible form of e-commerce to everyday people.
+              </td>
+              <td>Amazon, Daraz, Flipkart</td>
+            </tr>
+            <tr>
+              <td><strong>B2B</strong> — Business to Business</td>
+              <td>
+                Transactions between businesses — procurement departments
+                negotiating with suppliers, bulk purchasing, digital invoicing.
+                Much larger in total volume than B2C.
+              </td>
+              <td>Alibaba wholesale, SAP procurement systems</td>
+            </tr>
+            <tr>
+              <td><strong>Business Processes</strong></td>
+              <td>
+                Companies using internet technologies to support their own
+                internal buying/selling operations — ERP systems, logistics
+                management, digital supply chain platforms.
+              </td>
+              <td>SAP ERP, Oracle Supply Chain</td>
+            </tr>
+            <tr>
+              <td><strong>C2C</strong> — Consumer to Consumer</td>
+              <td>
+                Individuals buying and selling among themselves using a platform
+                as intermediary. The platform earns fees without owning
+                inventory.
+              </td>
+              <td>eBay auctions, Facebook Marketplace, Craigslist</td>
+            </tr>
+            <tr>
+              <td><strong>B2G</strong> — Business to Government</td>
+              <td>
+                Business transactions with government agencies — digital
+                procurement, tax filing, license applications, reporting
+                requirements.
+              </td>
+              <td>
+                Paying taxes online, submitting compliance reports digitally
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>What Accelerated e-Business Growth — Four Drivers</h3>
+        <div class="card-row">
+          <div class="card">
+            <div class="card-title" style="color: var(--accent2)">
+              Wide Public Network Access
+            </div>
+            <p>
+              The Internet — a network anyone can connect to — created the
+              infrastructure needed for global commerce. Without universal
+              access, e-business is impossible.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent2)">
+              Internet Technology (TCP/IP)
+            </div>
+            <p>
+              Standardised protocols reduced network implementation and training
+              costs dramatically. Companies no longer needed proprietary
+              networks — one shared global standard.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent2)">
+              Standard User Interface
+            </div>
+            <p>
+              Web browsers (Netscape, then Internet Explorer, then Chrome) gave
+              everyone a common, easy-to-use way to access the internet — no
+              technical expertise required.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent2)">
+              e-Business Applications
+            </div>
+            <p>
+              Apps running on the internet drastically reduced the cost of
+              communication, transaction processing, and customer acquisition
+              compared to traditional methods.
+            </p>
+          </div>
+        </div>
+
+        <h3>Benefits of e-Business</h3>
+        <div class="card-row">
+          <div class="card">
+            <div class="card-title" style="color: var(--accent4)">
+              Global Accessibility
+            </div>
+            <p>
+              The internet removes geographical constraints — businesses reach
+              customers worldwide without opening physical offices in every
+              country.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent4)">
+              24/7 Availability
+            </div>
+            <p>
+              Online stores never close — a customer in Tokyo can buy from a
+              Kathmandu business at 3am. Maximises every possible revenue
+              opportunity.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent4)">
+              Direct Marketing
+            </div>
+            <p>
+              Manufacturers can bypass retailers and distributors entirely —
+              selling directly to end customers, capturing the full margin and
+              building direct relationships.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent4)">
+              Closer Customer Relationships
+            </div>
+            <p>
+              Quick response to concerns, personalised recommendations, loyalty
+              programs, and direct communication increase customer retention.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent4)">
+              Reduced Order Processing
+            </div>
+            <p>
+              Automated processing improves efficiency, reduces errors, and
+              eliminates the cost of manual order entry — orders flow directly
+              into fulfilment systems.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent4)">
+              Customer Data & Insights
+            </div>
+            <p>
+              Direct digital customer link provides instant feedback on product
+              demand, browsing behaviour, and preferences — enabling data-driven
+              decisions.
+            </p>
+          </div>
+        </div>
+
+        <h3>e-Commerce Barriers</h3>
+        <div class="card-row">
+          <div class="card">
+            <div class="card-title" style="color: var(--accent3)">Fraud</div>
+            <p>
+              Security mechanisms for digital payments remain a major concern.
+              Credit card fraud, identity theft, and fake storefronts undermine
+              consumer trust and require expensive security infrastructure.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent3)">
+              Product Limitations
+            </div>
+            <p>
+              Perishable foods, high-cost unique items (antiques, fine art), and
+              products requiring physical inspection or fitting (prescription
+              glasses, custom tailoring) are poor fits for pure e-commerce.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent3)">
+              Technology Access
+            </div>
+            <p>
+              Requires a critical mass of customers with appropriate technology
+              access — internet connection, smart device, digital literacy, and
+              payment methods. A significant barrier in developing markets.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color: var(--accent3)">
+              Regulations
+            </div>
+            <p>
+              Cultural and legal barriers vary dramatically across countries —
+              different privacy laws, payment regulations, import restrictions,
+              and consumer protection requirements complicate global e-commerce.
+            </p>
+          </div>
+        </div>
+
+        <h3>Secure e-Commerce — Five Requirements</h3>
+        <div class="steps">
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(232, 168, 56, 0.2); color: var(--accent1)"
+            >
+              1
+            </div>
+            <div class="step-content">
+              <strong>SSL Certificate</strong
+              ><span
+                >All sensitive user information must be encrypted and protected
+                from cyber-attacks using SSL/TLS encryption. Look for HTTPS in
+                the address bar — the padlock icon confirms the certificate is
+                active.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(232, 168, 56, 0.2); color: var(--accent1)"
+            >
+              2
+            </div>
+            <div class="step-content">
+              <strong>Layered Security</strong
+              ><span
+                >Multiple security layers create multiple obstacles that
+                attackers must break through — WAF (Web Application Firewall),
+                CDN security, application-level security, and database security
+                all working together.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(232, 168, 56, 0.2); color: var(--accent1)"
+            >
+              3
+            </div>
+            <div class="step-content">
+              <strong>Firewalls</strong
+              ><span
+                >Monitor all traffic coming and going from the site to block
+                suspicious requests, known malicious IP addresses, and unusual
+                traffic patterns before they reach the server.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(232, 168, 56, 0.2); color: var(--accent1)"
+            >
+              4
+            </div>
+            <div class="step-content">
+              <strong>Malware Scanning</strong
+              ><span
+                >Regular automated scanning of website files and databases for
+                malware. Any injected malicious code must be detected and
+                removed before it harms visitors or steals data.</span
+              >
+            </div>
+          </div>
+          <div class="step">
+            <div
+              class="step-num"
+              style="background: rgba(232, 168, 56, 0.2); color: var(--accent1)"
+            >
+              5
+            </div>
+            <div class="step-content">
+              <strong>Confidentiality</strong
+              ><span
+                >Protecting customer information from being accessed by
+                unauthorised persons — data minimisation, encryption at rest,
+                access controls on customer databases, and clear privacy
+                policies.</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <h3>e-Commerce Technologies</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Technology</th>
+              <th>What It Does</th>
+              <th>Business Benefit</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Chatbots</strong></td>
+              <td>
+                Powered by AI and machine learning, provide quick, personalised
+                customer service 24/7 without human staff.
+              </td>
+              <td>
+                Reduces support costs, handles thousands of queries
+                simultaneously
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Intelligent Virtual Assistants (IVAs)</strong></td>
+              <td>
+                More sophisticated than chatbots — can understand context,
+                handle complex queries, and escalate to humans when needed.
+              </td>
+              <td>
+                Improves customer experience while reducing engagement costs
+              </td>
+            </tr>
+            <tr>
+              <td><strong>AI-Driven Price Monitoring</strong></td>
+              <td>
+                Instantly compares rivals' pricing, stock levels, and delivery
+                policies in real time — enables dynamic pricing responses.
+              </td>
+              <td>Stay competitive on price without manual monitoring</td>
+            </tr>
+            <tr>
+              <td><strong>E-Wallets</strong></td>
+              <td>
+                Electronic cards or digital wallets connected to a bank account
+                used for seamless, one-click online purchases. Examples: Apple
+                Pay, Google Pay, eSewa, Khalti.
+              </td>
+              <td>Reduces checkout friction, increases conversion rates</td>
+            </tr>
+            <tr>
+              <td><strong>Warehouse Automation</strong></td>
+              <td>
+                Robotic picking systems, automated inventory management, optimal
+                scheduling — reducing human error and operating costs.
+              </td>
+              <td>Faster fulfilment, lower costs, reduced carbon footprint</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </body>
+</html>
