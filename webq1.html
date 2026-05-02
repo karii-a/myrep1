@@ -1,0 +1,1835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASP.NET Mastery — Learn & Examine</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c10;
+    --surface: #111318;
+    --surface2: #181c24;
+    --border: #22283a;
+    --accent: #00e5ff;
+    --accent2: #7c3aed;
+    --accent3: #f59e0b;
+    --success: #10b981;
+    --danger: #ef4444;
+    --text: #e2e8f0;
+    --text2: #8892a4;
+    --text3: #4a5568;
+    --code-bg: #0d1117;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'Syne', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* GRID BACKGROUND */
+  body::before {
+    content:'';
+    position:fixed;
+    inset:0;
+    background-image:
+      linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events:none;
+    z-index:0;
+  }
+
+  /* ===== HEADER ===== */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,12,16,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+  }
+
+  .logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+  }
+  .logo span { color: var(--text2); }
+
+  nav { display:flex; gap:0.25rem; }
+  nav button {
+    background: none;
+    border: none;
+    color: var(--text2);
+    font-family: 'Syne', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  nav button:hover, nav button.active {
+    color: var(--accent);
+    background: rgba(0,229,255,0.08);
+  }
+  nav button.active { border: 1px solid rgba(0,229,255,0.2); }
+
+  /* ===== LAYOUT ===== */
+  .app { position:relative; z-index:1; }
+
+  /* ===== SCREENS ===== */
+  .screen { display:none; animation: fadeIn 0.3s ease; }
+  .screen.active { display:block; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
+
+  /* ===== HOME ===== */
+  #home {
+    min-height: calc(100vh - 60px);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding: 3rem 2rem;
+    text-align:center;
+  }
+
+  .hero-badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    background: rgba(0,229,255,0.1);
+    border: 1px solid rgba(0,229,255,0.25);
+    padding: 0.3rem 0.8rem;
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  h1.hero-title {
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    margin-bottom: 1.2rem;
+    letter-spacing: -0.03em;
+  }
+  h1.hero-title .line1 { color: var(--text); }
+  h1.hero-title .line2 {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-family: 'Space Mono', monospace;
+    color: var(--text2);
+    font-size: 0.95rem;
+    max-width: 560px;
+    line-height: 1.7;
+    margin-bottom: 3rem;
+  }
+
+  .module-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.2rem;
+    max-width: 1100px;
+    width: 100%;
+    margin-bottom: 3rem;
+  }
+
+  .module-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.25s;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+  }
+  .module-card::before {
+    content:'';
+    position:absolute;
+    top:0; left:0; right:0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .module-card:hover::before { transform: scaleX(1); }
+  .module-card:hover {
+    border-color: rgba(0,229,255,0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0,229,255,0.1);
+  }
+  .module-card .num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.7rem;
+  }
+  .module-card h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+  .module-card p {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text2);
+    line-height: 1.6;
+  }
+  .module-card .tags {
+    display:flex; flex-wrap:wrap; gap:0.4rem;
+    margin-top: 1rem;
+  }
+  .tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    background: rgba(124,58,237,0.15);
+    color: #a78bfa;
+    border: 1px solid rgba(124,58,237,0.25);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .cta-row { display:flex; gap:1rem; flex-wrap:wrap; justify-content:center; }
+  .btn {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 0.75rem 2rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #000;
+    box-shadow: 0 0 20px rgba(0,229,255,0.3);
+  }
+  .btn-primary:hover { box-shadow: 0 0 30px rgba(0,229,255,0.5); transform: translateY(-1px); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-accent2 {
+    background: var(--accent2);
+    color: #fff;
+  }
+  .btn-accent2:hover { opacity:0.9; transform:translateY(-1px); }
+
+  /* ===== LEARN SCREEN ===== */
+  #learn { padding: 2rem; max-width: 1200px; margin: 0 auto; }
+
+  .learn-header {
+    display:flex; align-items:center; gap:1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .learn-header h2 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  .lesson-layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 2rem;
+    min-height: 70vh;
+  }
+
+  .lesson-sidebar {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.2rem;
+    height: fit-content;
+    position: sticky;
+    top: 80px;
+  }
+  .sidebar-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+  .lesson-nav-item {
+    display:flex; align-items:center; gap:0.7rem;
+    padding: 0.6rem 0.8rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: 0.25rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text2);
+  }
+  .lesson-nav-item:hover { background: var(--surface2); color: var(--text); }
+  .lesson-nav-item.active { background: rgba(0,229,255,0.1); color: var(--accent); }
+  .lesson-nav-item .dot {
+    width:6px; height:6px; border-radius:50%;
+    background: var(--border);
+    flex-shrink:0;
+  }
+  .lesson-nav-item.active .dot { background: var(--accent); box-shadow: 0 0 6px var(--accent); }
+  .lesson-nav-item.done .dot { background: var(--success); }
+
+  .lesson-content {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+  }
+
+  .lesson-meta {
+    display:flex; align-items:center; gap:0.8rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid var(--border);
+    flex-wrap:wrap;
+  }
+  .lesson-number {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--accent);
+    background: rgba(0,229,255,0.1);
+    border: 1px solid rgba(0,229,255,0.2);
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .lesson-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    flex: 1;
+  }
+
+  .lesson-body h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin: 1.8rem 0 0.8rem;
+    padding-left: 0.8rem;
+    border-left: 3px solid var(--accent);
+    letter-spacing: -0.01em;
+  }
+  .lesson-body h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--accent3);
+    margin: 1.2rem 0 0.5rem;
+  }
+  .lesson-body p {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.82rem;
+    color: var(--text2);
+    line-height: 1.8;
+    margin-bottom: 0.8rem;
+  }
+  .lesson-body ul, .lesson-body ol {
+    margin: 0.5rem 0 1rem 1.2rem;
+  }
+  .lesson-body li {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--text2);
+    line-height: 1.8;
+    margin-bottom: 0.3rem;
+  }
+  .lesson-body li strong, .lesson-body p strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  /* CODE BLOCKS */
+  .code-block {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.2rem 1.4rem;
+    margin: 1rem 0;
+    overflow-x: auto;
+    position: relative;
+  }
+  .code-block .code-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.6rem;
+  }
+  .code-block pre {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.78rem;
+    color: #c9d1d9;
+    line-height: 1.7;
+    white-space: pre;
+    overflow-x: auto;
+  }
+  .kw { color: #ff7b72; }
+  .st { color: #a5d6ff; }
+  .cm { color: #8b949e; font-style:italic; }
+  .fn { color: #d2a8ff; }
+  .nm { color: #79c0ff; }
+  .op { color: #ff7b72; }
+
+  /* CALLOUT BOXES */
+  .callout {
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    margin: 1rem 0;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.78rem;
+    line-height: 1.7;
+  }
+  .callout-info {
+    background: rgba(0,229,255,0.06);
+    border-left: 3px solid var(--accent);
+    color: #93c5fd;
+  }
+  .callout-warn {
+    background: rgba(245,158,11,0.08);
+    border-left: 3px solid var(--accent3);
+    color: #fde68a;
+  }
+  .callout-success {
+    background: rgba(16,185,129,0.08);
+    border-left: 3px solid var(--success);
+    color: #6ee7b7;
+  }
+  .callout-title {
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+    display:block;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* TABLE */
+  .styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+  }
+  .styled-table th {
+    background: var(--surface2);
+    color: var(--accent);
+    padding: 0.6rem 0.8rem;
+    text-align: left;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-bottom: 1px solid var(--border);
+  }
+  .styled-table td {
+    padding: 0.6rem 0.8rem;
+    color: var(--text2);
+    border-bottom: 1px solid rgba(34,40,58,0.5);
+    line-height: 1.5;
+  }
+  .styled-table td:first-child { color: var(--text); font-weight: 600; }
+  .styled-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+  .lesson-footer {
+    display:flex; justify-content:space-between; align-items:center;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    flex-wrap:wrap; gap:1rem;
+  }
+
+  /* ===== EXAM SCREEN ===== */
+  #exam { padding: 2rem; max-width: 800px; margin: 0 auto; }
+
+  .exam-header {
+    margin-bottom: 2rem;
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;
+  }
+  .exam-header h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  .exam-select-grid {
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap:1rem;
+    margin-bottom: 2rem;
+  }
+  .exam-topic-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.2rem;
+    cursor:pointer;
+    transition: all 0.2s;
+  }
+  .exam-topic-card:hover, .exam-topic-card.selected {
+    border-color: var(--accent2);
+    background: rgba(124,58,237,0.08);
+  }
+  .exam-topic-card.selected { border-color: var(--accent); }
+  .exam-topic-card h4 { font-size:0.9rem; font-weight:700; margin-bottom:0.3rem; }
+  .exam-topic-card p {
+    font-family:'Space Mono',monospace; font-size:0.68rem; color:var(--text2); line-height:1.5;
+  }
+  .exam-topic-card .q-count {
+    font-family:'Space Mono',monospace; font-size:0.65rem;
+    color:var(--accent); margin-top:0.6rem;
+  }
+
+  /* QUIZ INTERFACE */
+  .quiz-container { display:none; }
+  .quiz-container.active { display:block; }
+
+  .quiz-progress {
+    background: var(--surface2);
+    border-radius: 100px;
+    height:4px;
+    margin-bottom: 2rem;
+    overflow: hidden;
+  }
+  .quiz-progress-fill {
+    height:100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 100px;
+    transition: width 0.4s ease;
+  }
+
+  .quiz-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  .q-meta {
+    display:flex; align-items:center; gap:0.8rem; margin-bottom:1.2rem;
+  }
+  .q-badge {
+    font-family:'Space Mono',monospace; font-size:0.6rem;
+    color:#000; background:var(--accent); padding:0.2rem 0.6rem; border-radius:4px;
+    font-weight:700; text-transform:uppercase; letter-spacing:0.08em;
+  }
+  .q-badge.multi { background: var(--accent2); color:#fff; }
+  .q-badge.tf { background: var(--accent3); color:#000; }
+  .q-type-label {
+    font-family:'Space Mono',monospace; font-size:0.65rem; color:var(--text3);
+    text-transform:uppercase; letter-spacing:0.08em;
+  }
+
+  .question-text {
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+    color: var(--text);
+  }
+
+  .code-snippet {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.8rem 1rem;
+    margin-bottom: 1rem;
+    font-family:'Fira Code',monospace;
+    font-size:0.75rem;
+    color:#c9d1d9;
+    line-height:1.6;
+    overflow-x:auto;
+  }
+
+  .options-grid { display:flex; flex-direction:column; gap:0.6rem; }
+  .option-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.9rem 1.1rem;
+    cursor:pointer;
+    transition:all 0.2s;
+    text-align:left;
+    display:flex; align-items:center; gap:0.8rem;
+    font-family:'Space Mono',monospace;
+    font-size:0.8rem;
+    color:var(--text2);
+    width:100%;
+  }
+  .option-btn:hover:not(:disabled) {
+    border-color: rgba(0,229,255,0.4);
+    color: var(--text);
+    background: rgba(0,229,255,0.05);
+  }
+  .option-btn.selected {
+    border-color: var(--accent2);
+    background: rgba(124,58,237,0.12);
+    color: #c4b5fd;
+  }
+  .option-btn.correct {
+    border-color: var(--success);
+    background: rgba(16,185,129,0.12);
+    color: #6ee7b7;
+  }
+  .option-btn.wrong {
+    border-color: var(--danger);
+    background: rgba(239,68,68,0.1);
+    color: #fca5a5;
+  }
+  .option-btn:disabled { cursor:default; }
+  .opt-letter {
+    width: 22px; height: 22px;
+    border-radius:4px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    display:flex; align-items:center; justify-content:center;
+    font-size:0.65rem; font-weight:700; color:var(--text3);
+    flex-shrink:0;
+  }
+  .option-btn.selected .opt-letter { background:var(--accent2); border-color:var(--accent2); color:#fff; }
+  .option-btn.correct .opt-letter { background:var(--success); border-color:var(--success); color:#000; }
+  .option-btn.wrong .opt-letter { background:var(--danger); border-color:var(--danger); color:#fff; }
+
+  .feedback-box {
+    display:none;
+    margin-top:1rem;
+    border-radius:8px;
+    padding:1rem 1.2rem;
+    font-family:'Space Mono',monospace;
+    font-size:0.78rem;
+    line-height:1.7;
+  }
+  .feedback-box.show { display:block; }
+  .feedback-box.correct-fb {
+    background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.3); color:#6ee7b7;
+  }
+  .feedback-box.wrong-fb {
+    background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.3); color:#fca5a5;
+  }
+  .feedback-box .fb-title { font-weight:700; display:block; margin-bottom:0.3rem; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.08em; }
+
+  .quiz-nav {
+    display:flex; justify-content:space-between; align-items:center;
+    flex-wrap:wrap; gap:1rem;
+  }
+  .q-counter {
+    font-family:'Space Mono',monospace; font-size:0.75rem; color:var(--text3);
+  }
+
+  /* RESULTS */
+  .results-panel {
+    display:none;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 3rem 2rem;
+    text-align:center;
+  }
+  .results-panel.show { display:block; }
+  .results-score {
+    font-family:'Space Mono',monospace;
+    font-size: 5rem;
+    font-weight:700;
+    line-height:1;
+    margin: 1rem 0;
+  }
+  .results-score.excellent { color: var(--success); }
+  .results-score.good { color: var(--accent3); }
+  .results-score.poor { color: var(--danger); }
+  .results-label { font-size:1.3rem; font-weight:800; margin-bottom:0.5rem; }
+  .results-sub { font-family:'Space Mono',monospace; font-size:0.8rem; color:var(--text2); margin-bottom:2rem; }
+  .results-breakdown {
+    display:flex; justify-content:center; gap:2rem; margin-bottom:2rem; flex-wrap:wrap;
+  }
+  .rb-item { text-align:center; }
+  .rb-num { font-family:'Space Mono',monospace; font-size:1.5rem; font-weight:700; }
+  .rb-label { font-family:'Space Mono',monospace; font-size:0.65rem; color:var(--text3); text-transform:uppercase; letter-spacing:0.08em; }
+
+  /* ===== PROGRESS SCREEN ===== */
+  #progress { padding: 2rem; max-width: 900px; margin: 0 auto; }
+  .progress-header { margin-bottom: 2rem; }
+  .progress-header h2 { font-size:1.5rem; font-weight:800; letter-spacing:-0.02em; }
+
+  .stats-row {
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:1rem; margin-bottom:2rem;
+  }
+  .stat-card {
+    background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:1.2rem;
+    text-align:center;
+  }
+  .stat-num { font-family:'Space Mono',monospace; font-size:2rem; font-weight:700; }
+  .stat-num.c1 { color:var(--accent); }
+  .stat-num.c2 { color:var(--accent3); }
+  .stat-num.c3 { color:var(--success); }
+  .stat-num.c4 { color:var(--accent2); }
+  .stat-label { font-family:'Space Mono',monospace; font-size:0.65rem; color:var(--text3); text-transform:uppercase; letter-spacing:0.08em; margin-top:0.3rem; }
+
+  .topic-progress-list { display:flex; flex-direction:column; gap:0.8rem; }
+  .tpl-item {
+    background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:1rem 1.2rem;
+  }
+  .tpl-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem; }
+  .tpl-name { font-size:0.85rem; font-weight:700; }
+  .tpl-pct { font-family:'Space Mono',monospace; font-size:0.75rem; color:var(--accent); }
+  .tpl-bar { height:3px; background:var(--border); border-radius:100px; overflow:hidden; }
+  .tpl-bar-fill { height:100%; background:linear-gradient(90deg,var(--accent),var(--accent2)); border-radius:100px; transition:width 1s ease; }
+
+  .empty-state {
+    text-align:center; padding:4rem 2rem;
+    font-family:'Space Mono',monospace; color:var(--text3); font-size:0.85rem;
+  }
+  .empty-state .icon { font-size:3rem; margin-bottom:1rem; }
+
+  /* ===== SCROLLBAR ===== */
+  ::-webkit-scrollbar { width:5px; height:5px; }
+  ::-webkit-scrollbar-track { background:transparent; }
+  ::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
+
+  /* ===== RESPONSIVE ===== */
+  @media(max-width:768px) {
+    .lesson-layout { grid-template-columns:1fr; }
+    .lesson-sidebar { position:static; }
+    header { padding:0 1rem; }
+    nav button { font-size:0.7rem; padding:0.3rem 0.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">ASP<span>.NET</span> // MASTERY</div>
+  <nav>
+    <button class="active" onclick="showScreen('home',this)">Home</button>
+    <button onclick="showScreen('learn',this)">Learn</button>
+    <button onclick="showScreen('exam',this)">Exam</button>
+    <button onclick="showScreen('progress',this)">Progress</button>
+  </nav>
+</header>
+
+<div class="app">
+
+<!-- ===== HOME ===== -->
+<section id="home" class="screen active">
+  <div class="hero-badge">📡 Web Applications Course</div>
+  <h1 class="hero-title">
+    <div class="line1">Master</div>
+    <div class="line2">ASP.NET</div>
+  </h1>
+  <p class="hero-sub">5 comprehensive tutorials covering web forms, database operations, validation controls, and authentication. Study deeply, then test your knowledge.</p>
+
+  <div class="module-grid">
+    <div class="module-card" onclick="openLesson(0); showScreen('learn', document.querySelector('nav button:nth-child(2)'))">
+      <div class="num">Tutorial 01</div>
+      <h3>Introduction to ASP.NET</h3>
+      <p>Creating web sites in Visual Studio, web forms, HTTP GET/POST, session variables, file I/O, and string manipulation.</p>
+      <div class="tags">
+        <span class="tag">Web Forms</span>
+        <span class="tag">C#</span>
+        <span class="tag">Session</span>
+        <span class="tag">File I/O</span>
+      </div>
+    </div>
+    <div class="module-card" onclick="openLesson(1); showScreen('learn', document.querySelector('nav button:nth-child(2)'))">
+      <div class="num">Tutorial 02</div>
+      <h3>ASP.NET & OleDb</h3>
+      <p>Connecting to MS Access databases, executing SELECT, INSERT, UPDATE, DELETE commands using OleDbConnection and OleDbCommand.</p>
+      <div class="tags">
+        <span class="tag">OleDb</span>
+        <span class="tag">CRUD</span>
+        <span class="tag">MS Access</span>
+      </div>
+    </div>
+    <div class="module-card" onclick="openLesson(2); showScreen('learn', document.querySelector('nav button:nth-child(2)'))">
+      <div class="num">Tutorial 03</div>
+      <h3>AccessDataSource Control</h3>
+      <p>Data binding with AccessDataSource, wizard-driven configuration, SELECT, INSERT, UPDATE, DELETE using the data source model.</p>
+      <div class="tags">
+        <span class="tag">Data Binding</span>
+        <span class="tag">AccessDataSource</span>
+        <span class="tag">GridView</span>
+      </div>
+    </div>
+    <div class="module-card" onclick="openLesson(3); showScreen('learn', document.querySelector('nav button:nth-child(2)'))">
+      <div class="num">Tutorial 04</div>
+      <h3>Validation Controls</h3>
+      <p>All 6 validation controls: RequiredFieldValidator, CompareValidator, RangeValidator, RegularExpressionValidator, CustomValidator, ValidationSummary.</p>
+      <div class="tags">
+        <span class="tag">Validation</span>
+        <span class="tag">Server Controls</span>
+        <span class="tag">Regex</span>
+      </div>
+    </div>
+    <div class="module-card" onclick="openLesson(4); showScreen('learn', document.querySelector('nav button:nth-child(2)'))">
+      <div class="num">Tutorial 05</div>
+      <h3>Form Authentication</h3>
+      <p>Login pages, session-based auth, Members Only pages, Admin Only pages, role-based access control with ASP.NET.</p>
+      <div class="tags">
+        <span class="tag">Authentication</span>
+        <span class="tag">Sessions</span>
+        <span class="tag">Authorization</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-row">
+    <button class="btn btn-primary" onclick="openLesson(0); showScreen('learn', document.querySelector('nav button:nth-child(2)'))">▶ Start Learning</button>
+    <button class="btn btn-accent2" onclick="showScreen('exam', document.querySelector('nav button:nth-child(3)'))">📝 Take Exam</button>
+    <button class="btn btn-secondary" onclick="showScreen('progress', document.querySelector('nav button:nth-child(4)'))">📊 My Progress</button>
+  </div>
+</section>
+
+<!-- ===== LEARN ===== -->
+<section id="learn" class="screen">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div class="learn-header">
+      <h2>Learning Modules</h2>
+      <div style="font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--text3)">Click a topic in the sidebar to begin</div>
+    </div>
+    <div class="lesson-layout">
+      <div class="lesson-sidebar">
+        <div class="sidebar-title">Tutorials</div>
+        <div class="lesson-nav-item active" id="nav-0" onclick="openLesson(0)"><span class="dot"></span>01 — Intro to ASP.NET</div>
+        <div class="lesson-nav-item" id="nav-1" onclick="openLesson(1)"><span class="dot"></span>02 — ASP.NET & OleDb</div>
+        <div class="lesson-nav-item" id="nav-2" onclick="openLesson(2)"><span class="dot"></span>03 — AccessDataSource</div>
+        <div class="lesson-nav-item" id="nav-3" onclick="openLesson(3)"><span class="dot"></span>04 — Validation Controls</div>
+        <div class="lesson-nav-item" id="nav-4" onclick="openLesson(4)"><span class="dot"></span>05 — Form Authentication</div>
+        <div style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--border)">
+          <div class="sidebar-title">Quick Exam</div>
+          <button class="btn btn-accent2" style="width:100%;padding:0.5rem;" onclick="showScreen('exam', document.querySelector('nav button:nth-child(3)'))">Take Exam →</button>
+        </div>
+      </div>
+
+      <div class="lesson-content" id="lesson-content">
+        <!-- Content rendered by JS -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== EXAM ===== -->
+<section id="exam" class="screen">
+  <div class="exam-header">
+    <h2>Examination Centre</h2>
+    <div style="font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--text3)">Select a topic and test your knowledge</div>
+  </div>
+
+  <div id="exam-select">
+    <p style="font-family:'Space Mono',monospace;font-size:0.78rem;color:var(--text2);margin-bottom:1.2rem;">Choose a topic to examine, or take the full comprehensive exam:</p>
+    <div class="exam-select-grid">
+      <div class="exam-topic-card" onclick="startExam(0)">
+        <h4>Tutorial 01</h4>
+        <p>Introduction to ASP.NET</p>
+        <div class="q-count">10 Questions</div>
+      </div>
+      <div class="exam-topic-card" onclick="startExam(1)">
+        <h4>Tutorial 02</h4>
+        <p>ASP.NET & OleDb</p>
+        <div class="q-count">10 Questions</div>
+      </div>
+      <div class="exam-topic-card" onclick="startExam(2)">
+        <h4>Tutorial 03</h4>
+        <p>AccessDataSource</p>
+        <div class="q-count">10 Questions</div>
+      </div>
+      <div class="exam-topic-card" onclick="startExam(3)">
+        <h4>Tutorial 04</h4>
+        <p>Validation Controls</p>
+        <div class="q-count">10 Questions</div>
+      </div>
+      <div class="exam-topic-card" onclick="startExam(4)">
+        <h4>Tutorial 05</h4>
+        <p>Form Authentication</p>
+        <div class="q-count">10 Questions</div>
+      </div>
+      <div class="exam-topic-card" style="border-color:var(--accent3)" onclick="startExam('all')">
+        <h4>🏆 Full Exam</h4>
+        <p>All topics combined</p>
+        <div class="q-count" style="color:var(--accent3)">25 Questions</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="quiz-area" class="quiz-container">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem;">
+      <div id="exam-topic-title" style="font-weight:700;font-size:1rem;"></div>
+      <button class="btn btn-secondary" style="padding:0.4rem 1rem;font-size:0.75rem;" onclick="resetExam()">← Back</button>
+    </div>
+    <div class="quiz-progress"><div class="quiz-progress-fill" id="prog-fill" style="width:0%"></div></div>
+    <div id="question-container"></div>
+    <div class="quiz-nav">
+      <div class="q-counter" id="q-counter">Question 1 of 10</div>
+      <div style="display:flex;gap:0.5rem;">
+        <button class="btn btn-secondary" id="btn-check" onclick="checkAnswer()" style="display:none">Check Answer</button>
+        <button class="btn btn-primary" id="btn-next" onclick="nextQuestion()" style="display:none">Next →</button>
+      </div>
+    </div>
+    <div class="results-panel" id="results-panel">
+      <div style="font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;">Your Score</div>
+      <div class="results-score" id="res-score"></div>
+      <div class="results-label" id="res-label"></div>
+      <div class="results-sub" id="res-sub"></div>
+      <div class="results-breakdown">
+        <div class="rb-item"><div class="rb-num" id="rb-correct" style="color:var(--success)">0</div><div class="rb-label">Correct</div></div>
+        <div class="rb-item"><div class="rb-num" id="rb-wrong" style="color:var(--danger)">0</div><div class="rb-label">Wrong</div></div>
+        <div class="rb-item"><div class="rb-num" id="rb-total">0</div><div class="rb-label">Total</div></div>
+      </div>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+        <button class="btn btn-primary" onclick="resetExam()">Try Another Exam</button>
+        <button class="btn btn-secondary" onclick="showScreen('learn', document.querySelector('nav button:nth-child(2)'))">Review Material</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROGRESS ===== -->
+<section id="progress" class="screen">
+  <div class="progress-header">
+    <h2>My Progress</h2>
+  </div>
+  <div id="progress-content"></div>
+</section>
+
+</div><!-- .app -->
+
+<script>
+// ============================================================
+// DATA — LESSONS
+// ============================================================
+const lessons = [
+{
+  num:'01', title:'Introduction to ASP.NET',
+  content:`
+  <h3>What is ASP.NET?</h3>
+  <p>ASP.NET is Microsoft's web application framework built on the .NET platform. It allows developers to build dynamic web pages and applications using languages like <strong>C#</strong> or VB.NET. ASP.NET Web Forms is a RAD (Rapid Application Development) model that abstracts HTML and HTTP into an event-driven programming model.</p>
+
+  <h3>Creating a New Web Site in Visual Studio 2005</h3>
+  <p>Follow these steps to create your first ASP.NET project:</p>
+  <ol>
+    <li>Choose <strong>File → New → Web Site</strong> from the menu.</li>
+    <li>Select <strong>ASP.NET Web Site</strong> from the templates list.</li>
+    <li>Choose <strong>File System, HTTP, or FTP</strong> from the Location drop-down list.</li>
+    <li>Enter the path for your web site (e.g., <code>D:\\Tutorial</code>).</li>
+    <li>Select your programming language (e.g., <strong>Visual C#</strong>).</li>
+    <li>Click <strong>OK</strong> to create the project.</li>
+  </ol>
+
+  <h3>Adding a New Web Form (Page)</h3>
+  <ol>
+    <li>Right-click the website in Solution Explorer → <strong>Add New Item</strong>.</li>
+    <li>Make sure <strong>Web Form</strong> is selected in the Templates box.</li>
+    <li>Enter a name (e.g., <code>SimpleCalculator.aspx</code>).</li>
+    <li>Check the <strong>"Place Code in Separate File"</strong> option.</li>
+    <li>Click <strong>Add</strong>.</li>
+  </ol>
+
+  <div class="callout callout-info"><span class="callout-title">💡 Code-Behind Pattern</span>Each .aspx file has a corresponding .aspx.cs (code-behind) file. The .aspx contains HTML/controls markup; the .aspx.cs contains C# logic. This is called the <strong>code-behind model</strong> and promotes separation of concerns.</div>
+
+  <h3>Adding Web Controls and Handling Events</h3>
+  <p>ASP.NET Web Forms use drag-and-drop server controls. When you place a Button on a form, double-clicking it generates the click event handler. Here is a simple calculator example:</p>
+
+  <div class="code-block">
+    <div class="code-label">C# — SimpleCalculator.aspx.cs</div>
+    <pre><span class="kw">protected void</span> <span class="fn">Button1_Click</span>(<span class="kw">object</span> sender, <span class="nm">EventArgs</span> e)
+{
+    <span class="kw">double</span> result = <span class="st">0.0</span>;
+    result = <span class="nm">Convert</span>.<span class="fn">ToDouble</span>(this.TextBox1.Text)
+           + <span class="nm">Convert</span>.<span class="fn">ToDouble</span>(this.TextBox2.Text);
+    this.Label4.Text = <span class="st">"The result is: "</span> + result.<span class="fn">ToString</span>();
+}</pre>
+  </div>
+
+  <h3>Parsing HTTP Form Data (GET vs POST)</h3>
+  <p>ASP.NET handles two HTTP methods for sending form data:</p>
+
+  <table class="styled-table">
+    <tr><th>Method</th><th>Collection Used</th><th>Use Case</th></tr>
+    <tr><td>GET</td><td>Request.QueryString["name"]</td><td>Data visible in URL, bookmarkable</td></tr>
+    <tr><td>POST</td><td>Request.Form["name"]</td><td>Data in request body, more secure</td></tr>
+  </table>
+
+  <div class="code-block">
+    <div class="code-label">ASP.NET — ShowData.aspx (handling both methods)</div>
+    <pre><span class="kw">if</span> (<span class="nm">Request</span>.ServerVariables[<span class="st">"Request_Method"</span>].<span class="fn">Equals</span>(<span class="st">"GET"</span>))
+    <span class="nm">Response</span>.<span class="fn">Write</span>(<span class="nm">Request</span>.QueryString[<span class="st">"txtData"</span>]);
+<span class="kw">if</span> (<span class="nm">Request</span>.ServerVariables[<span class="st">"Request_Method"</span>].<span class="fn">Equals</span>(<span class="st">"POST"</span>))
+    <span class="nm">Response</span>.<span class="fn">Write</span>(<span class="nm">Request</span>.Form[<span class="st">"txtData"</span>]);</pre>
+  </div>
+
+  <h3>Session Variables</h3>
+  <p>Session variables allow you to store and retrieve values as a user navigates between pages. They are created simply by referencing them by name:</p>
+
+  <div class="code-block">
+    <div class="code-label">Storing and reading session data</div>
+    <pre><span class="cm">// Store value in session</span>
+<span class="nm">Session</span>[<span class="st">"txtData"</span>] = this.TextBox1.Text;
+<span class="nm">Response</span>.<span class="fn">Redirect</span>(<span class="st">"NewShowData.aspx"</span>);
+
+<span class="cm">// On another page — read it back</span>
+<span class="nm">Response</span>.<span class="fn">Write</span>(<span class="nm">Session</span>[<span class="st">"txtData"</span>]);</pre>
+  </div>
+
+  <h3>File I/O — Writing and Reading Text Files</h3>
+  <p>ASP.NET can read and write files using <code>System.IO</code> classes. Files are stored in the <code>App_Data</code> folder for security.</p>
+
+  <div class="code-block">
+    <div class="code-label">Writing to a text file</div>
+    <pre><span class="nm">System.IO.FileStream</span> fs = <span class="kw">new</span> <span class="nm">System.IO.FileStream</span>(
+    <span class="nm">Page</span>.Server.<span class="fn">MapPath</span>(<span class="st">"App_Data//Data.txt"</span>),
+    <span class="nm">System.IO.FileMode</span>.Append,
+    <span class="nm">System.IO.FileAccess</span>.Write);
+<span class="nm">System.IO.StreamWriter</span> sw = <span class="kw">new</span> <span class="nm">System.IO.StreamWriter</span>(fs);
+sw.<span class="fn">WriteLine</span>(this.TextBox1.Text);
+sw.<span class="fn">Close</span>();
+fs.<span class="fn">Close</span>();</pre>
+  </div>
+
+  <div class="code-block">
+    <div class="code-label">Reading from a text file</div>
+    <pre><span class="nm">System.IO.FileStream</span> fs = <span class="kw">new</span> <span class="nm">System.IO.FileStream</span>(
+    <span class="nm">Page</span>.Server.<span class="fn">MapPath</span>(<span class="st">"App_Data//Data.txt"</span>),
+    <span class="nm">System.IO.FileMode</span>.Open,
+    <span class="nm">System.IO.FileAccess</span>.Read);
+<span class="nm">System.IO.StreamReader</span> sr = <span class="kw">new</span> <span class="nm">System.IO.StreamReader</span>(fs);
+<span class="kw">string</span> oneLine = sr.<span class="fn">ReadLine</span>();
+<span class="kw">while</span> (oneLine != <span class="kw">null</span>) {
+    this.Label1.Text += oneLine + <span class="st">"&lt;br /&gt;"</span>;
+    oneLine = sr.<span class="fn">ReadLine</span>();
+}
+sr.<span class="fn">Close</span>(); fs.<span class="fn">Close</span>();</pre>
+  </div>
+
+  <h3>String Parsing with Split()</h3>
+  <p>The <code>String.Split()</code> method breaks a string into an array of substrings using specified delimiter characters:</p>
+
+  <div class="code-block">
+    <div class="code-label">Split example</div>
+    <pre><span class="kw">char</span>[] delimiterChars = { <span class="st">' '</span>, <span class="st">','</span>, <span class="st">'.'</span>, <span class="st">':'</span>, <span class="st">'\t'</span> };
+<span class="kw">string</span> text = <span class="st">"one\ttwo three:four,five"</span>;
+<span class="kw">string</span>[] words = text.<span class="fn">Split</span>(delimiterChars);
+<span class="kw">foreach</span> (<span class="kw">string</span> s <span class="kw">in</span> words)
+    <span class="nm">Response</span>.<span class="fn">Write</span>(s + <span class="st">"&lt;br /&gt;"</span>);</pre>
+  </div>
+
+  <div class="callout callout-warn"><span class="callout-title">⚠️ Remember</span>Always call <code>sr.Close()</code> and <code>fs.Close()</code> after file operations to release system resources and prevent file locking errors.</div>
+  `
+},
+{
+  num:'02', title:'ASP.NET & OleDb Database Operations',
+  content:`
+  <h3>Introduction to OleDb</h3>
+  <p>To interact with a Microsoft Access database in ASP.NET, you use classes from the <strong>System.Data.OleDb</strong> namespace. The key classes are:</p>
+  <ul>
+    <li><strong>OleDbConnection</strong> — Manages the database connection</li>
+    <li><strong>OleDbCommand</strong> — Executes SQL commands</li>
+    <li><strong>OleDbDataReader</strong> — Reads result sets row by row</li>
+  </ul>
+
+  <h3>Setting Up a MS Access Database</h3>
+  <p>Create a database called <code>db1.mdb</code> with a table <strong>[Members]</strong> containing these fields:</p>
+
+  <table class="styled-table">
+    <tr><th>Field Name</th><th>Data Type</th><th>Notes</th></tr>
+    <tr><td>ID</td><td>AutoNumber</td><td>Primary Key</td></tr>
+    <tr><td>FirstName</td><td>Text</td><td></td></tr>
+    <tr><td>LastName</td><td>Text</td><td></td></tr>
+    <tr><td>Gender</td><td>Text</td><td>M or F</td></tr>
+    <tr><td>YearBorn</td><td>Number</td><td></td></tr>
+  </table>
+
+  <div class="callout callout-info"><span class="callout-title">📂 File Formats</span><strong>*.mdb</strong> = MS Access 2000 / 2002-2003 format (provider: <code>Microsoft.Jet.OLEDB.4.0</code>)<br><strong>*.accdb</strong> = MS Access 2007 / 2010 format (provider: <code>Microsoft.ACE.OLEDB.12.0</code>)</div>
+
+  <h3>Connection Strings</h3>
+
+  <div class="code-block">
+    <div class="code-label">Access 2000/2003 (.mdb)</div>
+    <pre><span class="kw">string</span> connectionString =
+    <span class="st">"provider=Microsoft.Jet.OLEDB.4.0;"</span> +
+    <span class="st">"data source="</span> + <span class="nm">Page</span>.Server.<span class="fn">MapPath</span>(<span class="st">"App_Data\\db1.mdb"</span>);</pre>
+  </div>
+
+  <h3>SELECT — Reading Records (ExecuteReader)</h3>
+  <p>Use <code>ExecuteReader()</code> to retrieve a result set. The returned <strong>OleDbDataReader</strong> reads rows one at a time using <code>Read()</code>:</p>
+
+  <div class="code-block">
+    <div class="code-label">View.aspx.cs — Page_Load</div>
+    <pre><span class="nm">OleDbConnection</span> conn = <span class="kw">new</span> <span class="nm">OleDbConnection</span>(connectionString);
+<span class="nm">OleDbCommand</span> cmd = conn.<span class="fn">CreateCommand</span>();
+cmd.CommandText = <span class="st">"SELECT * FROM [Members]"</span>;
+conn.<span class="fn">Open</span>();
+<span class="nm">OleDbDataReader</span> dr = cmd.<span class="fn">ExecuteReader</span>();
+<span class="kw">while</span> (dr.<span class="fn">Read</span>()) {
+    this.Label1.Text += <span class="st">"ID: "</span> + dr[<span class="st">"ID"</span>].<span class="fn">ToString</span>() + <span class="st">"&lt;br&gt;"</span>
+                      + <span class="st">"First Name: "</span> + dr[<span class="st">"FirstName"</span>].<span class="fn">ToString</span>() + <span class="st">"&lt;br&gt;"</span>;
+}
+dr.<span class="fn">Close</span>(); conn.<span class="fn">Close</span>();</pre>
+  </div>
+
+  <div class="callout callout-success"><span class="callout-title">✅ Best Practice</span>Open the connection as <strong>late as possible</strong> (just before ExecuteReader) and close it <strong>as soon as possible</strong>. This minimises connection time and conserves database resources.</div>
+
+  <h3>INSERT — Adding Records (ExecuteNonQuery)</h3>
+  <p><code>ExecuteNonQuery()</code> is used for INSERT, UPDATE, and DELETE commands that don't return a result set. It returns the number of rows affected.</p>
+
+  <div class="code-block">
+    <div class="code-label">Add.aspx.cs — Button1_Click (INSERT)</div>
+    <pre>cmd.Parameters.<span class="fn">Add</span>(<span class="st">"FirstName"</span>, <span class="nm">OleDbType</span>.VarChar);
+cmd.Parameters[<span class="st">"FirstName"</span>].Value = this.TextBox1.Text;
+cmd.Parameters.<span class="fn">Add</span>(<span class="st">"LastName"</span>, <span class="nm">OleDbType</span>.VarChar);
+cmd.Parameters[<span class="st">"LastName"</span>].Value = this.TextBox2.Text;
+
+cmd.CommandText = <span class="st">"INSERT INTO [Members] ([FirstName], [LastName], "</span>
+                + <span class="st">"[Gender], [YearBorn]) VALUES "</span>
+                + <span class="st">"(@FirstName, @LastName, @Gender, @YearBorn)"</span>;
+conn.<span class="fn">Open</span>();
+<span class="kw">int</span> rows = cmd.<span class="fn">ExecuteNonQuery</span>();
+conn.<span class="fn">Close</span>();
+<span class="nm">Response</span>.<span class="fn">Redirect</span>(<span class="st">"View.aspx"</span>);</pre>
+  </div>
+
+  <h3>UPDATE — Modifying Records</h3>
+
+  <div class="code-block">
+    <div class="code-label">Modify.aspx.cs — Button1_Click (UPDATE)</div>
+    <pre>cmd.CommandText =
+    <span class="st">"UPDATE [Members] SET [FirstName] = @FirstName, "</span>
+  + <span class="st">"[LastName] = @LastName, [Gender] = @Gender, "</span>
+  + <span class="st">"[YearBorn] = @YearBorn WHERE [ID] = @ID"</span>;
+conn.<span class="fn">Open</span>();
+cmd.<span class="fn">ExecuteNonQuery</span>();
+conn.<span class="fn">Close</span>();
+<span class="nm">Response</span>.<span class="fn">Redirect</span>(<span class="st">"View.aspx"</span>);</pre>
+  </div>
+
+  <h3>DELETE — Removing Records</h3>
+
+  <div class="code-block">
+    <div class="code-label">Remove.aspx.cs — Button1_Click (DELETE)</div>
+    <pre>cmd.Parameters.<span class="fn">Add</span>(<span class="st">"ID"</span>, <span class="nm">OleDbType</span>.Integer);
+cmd.Parameters[<span class="st">"ID"</span>].Value = this.DropDownList1.Text;
+cmd.CommandText = <span class="st">"DELETE FROM [Members] WHERE [ID] = @ID"</span>;
+conn.<span class="fn">Open</span>();
+cmd.<span class="fn">ExecuteNonQuery</span>();
+conn.<span class="fn">Close</span>();
+<span class="nm">Response</span>.<span class="fn">Redirect</span>(<span class="st">"Remove.aspx"</span>);</pre>
+  </div>
+
+  <h3>AutoPostBack for DropDownLists</h3>
+  <p>Set <code>DropDownList1.AutoPostBack = true</code> to trigger a page postback automatically when the user changes the selected item. This lets you load related data dynamically (e.g., selecting a member ID fills in their details).</p>
+
+  <div class="callout callout-warn"><span class="callout-title">⚠️ Page.IsPostBack</span>Use <code>if (Page.IsPostBack) return;</code> in Page_Load to prevent reinitialising controls when a postback occurs. Without this, your DropDownLists get repopulated and lose the user's selection!</div>
+  `
+},
+{
+  num:'03', title:'AccessDataSource Control & Data Binding',
+  content:`
+  <h3>What is Data Binding?</h3>
+  <p>Data binding is a technique that connects a <strong>data source</strong> (where data comes from) to <strong>controls</strong> (where data is displayed). ASP.NET provides data source controls like <strong>AccessDataSource</strong> that use wizard-driven configuration to wire up database operations without writing much code.</p>
+
+  <div class="callout callout-info"><span class="callout-title">💡 Key Advantage</span>AccessDataSource automatically generates SELECT, INSERT, UPDATE, and DELETE SQL statements. You configure it visually through the IDE wizard, then bind it to display controls (GridView, DetailsView, etc.).</div>
+
+  <h3>Tutorial 01 — SELECT Using AccessDataSource</h3>
+  <p>Steps to configure an AccessDataSource for reading data:</p>
+  <ol>
+    <li>Drag <strong>AccessDataSource</strong> from the toolbox onto the web form.</li>
+    <li>Click the Smart Tag triangle → <strong>Configure Data Source…</strong></li>
+    <li>Browse to and select your <code>db1.mdb</code> file.</li>
+    <li>Click Next → Select the <strong>Members</strong> table → check <code>*</code> (all columns).</li>
+    <li>Click Finish.</li>
+  </ol>
+
+  <p>Then add a Label control and use the code below to display data in Page_Load:</p>
+
+  <div class="code-block">
+    <div class="code-label">View2.aspx.cs — Page_Load using DataView</div>
+    <pre><span class="nm">DataView</span> dv = <span class="kw">new</span> <span class="nm">DataView</span>();
+dv = (<span class="nm">DataView</span>)<span class="nm">AccessDataSource1</span>.<span class="fn">Select</span>(<span class="nm">DataSourceSelectArguments</span>.Empty);
+this.Label1.Text = <span class="st">""</span>;
+<span class="kw">for</span> (<span class="kw">int</span> i = <span class="st">0</span>; i &lt; dv.Count; i++) {
+    this.Label1.Text += <span class="st">"ID:"</span> + dv[i].Row[<span class="st">"ID"</span>].<span class="fn">ToString</span>() + <span class="st">"&lt;br /&gt;"</span>
+                      + <span class="st">"FirstName: "</span> + dv[i].Row[<span class="st">"FirstName"</span>].<span class="fn">ToString</span>() + <span class="st">"&lt;br /&gt;"</span>;
+}</pre>
+  </div>
+
+  <h3>Tutorial 02 — INSERT Using AccessDataSource</h3>
+  <p>To enable INSERT, you must configure the <strong>InsertQuery</strong> property in the Advanced SQL Generation Options (check <strong>"Generate INSERT, UPDATE, and DELETE Statements"</strong>). Then map each parameter to a control:</p>
+
+  <table class="styled-table">
+    <tr><th>Parameter</th><th>Source Control</th><th>ControlID</th></tr>
+    <tr><td>FirstName</td><td>Control</td><td>TextBox1</td></tr>
+    <tr><td>LastName</td><td>Control</td><td>TextBox2</td></tr>
+    <tr><td>Gender</td><td>Control</td><td>DropDownList1</td></tr>
+    <tr><td>YearBorn</td><td>Control</td><td>DropDownList2</td></tr>
+  </table>
+
+  <div class="code-block">
+    <div class="code-label">Add2.aspx.cs — Button1_Click</div>
+    <pre><span class="kw">protected void</span> <span class="fn">Button1_Click</span>(<span class="kw">object</span> sender, <span class="nm">EventArgs</span> e) {
+    this.<span class="nm">AccessDataSource1</span>.<span class="fn">Insert</span>();  <span class="cm">// triggers the configured INSERT</span>
+    <span class="nm">Response</span>.<span class="fn">Redirect</span>(<span class="st">"View2.aspx"</span>);
+}</pre>
+  </div>
+
+  <h3>Tutorial 03 — UPDATE Using AccessDataSource</h3>
+  <p>For updates, configure the <strong>UpdateQuery</strong> property. The ID dropdown should have <code>AutoPostBack = true</code>. When the user selects an ID, the DropDownList_SelectedIndexChanged handler populates the form fields using a separate AccessDataSource query:</p>
+
+  <div class="code-block">
+    <div class="code-label">Modify2.aspx.cs — SelectedIndexChanged handler</div>
+    <pre><span class="nm">AccessDataSource</span> ads = <span class="kw">new</span> <span class="nm">AccessDataSource</span>();
+ads.DataFile = <span class="st">"App_Data\\db1.mdb"</span>;
+ads.SelectParameters.<span class="fn">Add</span>(<span class="st">"ID"</span>, <span class="nm">TypeCode</span>.Int16, this.DropDownList1.Text);
+ads.SelectCommand = <span class="st">"SELECT * FROM [Members] WHERE [ID] = @ID"</span>;
+<span class="nm">DataView</span> dv = (<span class="nm">DataView</span>)ads.<span class="fn">Select</span>(<span class="nm">DataSourceSelectArguments</span>.Empty);
+<span class="kw">if</span> (dv.Count == <span class="st">0</span>) <span class="kw">return</span>;
+this.TextBox1.Text = dv[<span class="st">0</span>].Row[<span class="st">"FirstName"</span>].<span class="fn">ToString</span>();
+this.TextBox2.Text = dv[<span class="st">0</span>].Row[<span class="st">"LastName"</span>].<span class="fn">ToString</span>();</pre>
+  </div>
+
+  <h3>Tutorial 04 — DELETE Using AccessDataSource</h3>
+
+  <div class="code-block">
+    <div class="code-label">Remove2.aspx.cs — Delete button handler</div>
+    <pre><span class="kw">protected void</span> <span class="fn">Button1_Click</span>(<span class="kw">object</span> sender, <span class="nm">EventArgs</span> e) {
+    this.<span class="nm">AccessDataSource1</span>.<span class="fn">Delete</span>();  <span class="cm">// uses configured DeleteQuery</span>
+    <span class="nm">Response</span>.<span class="fn">Redirect</span>(<span class="st">"Remove2.aspx"</span>);
+}</pre>
+  </div>
+
+  <div class="callout callout-warn"><span class="callout-title">⚠️ Parameter Mapping</span>When configuring the DeleteQuery, you must map the <strong>ID</strong> parameter to <strong>DropDownList1.SelectedValue</strong>. Without this mapping, the DELETE statement won't know which record to remove.</div>
+
+  <h3>OleDb vs AccessDataSource — Key Differences</h3>
+
+  <table class="styled-table">
+    <tr><th>Feature</th><th>OleDb (Manual)</th><th>AccessDataSource</th></tr>
+    <tr><td>Code required</td><td>More code</td><td>Less code</td></tr>
+    <tr><td>Flexibility</td><td>High</td><td>Moderate</td></tr>
+    <tr><td>Wizard support</td><td>No</td><td>Yes</td></tr>
+    <tr><td>Parameter handling</td><td>Manual</td><td>Automatic via UI</td></tr>
+    <tr><td>Best for</td><td>Complex queries</td><td>Simple CRUD</td></tr>
+  </table>
+  `
+},
+{
+  num:'04', title:'Validation Controls',
+  content:`
+  <h3>Why Use Validation Controls?</h3>
+  <p>ASP.NET provides 6 built-in server-side validation controls. They run on the server (and optionally the client via JavaScript) to ensure user input meets requirements before form processing continues.</p>
+
+  <table class="styled-table">
+    <tr><th>Control</th><th>Purpose</th></tr>
+    <tr><td>RequiredFieldValidator</td><td>Ensures the field is not empty</td></tr>
+    <tr><td>CompareValidator</td><td>Compares value to a constant or another control</td></tr>
+    <tr><td>RangeValidator</td><td>Checks value is within a min/max range</td></tr>
+    <tr><td>RegularExpressionValidator</td><td>Validates against a regex pattern</td></tr>
+    <tr><td>CustomValidator</td><td>Your own validation logic (server-side method)</td></tr>
+    <tr><td>ValidationSummary</td><td>Displays all validation errors in one place</td></tr>
+  </table>
+
+  <h3>RequiredFieldValidator</h3>
+  <p>The most basic validator. It requires that the user enters any value into the associated input control. Key properties:</p>
+  <ul>
+    <li><strong>ControlToValidate</strong> — ID of the input control to watch</li>
+    <li><strong>ErrorMessage</strong> — Text shown if validation fails</li>
+  </ul>
+
+  <div class="code-block">
+    <div class="code-label">ASPX markup</div>
+    <pre><span class="nm">&lt;asp:RequiredFieldValidator</span>
+    ID=<span class="st">"RequiredFieldValidator1"</span>
+    runat=<span class="st">"server"</span>
+    ControlToValidate=<span class="st">"TextBox1"</span>
+    ErrorMessage=<span class="st">"Required Field."</span>&gt;
+<span class="nm">&lt;/asp:RequiredFieldValidator&gt;</span></pre>
+  </div>
+
+  <h3>CompareValidator</h3>
+  <p>Performs three types of comparisons:</p>
+  <ul>
+    <li><strong>Constant comparison</strong> — value vs a fixed constant (e.g., must be &gt; 0)</li>
+    <li><strong>Control comparison</strong> — value vs another control's value (e.g., password == confirm password)</li>
+    <li><strong>Type check</strong> — ensures the entered value is a specific data type (most useful!)</li>
+  </ul>
+
+  <div class="code-block">
+    <div class="code-label">Type check — ensures integer input</div>
+    <pre><span class="nm">&lt;asp:CompareValidator</span>
+    ControlToValidate=<span class="st">"TextBox1"</span>
+    ErrorMessage=<span class="st">"Invalid Value. Integer Required!"</span>
+    Operator=<span class="st">"DataTypeCheck"</span>
+    Type=<span class="st">"Integer"</span>&gt;
+<span class="nm">&lt;/asp:CompareValidator&gt;</span></pre>
+  </div>
+
+  <div class="code-block">
+    <div class="code-label">Control comparison — password match</div>
+    <pre><span class="nm">&lt;asp:CompareValidator</span>
+    ControlToValidate=<span class="st">"TextBox1"</span>
+    ControlToCompare=<span class="st">"TextBox2"</span>
+    ErrorMessage=<span class="st">"Validation Failed"</span>
+    EnableClientScript=<span class="st">"False"</span>&gt;
+<span class="nm">&lt;/asp:CompareValidator&gt;</span></pre>
+  </div>
+
+  <h3>RangeValidator</h3>
+  <p>Checks that a value falls between <code>MinimumValue</code> and <code>MaximumValue</code>. Works with String, Integer, Double, Date, or Currency types:</p>
+
+  <div class="code-block">
+    <div class="code-label">Month range 1–12</div>
+    <pre><span class="nm">&lt;asp:RangeValidator</span>
+    ControlToValidate=<span class="st">"TextBox1"</span>
+    ErrorMessage=<span class="st">"The month must be between 1 and 12"</span>
+    MaximumValue=<span class="st">"12"</span>
+    MinimumValue=<span class="st">"1"</span>
+    Type=<span class="st">"Integer"</span>&gt;
+<span class="nm">&lt;/asp:RangeValidator&gt;</span></pre>
+  </div>
+
+  <h3>RegularExpressionValidator</h3>
+  <p>Uses a <strong>regex pattern</strong> to validate data. Visual Studio includes predefined expressions for common formats (email, phone, ZIP codes, URLs). Set the pattern via <code>ValidationExpression</code>:</p>
+
+  <div class="code-block">
+    <div class="code-label">Email validation using regex</div>
+    <pre><span class="nm">&lt;asp:RegularExpressionValidator</span>
+    ControlToValidate=<span class="st">"TextBox1"</span>
+    ErrorMessage=<span class="st">"Invalid email address"</span>
+    ValidationExpression=<span class="st">"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"</span>&gt;
+<span class="nm">&lt;/asp:RegularExpressionValidator&gt;</span></pre>
+  </div>
+
+  <h3>CustomValidator</h3>
+  <p>When built-in validators don't meet your needs, write your own. The validator calls a server-side method via <code>OnServerValidate</code>. The method receives <code>ServerValidateEventArgs</code> with two properties: <strong>IsValid</strong> (set to true/false) and <strong>Value</strong> (the user's input):</p>
+
+  <div class="code-block">
+    <div class="code-label">Username length validation (8–16 chars)</div>
+    <pre><span class="kw">protected void</span> <span class="fn">CustomValidator1_ServerValidate</span>(
+    <span class="kw">object</span> source, <span class="nm">ServerValidateEventArgs</span> args)
+{
+    <span class="kw">if</span> (args.Value.Length &lt; <span class="st">8</span> || args.Value.Length &gt; <span class="st">16</span>)
+        args.IsValid = <span class="kw">false</span>;
+    <span class="kw">else</span>
+        args.IsValid = <span class="kw">true</span>;
+}</pre>
+  </div>
+
+  <h3>ValidationSummary</h3>
+  <p>Collects all error messages from validators on the page and displays them in one place. Use it alongside validators where each validator shows only <code>*</code> next to the invalid field:</p>
+
+  <div class="code-block">
+    <div class="code-label">ValidationSummary markup</div>
+    <pre><span class="cm">&lt;!-- Validators show just an asterisk next to their field --&gt;</span>
+<span class="nm">&lt;asp:RequiredFieldValidator</span> ...
+    ErrorMessage=<span class="st">"First name is required."</span>&gt;*&lt;/asp:RequiredFieldValidator&gt;
+
+<span class="cm">&lt;!-- Summary lists all error messages together --&gt;</span>
+<span class="nm">&lt;asp:ValidationSummary</span>
+    HeaderText=<span class="st">"One or more fields were entered incorrectly."</span>
+    ShowMessageBox=<span class="st">"False"</span> /&gt;</pre>
+  </div>
+
+  <div class="callout callout-info"><span class="callout-title">💡 ShowMessageBox</span>Set <code>ShowMessageBox="True"</code> to display a JavaScript pop-up alert listing all errors. The user must dismiss the popup before correcting their input. Set <code>DisplayMode</code> to <em>List</em>, <em>BulletList</em>, or <em>SingleParagraph</em>.</div>
+  `
+},
+{
+  num:'05', title:'Form Authentication',
+  content:`
+  <h3>Authentication vs Authorization</h3>
+  <ul>
+    <li><strong>Authentication</strong> — Verifying identity (who are you?) — checking username & password</li>
+    <li><strong>Authorization</strong> — Determining access rights (what can you do?) — checking user role</li>
+  </ul>
+
+  <p>In this tutorial, a <strong>Users</strong> table stores credentials with three roles:</p>
+
+  <table class="styled-table">
+    <tr><th>Username</th><th>Password</th><th>UserType</th></tr>
+    <tr><td>admin</td><td>admin</td><td>admin</td></tr>
+    <tr><td>user</td><td>user</td><td>user</td></tr>
+    <tr><td>user1…user7</td><td>user1…user7</td><td>user</td></tr>
+  </table>
+
+  <h3>Creating the Login Page (Login.aspx)</h3>
+  <p>The login page queries the Users table, validates credentials, stores user info in <strong>Session variables</strong>, then redirects to the appropriate page based on user role:</p>
+
+  <div class="code-block">
+    <div class="code-label">Login.aspx.cs — Button1_Click</div>
+    <pre><span class="nm">AccessDataSource</span> ads = <span class="kw">new</span> <span class="nm">AccessDataSource</span>();
+ads.DataFile = <span class="st">"~/App_Data/Auth.mdb"</span>;
+ads.SelectParameters.<span class="fn">Add</span>(<span class="st">"Username"</span>, this.TextBox1.Text);
+ads.SelectParameters.<span class="fn">Add</span>(<span class="st">"Password"</span>, this.TextBox2.Text);
+ads.SelectCommand =
+    <span class="st">"SELECT * FROM [Users] WHERE [Username] = @Username AND [Password] = @Password"</span>;
+
+<span class="nm">DataView</span> dv = (<span class="nm">DataView</span>)ads.<span class="fn">Select</span>(<span class="nm">DataSourceSelectArguments</span>.Empty);
+<span class="kw">if</span> (dv.Count == <span class="st">0</span>) {
+    this.Label1.ForeColor = <span class="nm">System.Drawing.Color</span>.Red;
+    this.Label1.Text = <span class="st">"Login Failed!"</span>;
+    <span class="kw">return</span>;
+}
+<span class="cm">// Store user info in session</span>
+this.Session[<span class="st">"Username"</span>] = dv[<span class="st">0</span>].Row[<span class="st">"Username"</span>].<span class="fn">ToString</span>();
+this.Session[<span class="st">"UserType"</span>] = dv[<span class="st">0</span>].Row[<span class="st">"UserType"</span>].<span class="fn">ToString</span>();
+
+<span class="cm">// Redirect based on role</span>
+<span class="kw">if</span> (Session[<span class="st">"UserType"</span>].<span class="fn">Equals</span>(<span class="st">"user"</span>))
+    <span class="nm">Response</span>.<span class="fn">Redirect</span>(<span class="st">"MembersOnlyPage1.aspx"</span>);
+<span class="kw">else if</span> (Session[<span class="st">"UserType"</span>].<span class="fn">Equals</span>(<span class="st">"admin"</span>))
+    <span class="nm">Response</span>.<span class="fn">Redirect</span>(<span class="st">"AdminOnlyPage1.aspx"</span>);</pre>
+  </div>
+
+  <h3>Creating a Members Only Page (MembersOnlyPage1.aspx)</h3>
+  <p>The members page uses a <strong>DetailsView</strong> control with Enable Editing enabled. The page redirects to Login if the session doesn't contain a valid user role:</p>
+
+  <div class="code-block">
+    <div class="code-label">MembersOnlyPage1.aspx.cs — Page_Load</div>
+    <pre><span class="kw">protected void</span> <span class="fn">Page_Load</span>(<span class="kw">object</span> sender, <span class="nm">EventArgs</span> e) {
+    <span class="cm">// Redirect to login if no valid session</span>
+    <span class="kw">if</span> (Session[<span class="st">"UserType"</span>] == <span class="kw">null</span> ||
+        !Session[<span class="st">"UserType"</span>].<span class="fn">Equals</span>(<span class="st">"user"</span>))
+        <span class="nm">Response</span>.<span class="fn">Redirect</span>(<span class="st">"Login.aspx"</span>);
+}</pre>
+  </div>
+
+  <h3>Logout — Destroying the Session</h3>
+
+  <div class="code-block">
+    <div class="code-label">Logout LinkButton handler</div>
+    <pre><span class="kw">protected void</span> <span class="fn">LinkButton1_Click</span>(<span class="kw">object</span> sender, <span class="nm">EventArgs</span> e) {
+    Session.<span class="fn">Abandon</span>();  <span class="cm">// destroys all session variables</span>
+    <span class="nm">Response</span>.<span class="fn">Redirect</span>(<span class="st">"Login.aspx"</span>);
+}</pre>
+  </div>
+
+  <h3>Creating an Admin Only Page (AdminOnlyPage1.aspx)</h3>
+  <p>The admin page uses a <strong>GridView</strong> with Enable Paging, Sorting, Editing, and Deleting all checked. The session check requires <code>"admin"</code> user type:</p>
+
+  <div class="code-block">
+    <div class="code-label">AdminOnlyPage1.aspx.cs — Page_Load</div>
+    <pre><span class="kw">protected void</span> <span class="fn">Page_Load</span>(<span class="kw">object</span> sender, <span class="nm">EventArgs</span> e) {
+    <span class="kw">if</span> (Session[<span class="st">"UserType"</span>] == <span class="kw">null</span> ||
+        !Session[<span class="st">"UserType"</span>].<span class="fn">Equals</span>(<span class="st">"admin"</span>))
+        <span class="nm">Response</span>.<span class="fn">Redirect</span>(<span class="st">"Login.aspx"</span>);
+}</pre>
+  </div>
+
+  <h3>Architecture Overview</h3>
+  <table class="styled-table">
+    <tr><th>Page</th><th>Control</th><th>Access</th><th>Purpose</th></tr>
+    <tr><td>Login.aspx</td><td>TextBox, Button, Label</td><td>Everyone</td><td>Authenticate users</td></tr>
+    <tr><td>MembersOnlyPage1.aspx</td><td>DetailsView (edit own record)</td><td>UserType = "user"</td><td>View/edit own profile</td></tr>
+    <tr><td>AdminOnlyPage1.aspx</td><td>GridView (full CRUD)</td><td>UserType = "admin"</td><td>Manage all users</td></tr>
+  </table>
+
+  <div class="callout callout-warn"><span class="callout-title">⚠️ Security Note</span>Always store sensitive pages behind session checks. Never rely on hiding links alone — users can directly type URLs. The <code>Page_Load</code> session check is your security gate.</div>
+
+  <div class="callout callout-success"><span class="callout-title">✅ Session.Abandon()</span><code>Session.Abandon()</code> immediately destroys the current session and all its variables. This is the correct way to implement logout — don't just delete individual session keys.</div>
+  `
+}
+];
+
+// ============================================================
+// DATA — QUESTIONS
+// ============================================================
+const questionBank = [
+// TOPIC 0 — ASP.NET Intro (10 questions)
+[
+  { q:"What command in Visual Studio 2005 is used to create a new web site?", type:"mc", opts:["File → Open → Web Site","File → New → Web Site","View → New → Web Site","Project → Add Web Site"], ans:1, exp:"The File → New → Web Site command opens the New Web Site dialog in Visual Studio 2005." },
+  { q:"Which option must be checked when adding a new Web Form to keep the logic separate from the markup?", type:"mc", opts:["Select Master Page","Auto Compile","Place Code in Separate File","Enable AJAX"], ans:2, exp:"Checking 'Place Code in Separate File' creates a .aspx.cs code-behind file separate from the .aspx markup file." },
+  { q:"Which HTTP method stores form data in the URL query string?", type:"mc", opts:["POST","PUT","GET","DELETE"], ans:2, exp:"GET appends form data to the URL as query string parameters, accessible via Request.QueryString." },
+  { q:"What ASP.NET collection is used to access POST form data?", type:"mc", opts:["Request.QueryString","Request.Form","Request.ServerVariables","Response.Form"], ans:1, exp:"POST data is accessed through Request.Form['fieldname'] in ASP.NET." },
+  { q:"Session variables in ASP.NET are automatically deleted when the browser is closed. True or False?", type:"tf", opts:["True","False"], ans:0, exp:"True — by default, sessions are stored server-side and expire on browser close or after a timeout (typically 20 minutes)." },
+  { q:"Which class is used to write text to a file in ASP.NET?", type:"mc", opts:["System.IO.FileReader","System.IO.BinaryWriter","System.IO.StreamWriter","System.IO.TextAppender"], ans:2, exp:"System.IO.StreamWriter is used to write text to a file. It wraps a FileStream object." },
+  { q:"What does the Page.Server.MapPath() method do?", type:"mc", opts:["Returns the server IP address","Converts a virtual path to a physical file path","Encrypts a file path","Redirects to a mapped URL"], ans:1, exp:"Server.MapPath() translates a relative virtual path (like 'App_Data/Data.txt') to the full physical path on the server." },
+  { q:"What method is used to break a string into parts using delimiters?", type:"mc", opts:["String.Join()","String.Split()","String.Trim()","String.Substring()"], ans:1, exp:"The String.Split() method takes an array of delimiter chars and returns an array of substrings." },
+  { q:"In the code-behind model, which file extension holds the C# logic for a web form?", type:"mc", opts:[".aspx",".cs",".aspx.cs",".config"], ans:2, exp:"The .aspx.cs file (code-behind) contains the C# event handlers and logic for the corresponding .aspx markup file." },
+  { q:"To prevent re-initializing controls on a page postback, what check should you add in Page_Load?", type:"mc", opts:["if (Page.IsNew)","if (Page.IsPostBack) return;","if (Request.IsAuthenticated)","if (ViewState.IsEmpty)"], ans:1, exp:"if (Page.IsPostBack) return; prevents the initialization code from running again on postbacks, preserving dropdown selections etc." }
+],
+// TOPIC 1 — OleDb (10 questions)
+[
+  { q:"Which namespace contains the OleDbConnection class?", type:"mc", opts:["System.Data.SqlClient","System.Data.OleDb","System.Web.Data","System.Database.OleDb"], ans:1, exp:"All OleDb classes (OleDbConnection, OleDbCommand, OleDbDataReader) are in System.Data.OleDb." },
+  { q:"Which method returns a result set from a SELECT statement?", type:"mc", opts:["ExecuteNonQuery()","ExecuteScalar()","ExecuteReader()","ExecuteQuery()"], ans:2, exp:"ExecuteReader() executes a SELECT statement and returns an OleDbDataReader that allows reading rows one at a time." },
+  { q:"What does ExecuteNonQuery() return?", type:"mc", opts:["A DataReader object","A DataSet","The number of rows affected","A boolean"], ans:2, exp:"ExecuteNonQuery() returns an integer representing the number of rows affected by the INSERT/UPDATE/DELETE command." },
+  { q:"What is the OleDb provider string for an MS Access 2000/2003 (.mdb) database?", type:"mc", opts:["Microsoft.ACE.OLEDB.12.0","Microsoft.Jet.OLEDB.4.0","MSDAORA.1","MSDASQL"], ans:1, exp:"Microsoft.Jet.OLEDB.4.0 is the provider for .mdb files. For .accdb (Access 2007+), use Microsoft.ACE.OLEDB.12.0." },
+  { q:"Which method of OleDbDataReader is used to advance to the next row?", type:"mc", opts:["Next()","Advance()","Read()","MoveNext()"], ans:2, exp:"dr.Read() advances the OleDbDataReader to the next row. It returns true if a row is available, false if there are no more rows." },
+  { q:"What should you do to avoid re-populating DropDownLists when a button is clicked (postback)?", type:"mc", opts:["Set DropDownList.DataBind()","Check if (Page.IsPostBack) return; at start of Page_Load","Use Session variables","Call Page.Refresh()"], ans:1, exp:"Using if (Page.IsPostBack) return; in Page_Load prevents the DropDownList from being repopulated and losing its selection on postback." },
+  { q:"In an SQL INSERT with parameterised queries in OleDb, which placeholder syntax is used?", type:"mc", opts:["?name","@name",":name","#{name}"], ans:1, exp:"OleDb uses @paramname syntax for named parameters (e.g., @FirstName). The actual ? positional syntax is used by some older OleDb drivers but named parameters are the modern approach." },
+  { q:"To delete a record using OleDb, which SQL command is used?", type:"mc", opts:["REMOVE FROM [Table] WHERE ...","DELETE FROM [Table] WHERE ...","DROP FROM [Table] WHERE ...","ERASE FROM [Table] WHERE ..."], ans:1, exp:"The correct SQL for deletion is DELETE FROM [TableName] WHERE [condition]." },
+  { q:"After calling ExecuteNonQuery() for an UPDATE, what should you do next?", type:"mc", opts:["Open the connection","Call conn.Begin()","Close the connection and redirect","Call dr.Close()"], ans:2, exp:"After executing a non-query command, close the OleDbConnection using conn.Close() to release resources, then redirect as needed." },
+  { q:"What is the purpose of setting DropDownList.AutoPostBack = true?", type:"mc", opts:["Automatically submits the entire form","Triggers a server postback when selection changes","Refreshes all controls on the page","Hides the dropdown after selection"], ans:1, exp:"AutoPostBack = true causes the page to post back to the server whenever the user changes the dropdown selection, allowing the SelectedIndexChanged event to fire." }
+],
+// TOPIC 2 — AccessDataSource (10 questions)
+[
+  { q:"What is data binding in ASP.NET?", type:"mc", opts:["Encrypting database connections","Connecting a data source to controls so data displays automatically","Manually writing SQL for each page","Converting database files to XML"], ans:1, exp:"Data binding connects a data source (like AccessDataSource) to controls (like GridView), so data is automatically retrieved and displayed." },
+  { q:"To enable INSERT, UPDATE, and DELETE in AccessDataSource, what must you check in the wizard?", type:"mc", opts:["Use Optimistic Concurrency","Generate INSERT, UPDATE, and DELETE Statements","Enable AJAX updates","Auto-generate primary keys"], ans:1, exp:"In the Advanced SQL Generation Options dialog, checking 'Generate INSERT, UPDATE, and DELETE Statements' creates the needed SQL automatically." },
+  { q:"Which method of AccessDataSource is called in code to perform an INSERT?", type:"mc", opts:["AccessDataSource1.Add()","AccessDataSource1.Insert()","AccessDataSource1.Execute()","AccessDataSource1.Save()"], ans:1, exp:"AccessDataSource1.Insert() triggers the configured INSERT statement with the mapped parameters." },
+  { q:"What control is used to display a single record with edit capability?", type:"mc", opts:["GridView","ListView","DetailsView","FormView"], ans:2, exp:"DetailsView displays a single record and can be configured with Enable Editing, Enable Inserting, and Enable Deleting." },
+  { q:"What does dv.Count return when querying a DataView?", type:"mc", opts:["The number of columns","The number of rows in the result","The size of the database","The number of tables"], ans:1, exp:"dv.Count returns the number of rows (DataRowView objects) in the DataView result set." },
+  { q:"To access the FirstName from the first row of a DataView 'dv', which syntax is correct?", type:"mc", opts:["dv['FirstName']","dv.Row[0]['FirstName']","dv[0].Row['FirstName'].ToString()","dv.Rows[0]['FirstName']"], ans:2, exp:"dv[0] accesses the first DataRowView, .Row accesses the DataRow, and ['FirstName'] accesses the column value." },
+  { q:"Which control allows full CRUD management in a tabular grid with paging and sorting?", type:"mc", opts:["DetailsView","DataList","GridView","Repeater"], ans:2, exp:"GridView supports paging, sorting, editing, and deleting in a tabular format, making it ideal for admin pages." },
+  { q:"In the AccessDataSource SelectQuery configuration, which parameter source would you use to filter by the current user's session?", type:"mc", opts:["QueryString","Control","Profile","Session"], ans:3, exp:"Select 'Session' as the parameter source and specify the session field name (e.g., 'Username') to filter database queries by the logged-in user." },
+  { q:"What is the purpose of calling Page_SaveStateComplete event handler?", type:"mc", opts:["To save session data","To display the first row values after page state is saved","To encrypt viewstate","To reset all form fields"], ans:1, exp:"Page_SaveStateComplete fires after ViewState is saved, allowing you to set control values that need to reflect the current state without causing ViewState conflicts." },
+  { q:"AccessDataSource uses which property to specify the .mdb file location?", type:"mc", opts:["ConnectionString","DataFile","DatabasePath","SourceFile"], ans:1, exp:"The DataFile property of AccessDataSource specifies the path to the .mdb or .accdb Access database file." }
+],
+// TOPIC 3 — Validation (10 questions)
+[
+  { q:"Which validator ensures the user does not leave a field blank?", type:"mc", opts:["CompareValidator","RangeValidator","RequiredFieldValidator","CustomValidator"], ans:2, exp:"RequiredFieldValidator ensures the user enters some value (any value) in the associated input control." },
+  { q:"Which validator checks that a value is between two specified limits?", type:"mc", opts:["RequiredFieldValidator","CompareValidator","RangeValidator","RegularExpressionValidator"], ans:2, exp:"RangeValidator checks that input falls between MinimumValue and MaximumValue using the specified Type (Integer, Date, etc.)." },
+  { q:"The CompareValidator with Operator='DataTypeCheck' and Type='Integer' will:", type:"mc", opts:["Compare two textboxes for equality","Ensure the input is a valid integer","Check if the value is between 0 and 100","Validate against a regex pattern"], ans:1, exp:"DataTypeCheck operator simply verifies the entered value can be parsed as the specified data type (Integer in this case)." },
+  { q:"Which property of RegularExpressionValidator holds the regex pattern?", type:"mc", opts:["PatternExpression","ValidationExpression","RegexPattern","MatchPattern"], ans:1, exp:"The ValidationExpression property holds the regular expression pattern used to validate the input." },
+  { q:"In a CustomValidator, what property in ServerValidateEventArgs do you set to indicate the input is invalid?", type:"mc", opts:["args.Failed = true","args.IsValid = false","args.Result = 'invalid'","args.Error = true"], ans:1, exp:"Set args.IsValid = false to indicate validation failure, or args.IsValid = true for valid input." },
+  { q:"What does ValidationSummary's ShowMessageBox='True' do?", type:"mc", opts:["Shows a floating tooltip","Highlights all invalid fields in red","Displays a JavaScript alert popup listing all errors","Sends an email with the errors"], ans:2, exp:"ShowMessageBox='True' triggers a JavaScript alert (popup) that lists all validation error messages when the page is submitted with errors." },
+  { q:"You can attach more than one validation control to a single input control. True or False?", type:"tf", opts:["True","False"], ans:0, exp:"True — you can combine validators. For example, a TextBox can have both a RequiredFieldValidator AND a RangeValidator." },
+  { q:"Which DisplayMode for ValidationSummary wraps all errors into a single text block?", type:"mc", opts:["List","BulletList","SingleParagraph","InlineDisplay"], ans:2, exp:"SingleParagraph combines all error messages into one paragraph. List uses newlines, BulletList uses bullet points." },
+  { q:"By default, validation controls run on:", type:"mc", opts:["Client side only","Server side only","Both client and server side","Neither — they must be manually triggered"], ans:2, exp:"ASP.NET validation controls run on both client side (via JavaScript for immediate feedback) and server side (for security). You can disable client-side with EnableClientScript='False'." },
+  { q:"What is the OnServerValidate attribute used for in CustomValidator?", type:"mc", opts:["Specifies the CSS class for the error message","Names the server-side method that performs validation logic","Enables server-side caching of validation results","Disables client-side validation"], ans:1, exp:"OnServerValidate specifies the name of the C# method (event handler) that contains your custom validation logic." }
+],
+// TOPIC 4 — Authentication (10 questions)
+[
+  { q:"What is the process of verifying a user's identity called?", type:"mc", opts:["Authorization","Authentication","Validation","Verification"], ans:1, exp:"Authentication is the process of verifying identity (checking who you are). Authorization is what happens next — determining what you're allowed to do." },
+  { q:"In the tutorial's login system, where is the user's role stored after successful login?", type:"mc", opts:["Cookie","Database","Session variable","ViewState"], ans:2, exp:"After login, the user's role is stored as Session['UserType'] = 'user' or 'admin', enabling role-based access on other pages." },
+  { q:"What code is used to immediately destroy a session and all its variables?", type:"mc", opts:["Session.Clear()","Session.Remove('all')","Session.Abandon()","Session.Dispose()"], ans:2, exp:"Session.Abandon() destroys the entire session, invalidating all session variables. This is the correct way to implement logout." },
+  { q:"If Session['UserType'] is null or not 'user', what should a Members Only page do?", type:"mc", opts:["Show an error message","Redirect to Login.aspx","Show empty content","Display a 404 page"], ans:1, exp:"The page should call Response.Redirect('Login.aspx') to send unauthenticated users to the login page." },
+  { q:"Which ASP.NET control is used on the Members Only page to display and edit a single user record?", type:"mc", opts:["GridView","ListView","DetailsView","FormView"], ans:2, exp:"DetailsView is configured with Enable Editing on the Members Only page to show one record at a time." },
+  { q:"Which control is used on the Admin Only page to display all users with full management features?", type:"mc", opts:["DetailsView","GridView","DataGrid","Repeater"], ans:1, exp:"GridView with Enable Paging, Sorting, Editing, and Deleting is used on the Admin Only page." },
+  { q:"The Admin Only page checks Session['UserType'] for which value?", type:"mc", opts:["'user'","'admin'","'superuser'","'manager'"], ans:1, exp:"The admin page checks !Session['UserType'].Equals('admin') and redirects to login if the condition is true." },
+  { q:"In the SelectQuery for the Members Only page, what parameter source filters data by the logged-in user?", type:"mc", opts:["QueryString","Control","Session","Cookie"], ans:2, exp:"The SELECT uses a Session parameter: SELECT * FROM [Users] WHERE [Username] = @Username, where @Username comes from Session['Username']." },
+  { q:"What does Session.Abandon() cause when the user visits another restricted page?", type:"mc", opts:["The page loads normally","Session variables are empty so the page redirects to login","An error is thrown","The browser crashes"], ans:1, exp:"After Session.Abandon(), all session variables are gone. The Page_Load check finds Session['UserType'] == null and redirects to Login.aspx." },
+  { q:"Which event handler is added to both the Members and Admin pages to trigger the logout action?", type:"mc", opts:["Button_Click","ImageButton_Click","LinkButton_Click","HyperLink_Click"], ans:2, exp:"A LinkButton control is added to the page. Its Click event handler calls Session.Abandon() and redirects to the login page." }
+]
+];
+
+// ============================================================
+// STATE
+// ============================================================
+let currentLesson = 0;
+let currentExamTopic = null;
+let currentQuestions = [];
+let currentQIndex = 0;
+let score = 0;
+let answered = false;
+let progressData = JSON.parse(localStorage.getItem('aspnet_progress') || '{}');
+// progressData shape: { lessons: {0:true,...}, exams: [{topic,score,total,date},...] }
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+function showScreen(id, btn) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  if (id === 'progress') renderProgress();
+}
+
+// ============================================================
+// LESSONS
+// ============================================================
+function openLesson(idx) {
+  currentLesson = idx;
+  document.querySelectorAll('.lesson-nav-item').forEach((el,i) => {
+    el.classList.toggle('active', i === idx);
+  });
+
+  const l = lessons[idx];
+  const container = document.getElementById('lesson-content');
+
+  // Mark as read
+  if (!progressData.lessons) progressData.lessons = {};
+  progressData.lessons[idx] = true;
+  saveProgress();
+
+  // Update nav dots
+  Object.keys(progressData.lessons).forEach(k => {
+    const el = document.getElementById('nav-' + k);
+    if (el) el.classList.add('done');
+  });
+
+  container.innerHTML = `
+    <div class="lesson-meta">
+      <span class="lesson-number">Tutorial ${l.num}</span>
+      <h2 class="lesson-title">${l.title}</h2>
+    </div>
+    <div class="lesson-body">${l.content}</div>
+    <div class="lesson-footer">
+      <div style="font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--text3)">
+        ${idx > 0 ? `<button class="btn btn-secondary" style="padding:0.4rem 0.9rem;font-size:0.72rem;" onclick="openLesson(${idx-1})">← Previous</button>` : ''}
+      </div>
+      <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+        <button class="btn btn-accent2" style="padding:0.5rem 1rem;font-size:0.75rem;" onclick="startExam(${idx}); showScreen('exam', document.querySelector('nav button:nth-child(3)'))">Test on This Topic →</button>
+        ${idx < lessons.length-1 ? `<button class="btn btn-primary" style="padding:0.5rem 1rem;font-size:0.75rem;" onclick="openLesson(${idx+1})">Next →</button>` : ''}
+      </div>
+    </div>
+  `;
+  container.scrollTop = 0;
+}
+
+// ============================================================
+// EXAM
+// ============================================================
+function startExam(topicIdx) {
+  document.getElementById('exam-select').style.display = 'none';
+  const qa = document.getElementById('quiz-area');
+  qa.classList.add('active');
+  qa.style.display = 'block';
+  document.getElementById('results-panel').classList.remove('show');
+  document.getElementById('question-container').style.display = '';
+
+  if (topicIdx === 'all') {
+    // Pick 5 from each topic
+    currentQuestions = [];
+    questionBank.forEach(bank => {
+      const shuffled = [...bank].sort(() => Math.random()-0.5);
+      currentQuestions.push(...shuffled.slice(0,5));
+    });
+    currentExamTopic = 'all';
+    document.getElementById('exam-topic-title').textContent = '🏆 Full Comprehensive Exam (25 Questions)';
+  } else {
+    currentQuestions = [...questionBank[topicIdx]].sort(() => Math.random()-0.5);
+    currentExamTopic = topicIdx;
+    document.getElementById('exam-topic-title').textContent = `Tutorial 0${topicIdx+1} — ${lessons[topicIdx].title}`;
+  }
+
+  currentQIndex = 0;
+  score = 0;
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = currentQuestions[currentQIndex];
+  const total = currentQuestions.length;
+  answered = false;
+
+  document.getElementById('q-counter').textContent = `Question ${currentQIndex+1} of ${total}`;
+  document.getElementById('prog-fill').style.width = `${((currentQIndex)/total)*100}%`;
+  document.getElementById('btn-check').style.display = 'inline-block';
+  document.getElementById('btn-next').style.display = 'none';
+
+  const letters = ['A','B','C','D','E'];
+  const badgeClass = q.type === 'tf' ? 'tf' : (q.type === 'multi' ? 'multi' : '');
+  const typeLabel = q.type === 'tf' ? 'True / False' : 'Multiple Choice';
+
+  let optHtml = q.opts.map((o,i) => `
+    <button class="option-btn" id="opt-${i}" onclick="selectOpt(${i})">
+      <span class="opt-letter">${letters[i]}</span>
+      <span>${o}</span>
+    </button>
+  `).join('');
+
+  document.getElementById('question-container').innerHTML = `
+    <div class="quiz-card">
+      <div class="q-meta">
+        <span class="q-badge ${badgeClass}">${q.type === 'tf' ? 'T/F' : 'MCQ'}</span>
+        <span class="q-type-label">${typeLabel}</span>
+        <span style="margin-left:auto;font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--text3)">Q${currentQIndex+1}/${total}</span>
+      </div>
+      <div class="question-text">${q.q}</div>
+      <div class="options-grid" id="options-grid">${optHtml}</div>
+      <div class="feedback-box" id="feedback-box"></div>
+    </div>
+  `;
+}
+
+let selectedOpt = null;
+function selectOpt(i) {
+  if (answered) return;
+  selectedOpt = i;
+  document.querySelectorAll('.option-btn').forEach((b,idx) => {
+    b.classList.toggle('selected', idx === i);
+  });
+}
+
+function checkAnswer() {
+  if (selectedOpt === null) {
+    alert('Please select an answer first!');
+    return;
+  }
+  answered = true;
+  const q = currentQuestions[currentQIndex];
+  const correct = q.ans === selectedOpt;
+  if (correct) score++;
+
+  document.querySelectorAll('.option-btn').forEach((b,i) => {
+    b.disabled = true;
+    if (i === q.ans) b.classList.add('correct');
+    else if (i === selectedOpt && !correct) b.classList.add('wrong');
+    b.classList.remove('selected');
+  });
+
+  const fb = document.getElementById('feedback-box');
+  fb.className = 'feedback-box show ' + (correct ? 'correct-fb' : 'wrong-fb');
+  fb.innerHTML = `<span class="fb-title">${correct ? '✓ Correct!' : '✗ Incorrect'}</span>${q.exp}`;
+
+  document.getElementById('btn-check').style.display = 'none';
+  document.getElementById('btn-next').style.display = 'inline-block';
+  document.getElementById('btn-next').textContent = currentQIndex < currentQuestions.length-1 ? 'Next →' : 'See Results';
+  selectedOpt = null;
+}
+
+function nextQuestion() {
+  currentQIndex++;
+  if (currentQIndex >= currentQuestions.length) {
+    showResults();
+  } else {
+    renderQuestion();
+  }
+}
+
+function showResults() {
+  document.getElementById('question-container').style.display = 'none';
+  document.getElementById('btn-check').style.display = 'none';
+  document.getElementById('btn-next').style.display = 'none';
+  document.getElementById('q-counter').textContent = '';
+
+  const total = currentQuestions.length;
+  const pct = Math.round((score/total)*100);
+  const panel = document.getElementById('results-panel');
+  panel.classList.add('show');
+  document.getElementById('prog-fill').style.width = '100%';
+
+  document.getElementById('res-score').textContent = pct + '%';
+  document.getElementById('res-score').className = 'results-score ' + (pct >= 80 ? 'excellent' : pct >= 60 ? 'good' : 'poor');
+  document.getElementById('res-label').textContent = pct >= 80 ? '🏆 Excellent Work!' : pct >= 60 ? '👍 Good Effort!' : '📖 Keep Studying!';
+  document.getElementById('res-sub').textContent = pct >= 80 ? 'Outstanding performance — you have mastered this material.' : pct >= 60 ? 'Good understanding — review the topics you missed.' : 'Return to the learning material and try again.';
+  document.getElementById('rb-correct').textContent = score;
+  document.getElementById('rb-wrong').textContent = total - score;
+  document.getElementById('rb-total').textContent = total;
+
+  // Save result
+  if (!progressData.exams) progressData.exams = [];
+  progressData.exams.push({
+    topic: currentExamTopic,
+    score, total, pct,
+    date: new Date().toLocaleDateString()
+  });
+  saveProgress();
+}
+
+function resetExam() {
+  document.getElementById('exam-select').style.display = '';
+  const qa = document.getElementById('quiz-area');
+  qa.classList.remove('active');
+  qa.style.display = 'none';
+  selectedOpt = null;
+}
+
+// ============================================================
+// PROGRESS
+// ============================================================
+function renderProgress() {
+  const container = document.getElementById('progress-content');
+  const lessons_done = Object.keys(progressData.lessons || {}).length;
+  const exams = progressData.exams || [];
+  const avgScore = exams.length > 0
+    ? Math.round(exams.reduce((a,e) => a+e.pct, 0) / exams.length)
+    : 0;
+  const best = exams.length > 0 ? Math.max(...exams.map(e => e.pct)) : 0;
+
+  container.innerHTML = `
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-num c1">${lessons_done}/5</div><div class="stat-label">Lessons Read</div></div>
+      <div class="stat-card"><div class="stat-num c2">${exams.length}</div><div class="stat-label">Exams Taken</div></div>
+      <div class="stat-card"><div class="stat-num c3">${avgScore}%</div><div class="stat-label">Avg Score</div></div>
+      <div class="stat-card"><div class="stat-num c4">${best}%</div><div class="stat-label">Best Score</div></div>
+    </div>
+
+    <div style="font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.8rem;">Topic Progress</div>
+    <div class="topic-progress-list">
+      ${lessons.map((l,i) => {
+        const topicExams = exams.filter(e => e.topic === i || e.topic === 'all');
+        const read = (progressData.lessons || {})[i];
+        const pct = topicExams.length > 0 ? Math.round(topicExams.reduce((a,e)=>a+e.pct,0)/topicExams.length) : 0;
+        return `
+          <div class="tpl-item">
+            <div class="tpl-header">
+              <span class="tpl-name">Tutorial 0${i+1} — ${l.title}</span>
+              <span class="tpl-pct">${read ? '✓ Read' : '— Not read'} ${pct > 0 ? '| '+pct+'% exam avg' : ''}</span>
+            </div>
+            <div class="tpl-bar"><div class="tpl-bar-fill" style="width:${pct}%"></div></div>
+          </div>`;
+      }).join('')}
+    </div>
+
+    ${exams.length > 0 ? `
+      <div style="font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;margin:1.5rem 0 0.8rem;">Recent Exams</div>
+      <div style="display:flex;flex-direction:column;gap:0.5rem;">
+        ${exams.slice(-8).reverse().map(e => `
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:0.8rem 1rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;">
+            <span style="font-family:'Space Mono',monospace;font-size:0.78rem;color:var(--text2)">${e.topic === 'all' ? '🏆 Full Exam' : 'Tutorial 0'+(e.topic+1)}</span>
+            <div style="display:flex;gap:1rem;align-items:center;">
+              <span style="font-family:'Space Mono',monospace;font-size:0.78rem;color:${e.pct>=80?'var(--success)':e.pct>=60?'var(--accent3)':'var(--danger)'}">${e.pct}% (${e.score}/${e.total})</span>
+              <span style="font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--text3)">${e.date}</span>
+            </div>
+          </div>`).join('')}
+      </div>
+      <div style="margin-top:1rem;">
+        <button class="btn btn-secondary" style="font-size:0.75rem;padding:0.4rem 1rem;" onclick="clearProgress()">Clear All Progress</button>
+      </div>
+    ` : '<div class="empty-state"><div class="icon">📊</div><div>No exam results yet.<br>Take an exam to see your progress here.</div></div>'}
+  `;
+}
+
+function clearProgress() {
+  if (confirm('Clear all progress data?')) {
+    progressData = {};
+    saveProgress();
+    document.querySelectorAll('.lesson-nav-item').forEach(el => el.classList.remove('done'));
+    renderProgress();
+  }
+}
+
+function saveProgress() {
+  try { localStorage.setItem('aspnet_progress', JSON.stringify(progressData)); } catch(e) {}
+}
+
+// ============================================================
+// INIT
+// ============================================================
+// Restore nav dot state
+Object.keys(progressData.lessons || {}).forEach(k => {
+  const el = document.getElementById('nav-' + k);
+  if (el) el.classList.add('done');
+});
+
+// Load first lesson
+openLesson(0);
+</script>
+</body>
+</html>
