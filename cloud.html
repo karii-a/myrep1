@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CSVC Cloud Computing — Complete Study Guide</title>
+<title>CSVC Cloud Computing — Complete Study Guide (Lec 1–11)</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600&display=swap');
 
@@ -239,26 +239,35 @@
   <a href="#lec1">Intro to Cloud</a>
   <a href="#lec2">Storage (S3)</a>
   <a href="#lec3">Compute (EC2)</a>
-  <a href="#lec4">Database Layer</a>
+  <a href="#lec4">Database</a>
+  <a href="#lec5">Networking</a>
+  <a href="#lec6">IAM</a>
+  <a href="#lec7">High Availability</a>
+  <a href="#lec8">Caching</a>
+  <a href="#lec9">Disaster Recovery</a>
   <a href="#lec10">Microservices</a>
   <a href="#lec11">Automation</a>
 </nav>
 
 <div class="hero">
-  <h1>CT097-3-3 CSVC<br>Cloud Computing Study Guide</h1>
-  <p>Complete notes from all 6 lectures — Architecture, Services, and AWS Best Practices</p>
+  <h1>CT097-3-3 CSVC<br>Complete Cloud Computing Study Guide</h1>
+  <p>All 11 lectures — Architecture, Networking, Security, Scalability &amp; AWS Best Practices</p>
   <div class="pill-row">
     <span class="pill pill-a">Lec 1 — Intro to Cloud</span>
     <span class="pill pill-b">Lec 2 — Storage / S3</span>
     <span class="pill pill-c">Lec 3 — Compute / EC2</span>
     <span class="pill pill-d">Lec 4 — Database</span>
-    <span class="pill pill-a">Lec 10 — Microservices &amp; Serverless</span>
-    <span class="pill pill-b">Lec 11 — Automating Architecture</span>
+    <span class="pill pill-a">Lec 5 — Networking / VPC</span>
+    <span class="pill pill-b">Lec 6 — IAM &amp; Identity</span>
+    <span class="pill pill-c">Lec 7 — High Availability</span>
+    <span class="pill pill-d">Lec 8 — Caching</span>
+    <span class="pill pill-a">Lec 9 — Disaster Recovery</span>
+    <span class="pill pill-b">Lec 10 — Microservices</span>
+    <span class="pill pill-c">Lec 11 — Automation</span>
   </div>
 </div>
 
 <main>
-
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- MODULE 1: INTRODUCTION TO CLOUD COMPUTING -->
 <!-- ═══════════════════════════════════════════════════════ -->
@@ -927,6 +936,575 @@
   </div>
 </div>
 
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- MODULE 1: NETWORKING LAYER — VPC -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="module anchor" id="lec5">
+  <div class="module-header">
+    <div class="module-number num-a">7</div>
+    <div>
+      <h2>Networking Layer — Amazon VPC</h2>
+      <span>Lec5_CSVC_Networking_Layer_VE.pptx — Creating a Networking Environment</span>
+    </div>
+  </div>
+
+  <h3>What is Amazon VPC?</h3>
+  <p>Amazon Virtual Private Cloud (VPC) lets you provision a <strong>logically isolated section of the AWS Cloud</strong> where you can launch AWS resources in a virtual network that you define. You bring your own IP addresses, subnets, routing rules, network configuration, and security rules — full control over your virtual networking environment.</p>
+
+  <div class="highlight hl-a">
+    <strong>VPC Scope:</strong> A VPC belongs to only <strong>one AWS Region</strong> but can span all Availability Zones within that Region. A subnet, however, belongs to exactly <strong>one Availability Zone</strong>. AWS limits 5 VPCs per Region per account (soft limit, can be increased).
+  </div>
+
+  <h3>CIDR &amp; Subnets</h3>
+  <p>Classless Inter-Domain Routing (CIDR) notation defines IP ranges. A VPC is divided into <strong>subnets</strong> — each is a partition of the VPC's IP address range allocated to a group of resources.</p>
+
+  <table>
+    <thead><tr><th>CIDR</th><th>Total IPs</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>/28</td><td>16</td><td>Smallest practical subnet</td></tr>
+      <tr><td>/24</td><td>256 (251 usable)</td><td>AWS reserves 5 IPs per subnet</td></tr>
+      <tr><td>/20</td><td>4,096</td><td>Good mid-size subnet</td></tr>
+      <tr><td>/16</td><td>65,536</td><td>Maximum VPC size</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <div class="callout-head">Subnet Rules</div>
+    <p>Subnets are <em>not</em> isolation boundaries — they are address partitions. Subnet CIDR blocks <strong>cannot overlap</strong>. Each subnet resides entirely within one Availability Zone. AWS reserves 5 IP addresses per subnet (network, VPC router, DNS, future use, broadcast).</p>
+  </div>
+
+  <h3>VPC Design Best Practices</h3>
+  <div class="card-row">
+    <div class="card"><div class="card-title" style="color:var(--accent1);">One Subnet per AZ</div><p>Create one subnet per available Availability Zone for each group of hosts that have unique routing requirements.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent1);">Divide Evenly</div><p>Divide your VPC network range evenly across all available AZs in a Region to maximize fault tolerance.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent1);">Reserve Space</div><p>Do not allocate all network addresses at once — reserve space for future use and growth.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent1);">No Overlap</div><p>Ensure your VPC CIDR block does not overlap with your organization's other private network ranges.</p></div>
+  </div>
+
+  <h3>Single vs. Multiple VPCs vs. Multiple Accounts</h3>
+  <table>
+    <thead><tr><th>Pattern</th><th>Best Suited For</th><th>Consideration</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Single VPC</strong></td><td>Small single applications, HPC, identity management</td><td>Limited use cases only</td></tr>
+      <tr><td><strong>Multiple VPCs</strong></td><td>Single team / single organization, managed service providers</td><td>Easier to maintain standards with limited teams</td></tr>
+      <tr><td><strong>Multiple Accounts</strong></td><td>Large organizations, multiple IT teams, rapid-growth companies</td><td>Better isolation; harder to manage access standards</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Connecting VPCs to the Internet</h3>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num" style="background:rgba(91,138,240,0.2);color:var(--accent2);">1</div>
+      <div class="step-content"><strong>Internet Gateway (IGW)</strong><span>Allows communication between VPC resources and the internet. Horizontally scaled, redundant, and highly available by default. Provides a target in route tables for internet-routable traffic. Attach one to your VPC to make a subnet "public".</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:rgba(91,138,240,0.2);color:var(--accent2);">2</div>
+      <div class="step-content"><strong>Route Tables</strong><span>Required to direct traffic between VPC resources. Each VPC has a main (default) route table. Best practice: use custom route tables for each subnet. A route to 0.0.0.0/0 pointing at an IGW makes traffic internet-routable.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:rgba(91,138,240,0.2);color:var(--accent2);">3</div>
+      <div class="step-content"><strong>Elastic IP Addresses</strong><span>Static, public IPv4 addresses associated with your AWS account. Can be associated with an instance or elastic network interface. Can be remapped to another instance — useful for redundancy when load balancers are not an option.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:rgba(91,138,240,0.2);color:var(--accent2);">4</div>
+      <div class="step-content"><strong>NAT Gateway</strong><span>Enables instances in a private subnet to initiate outbound traffic to the internet or other AWS services, while preventing the internet from initiating connections to private instances. Sits in a public subnet; private route table points 0.0.0.0/0 to the NAT gateway.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:rgba(91,138,240,0.2);color:var(--accent2);">5</div>
+      <div class="step-content"><strong>Bastion Host</strong><span>A server in the public subnet whose purpose is to provide SSH/RDP access to instances in private subnets from an external network. Must minimize chances of penetration. Acts as a jump server.</span></div>
+    </div>
+  </div>
+
+  <h3>Securing the Network — Stateful vs. Stateless Firewalls</h3>
+  <div class="compare-row">
+    <div>
+      <p style="font-size:0.8rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent2);margin-bottom:0.8rem;">Security Groups — Instance Level</p>
+      <div class="card"><div class="card-title">Stateful Firewall</div><p>Controls inbound and outbound traffic to AWS resources. Acts at the level of the instance or network interface. Return traffic is automatically allowed — you only need to define inbound rules. Default: block all inbound, allow all outbound.</p></div>
+      <div class="card"><div class="card-title">Chaining Security Groups</div><p>You can chain SGs across tiers: Web tier allows HTTP/HTTPS from the internet; App tier allows port 8000 only from Web tier SG; DB tier allows port 3306 only from App tier SG. All other ports blocked by default.</p></div>
+    </div>
+    <div>
+      <p style="font-size:0.8rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent3);margin-bottom:0.8rem;">Network ACLs — Subnet Level</p>
+      <div class="card"><div class="card-title">Stateless Firewall</div><p>Acts at the subnet level. Default ACL allows all inbound and outbound traffic. Stateless means explicit rules are required for both inbound AND outbound traffic. Rules are evaluated in number order (lowest first), with a catch-all DENY * at the end.</p></div>
+      <div class="card"><div class="card-title">When to Use ACLs</div><p>Recommended only for specific network security requirements. For most use cases, security groups are sufficient. Use NACLs as an additional layer of defense for specific subnet-level restrictions.</p></div>
+    </div>
+  </div>
+
+  <div class="highlight hl-d">
+    <strong>How to Create a Public Subnet (Checklist):</strong> (1) Attach an Internet Gateway to your VPC. (2) Point the subnet's route table to the IGW for 0.0.0.0/0. (3) Ensure instances have public IP or Elastic IP addresses. (4) Configure security groups and NACLs to allow relevant traffic.
+  </div>
+
+  <div class="callout">
+    <div class="callout-head">Exam Tip — Security Groups vs. NACLs</div>
+    <p><strong>Security Groups</strong>: stateful, instance-level, only allow rules, return traffic automatic. <strong>NACLs</strong>: stateless, subnet-level, allow AND deny rules, must explicitly allow return traffic. Structure your infrastructure with multiple layers of defense — NACLs + SGs together.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- MODULE 2: SECURING USER IDENTITY — IAM -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="module anchor" id="lec6">
+  <div class="module-header">
+    <div class="module-number num-b">8</div>
+    <div>
+      <h2>Securing User Identity — AWS IAM</h2>
+      <span>Lec6_CSVC_Securing_User_Identity_Layer_VE.pptx — Securing User and Application Access</span>
+    </div>
+  </div>
+
+  <h3>The Root Account &amp; Why to Avoid It</h3>
+  <p>The account root user has a large amount of power and full, unrestricted access to all AWS services. Best practice: (1) Create an IAM admin user immediately. (2) Lock away the root user credentials. (3) Use the IAM user for all subsequent tasks — console, CLI, or SDK.</p>
+
+  <h3>IAM Core Components</h3>
+  <div class="card-row">
+    <div class="card"><div class="card-title" style="color:var(--accent2);">IAM User</div><p>An identity defined in your AWS account. Uses long-term credentials (username/password or access keys) to authenticate programmatically or via the AWS Management Console.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent2);">IAM Group</div><p>A collection of IAM users granted identical authorization. Makes it easier to manage access across multiple users. Best practice: create groups that reflect job functions (e.g., Developers, Testers, Admins).</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent2);">IAM Policy</div><p>A JSON document that defines which resources can be accessed and at what level. Attach to users, groups, or roles. Explicit Deny always overrides any Allow statement.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent2);">IAM Role</div><p>Provides temporary security credentials. Not uniquely associated with one person — assumable by a person, application, or service. Used for delegation and cross-account access.</p></div>
+  </div>
+
+  <h3>IAM Policy Structure</h3>
+  <p>Policies are JSON documents with a <strong>Statement</strong> array. Each statement contains:</p>
+  <table>
+    <thead><tr><th>Field</th><th>Purpose</th><th>Example</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Effect</strong></td><td>Allow or Deny the action</td><td><code>"Effect": "Allow"</code></td></tr>
+      <tr><td><strong>Action</strong></td><td>Type of access (API operation)</td><td><code>"Action": "s3:GetObject"</code></td></tr>
+      <tr><td><strong>Resource</strong></td><td>The AWS resource the action applies to (ARN)</td><td><code>"Resource": "arn:aws:s3:::my-bucket/*"</code></td></tr>
+      <tr><td><strong>Condition</strong></td><td>When the rule applies (optional)</td><td><code>"StringEquals": {"aws:username": "johndoe"}</code></td></tr>
+    </tbody>
+  </table>
+
+  <div class="highlight hl-c">
+    <strong>Permission Evaluation Logic:</strong> Is the action explicitly denied? → DENY. Is the action explicitly allowed? → ALLOW. Otherwise → Implicit DENY. An explicit Deny <em>always</em> wins, even if an Allow statement also exists.
+  </div>
+
+  <h3>Identity-Based vs. Resource-Based Policies</h3>
+  <div class="compare-row">
+    <div class="card"><div class="card-title" style="color:var(--accent4);">Identity-Based Policies</div><p>Attached to a user, group, or role. Three types: AWS Managed (pre-built by AWS), Customer Managed (you create and control), and Inline (embedded directly in a single principal).</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent1);">Resource-Based Policies</div><p>Attached directly to an AWS resource (e.g., an S3 bucket). Always an inline policy. Specifies who (Principal) can access the resource and what they can do.</p></div>
+  </div>
+
+  <h3>IAM Groups &amp; Least Privilege</h3>
+  <p>Use IAM groups to grant the same access rights to multiple users. All users in the group inherit the group's permissions. Best practice: follow the <strong>principle of least privilege</strong> — grant only the permissions required to perform a task.</p>
+  <div class="highlight hl-b">
+    <strong>Tip — Combine Approaches:</strong> Add a user to a group for standard job-function access (e.g., Developer group). Optionally attach an additional policy directly to the user for specific exceptions. Users can belong to more than one group — the most restrictive policy then applies.
+  </div>
+
+  <h3>IAM Roles &amp; Temporary Credentials</h3>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num" style="background:rgba(78,203,160,0.2);color:var(--accent4);">1</div>
+      <div class="step-content"><strong>Define the IAM Policy</strong><span>Write a policy document granting the needed permissions (e.g., read/write access to an S3 bucket).</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:rgba(78,203,160,0.2);color:var(--accent4);">2</div>
+      <div class="step-content"><strong>Attach the Policy to a Role</strong><span>Create an IAM role and attach the policy to it. A role is not tied to a specific person — it's a set of permissions.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:rgba(78,203,160,0.2);color:var(--accent4);">3</div>
+      <div class="step-content"><strong>Assume the Role</strong><span>An EC2 instance, Lambda function, or IAM user assumes the role via AWS STS. They receive temporary security credentials (time-limited access key + secret + session token).</span></div>
+    </div>
+  </div>
+
+  <h3>AWS STS — Security Token Service</h3>
+  <p><strong>AWS STS</strong> is a web service that enables you to request temporary, limited-privilege credentials for IAM users or for federated users. Credentials expire automatically — no long-term access keys to manage.</p>
+
+  <h3>RBAC vs. ABAC</h3>
+  <div class="compare-row">
+    <div class="quad quad-i">
+      <div class="quad-label" style="color:var(--accent2);">RBAC — Role-Based Access Control</div>
+      <div class="quad-title">Traditional Approach</div>
+      <div class="quad-desc">Create distinct IAM roles for each permission combination (e.g., database-admin, read-only-dev). Update permissions by adding access for each new resource — can become time-consuming as the organization grows.</div>
+    </div>
+    <div class="quad quad-iii">
+      <div class="quad-label" style="color:var(--accent4);">ABAC — Attribute-Based Access Control</div>
+      <div class="quad-title">Highly Scalable Approach</div>
+      <div class="quad-desc">Permissions rules are based on attributes (tags) — e.g., Team=Developers, Project=Unicorn. Permissions automatically apply based on matching tags. Granular without needing to update policies for every new user or resource.</div>
+    </div>
+  </div>
+
+  <h3>Identity Federation</h3>
+  <p>Identity federation allows authentication to be completed by a system <em>external</em> to the AWS account (e.g., corporate directory). Provides a way to allow access through existing identities, without creating IAM users.</p>
+  <div class="card-row">
+    <div class="card"><div class="card-title" style="color:var(--accent1);">AWS STS &amp; Custom Broker</div><p>A custom identity broker application authenticates the user against a corporate directory, then requests temporary credentials from STS, and passes them to the application.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent1);">SAML Federation</div><p>User navigates to a portal (IdP). IdP authenticates user and returns a SAML assertion. The assertion is posted to the AWS sign-in endpoint. AWS STS issues temporary credentials → user is redirected to the console.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent1);">Amazon Cognito</div><p>Fully managed service providing authentication, authorization, and user management for web and mobile apps. Supports federated identities (Amazon, Facebook, Google, SAML) and User Pools (maintain your own directory). Acts as an OIDC-compatible identity broker.</p></div>
+  </div>
+
+  <h3>Multiple AWS Accounts &amp; AWS Organizations</h3>
+  <p>Most organizations choose multiple accounts to: isolate business units, separate dev/test/prod environments, isolate auditing data, and handle billing per unit. <strong>AWS Organizations</strong> solves the management challenge:</p>
+  <div class="card-row">
+    <div class="card"><div class="card-title" style="color:var(--accent3);">Organizational Units (OUs)</div><p>Group accounts into a hierarchy of OUs (e.g., Internal IT OU → Engineering OU → Dev OU, Prod OU). Policies attached to a parent OU are inherited by all child accounts.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent3);">Service Control Policies (SCPs)</div><p>Control which AWS services are accessible to IAM users in member accounts. SCPs cannot be overridden by the local administrator. Example: deny all members from disabling CloudTrail. IAM policies in individual accounts still apply — SCPs set the maximum permissions boundary.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent3);">Consolidated Billing</div><p>One payment method for all accounts. Volume discounts aggregate across the organization. AWS Organizations also provides automated account creation via API.</p></div>
+  </div>
+
+  <h3>AWS CloudTrail</h3>
+  <p>CloudTrail logs and monitors all user activity across your AWS account. It provides a 90-day event history by default (at no cost) covering all actions taken through the Console, CLI, and SDKs. Use it to identify who accessed your account, when, from where, and what action they took — critical for security analysis and compliance.</p>
+
+  <div class="callout">
+    <div class="callout-head">Exam Tip — IAM Quick Rules</div>
+    <p><strong>Explicit Deny always wins.</strong> Default (no policy) = implicit deny. Best practice = principle of least privilege. Use groups for job functions, not individual user policies. Use roles for services and cross-account access — never long-term credentials on EC2. Federation via Cognito or SAML for external users.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- MODULE 3: HIGH AVAILABILITY — EC2 AUTO SCALING -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="module anchor" id="lec7">
+  <div class="module-header">
+    <div class="module-number num-c">9</div>
+    <div>
+      <h2>High Availability &amp; Elasticity</h2>
+      <span>Lec7_CSVC_High_Availability_Architecture.pptx — EC2 Auto Scaling, ELB, Route 53, CloudWatch</span>
+    </div>
+  </div>
+
+  <h3>Elasticity vs. Scalability</h3>
+  <p>An <strong>elastic</strong> infrastructure can expand and contract as capacity needs change — scaling web servers when traffic spikes, lowering write capacity when traffic drops, handling day-to-day fluctuations. <strong>Scaling</strong> is the technique used to achieve elasticity.</p>
+
+  <div class="compare-row">
+    <div class="card"><div class="card-title" style="color:var(--accent2);">Horizontal Scaling</div><p>Scale out (launch more instances) and scale in (terminate instances). Best paired with a load balancer. Preferred approach for stateless applications — effectively unlimited scale ceiling.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent3);">Vertical Scaling</div><p>Scale up (increase instance size) or scale down (decrease instance size). Simple but has a hard limit — only so much CPU/RAM one machine can have. Requires a restart in most cases.</p></div>
+  </div>
+
+  <h3>Amazon EC2 Auto Scaling</h3>
+  <p>EC2 Auto Scaling automatically launches or terminates instances based on specified conditions. It registers new instances with load balancers and can launch across Availability Zones for fault tolerance.</p>
+
+  <h3>Scaling Options</h3>
+  <div class="card-row">
+    <div class="card"><div class="card-title" style="color:var(--accent1);">Scheduled Scaling</div><p>Scale based on date and time. Good for predictable workloads. Example: turn off dev/test instances at night, scale up for a known marketing campaign.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent4);">Dynamic Scaling</div><p>Responds to changing conditions in real time. Supports target tracking (keep CPU at 50%), step scaling (scale proportionally to alarm breach), or simple scaling (single adjustment). Good for unpredictable workloads.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent2);">Predictive Scaling</div><p>Uses machine learning to predict demand and proactively provision capacity. Good for predicted demand with complex patterns (e.g., ecommerce during a major sales event).</p></div>
+  </div>
+
+  <h3>Dynamic Scaling Policy Types</h3>
+  <table>
+    <thead><tr><th>Policy Type</th><th>How It Works</th><th>Best For</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Simple Scaling</strong></td><td>Single scaling adjustment triggered by a CloudWatch alarm</td><td>New workloads, spiky workloads</td></tr>
+      <tr><td><strong>Step Scaling</strong></td><td>Adjustment amount depends on size of alarm breach</td><td>Predictable workloads with known patterns</td></tr>
+      <tr><td><strong>Target Tracking</strong></td><td>Maintains a target value for a specific metric (e.g., 50% CPU)</td><td>Load-balanced and batch processing applications</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Auto Scaling Group Configuration</h3>
+  <p>An Auto Scaling group defines three capacity values: <strong>Minimum</strong> (never go below this), <strong>Maximum</strong> (never exceed this), and <strong>Desired</strong> (the current target number of instances, which fluctuates in response to events). You can mix On-Demand and Spot Instances in a single ASG for cost optimization.</p>
+
+  <h3>Scaling Databases</h3>
+  <div class="card-row">
+    <div class="card"><div class="card-title" style="color:var(--accent2);">RDS Vertical Scaling</div><p>Push-button scaling — scale DB instances vertically from micro to 24xlarge with minimal downtime. Simple but limited by instance size ceiling.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent2);">RDS Read Replicas</div><p>Horizontal scaling for read-heavy workloads. Up to 5 read replicas (15 for Aurora). Replication is asynchronous. Available for MySQL, MariaDB, PostgreSQL, Oracle.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent2);">Aurora Serverless</div><p>Automatically scales capacity, starts up, and shuts down. Pay for Aurora Capacity Units (ACUs) used. Good for intermittent and unpredictable workloads.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent2);">Database Sharding</div><p>Split data into large chunks (shards) across multiple databases. Example: even-numbered employee IDs in one DB, odd-numbered in another. Improves write performance.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent4);">DynamoDB On-Demand</div><p>Pay per request — no provisioning needed. Rapidly accommodates need. For spiky, unpredictable workloads.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent4);">DynamoDB Auto Scaling</div><p>Default for all new tables. Specify upper and lower bounds. Uses Application Auto Scaling + CloudWatch alarms to dynamically adjust provisioned throughput.</p></div>
+  </div>
+
+  <div class="highlight hl-b">
+    <strong>DynamoDB Adaptive Capacity:</strong> Automatically increases throughput capacity for "hot" partitions that receive more traffic (enabled by default for every table). Note: it does NOT fix bad partition key design — e.g., a status code with only a few values as a partition key is still a bad choice.
+  </div>
+
+  <h3>Highly Available Systems — The Nines</h3>
+  <table>
+    <thead><tr><th>Uptime</th><th>Max Downtime / Year</th><th>Max Downtime / Day</th></tr></thead>
+    <tbody>
+      <tr><td>90%</td><td>36.5 days</td><td>2.4 hours</td></tr>
+      <tr><td>99%</td><td>3.65 days</td><td>14 minutes</td></tr>
+      <tr><td>99.9%</td><td>8.76 hours</td><td>86 seconds</td></tr>
+      <tr><td>99.99%</td><td>52.6 minutes</td><td>8.6 seconds</td></tr>
+      <tr><td>99.999%</td><td>5.25 minutes</td><td>0.86 seconds</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Elastic Load Balancing (ELB)</h3>
+  <p>A managed load balancing service that distributes incoming application traffic across multiple EC2 instances, containers, IP addresses, and Lambda functions. Can be external-facing or internal-facing. Each load balancer receives a DNS name and recognizes/responds to unhealthy instances.</p>
+
+  <table>
+    <thead><tr><th>Type</th><th>Layer</th><th>Protocol</th><th>Best For</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Application Load Balancer (ALB)</strong></td><td>Layer 7 (Request)</td><td>HTTP, HTTPS</td><td>Flexible app management, content-based routing, microservices</td></tr>
+      <tr><td><strong>Network Load Balancer (NLB)</strong></td><td>Layer 4 (Connection)</td><td>TCP, UDP, TLS</td><td>Ultra-high performance, static IP, extreme low latency</td></tr>
+      <tr><td><strong>Classic Load Balancer</strong></td><td>Layer 4 &amp; 7</td><td>HTTP, HTTPS, TCP, SSL</td><td>Previous generation — not recommended for new architectures</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Implementing High Availability</h3>
+  <p>Start with <strong>two Availability Zones</strong> per AWS Region. If resources in one AZ are unreachable, the application should not fail. The ELB automatically routes traffic only to healthy instances in the available AZ.</p>
+
+  <div class="highlight hl-a">
+    <strong>HA Architecture Pattern:</strong> Internet → Internet Gateway → Application Load Balancer (public subnets in 2+ AZs) → EC2 Auto Scaling group (private subnets in 2+ AZs) → NAT Gateways (one per AZ for outbound private traffic) → RDS Multi-AZ standby.
+  </div>
+
+  <h3>Amazon Route 53</h3>
+  <p>Route 53 is a highly available and scalable cloud DNS service. It translates domain names into IP addresses, connects user requests to infrastructure inside and outside of AWS, and can monitor health of endpoints for failover.</p>
+
+  <div class="card-row">
+    <div class="card"><div class="card-title" style="color:var(--accent1);">Simple</div><p>Single resource behind the domain — no health checks.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent1);">Weighted Round Robin</div><p>Route different percentages of traffic to different resources (A/B testing, gradual migrations).</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent1);">Latency-Based</div><p>Route to the region with the lowest latency for the user.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent1);">Geolocation</div><p>Route based on geographic location of the user (country, continent).</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent1);">Failover</div><p>Active-passive failover — route traffic to primary; if health check fails, route to secondary. Key for DR.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent1);">Multivalue Answer</div><p>Returns multiple IP addresses — can function as a simple load balancer with health checks.</p></div>
+  </div>
+
+  <h3>Monitoring with Amazon CloudWatch</h3>
+  <p>CloudWatch collects and tracks metrics, logs, and events for your resources and applications. It visualizes data on dashboards, enables alarms, and can trigger automated responses.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num" style="background:rgba(232,168,56,0.2);color:var(--accent1);">1</div>
+      <div class="step-content"><strong>Metrics</strong><span>CloudWatch collects metrics (CPU utilization, disk I/O, network traffic) from AWS services and custom applications. Metric data is retained for 15 months.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:rgba(232,168,56,0.2);color:var(--accent1);">2</div>
+      <div class="step-content"><strong>Logs</strong><span>Collect and monitor log files from EC2, Lambda, VPC Flow Logs, Route 53, ELB, and custom applications.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:rgba(232,168,56,0.2);color:var(--accent1);">3</div>
+      <div class="step-content"><strong>Alarms</strong><span>Trigger actions when a metric breaches a threshold. Examples: send SNS notification, trigger Auto Scaling to add an instance, run a Lambda function.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:rgba(232,168,56,0.2);color:var(--accent1);">4</div>
+      <div class="step-content"><strong>Amazon EventBridge</strong><span>A serverless event bus that routes real-time data from AWS services, SaaS apps, and custom applications to targets (Lambda, SQS, SNS, Step Functions, etc.) based on rules.</span></div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-head">Exam Tip — High Availability Quick Summary</div>
+    <p>Use <strong>multiple AZs</strong> for fault tolerance. Use <strong>ALB</strong> for Layer 7, <strong>NLB</strong> for Layer 4 ultra performance. Use <strong>Auto Scaling</strong> for elasticity (scheduled, dynamic, predictive). Use <strong>Route 53 Failover routing</strong> for multi-region DR. Use <strong>CloudWatch</strong> for metrics, alarms, and automated responses.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- MODULE 4: CACHING CONTENT -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="module anchor" id="lec8">
+  <div class="module-header">
+    <div class="module-number num-d">10</div>
+    <div>
+      <h2>Caching Content</h2>
+      <span>Lec8_CSVC_Caching_Content_VE.pptx — CloudFront, ElastiCache, Session Management</span>
+    </div>
+  </div>
+
+  <h3>What Is Caching?</h3>
+  <p>A cache is a <strong>high-speed data storage layer</strong> that stores a subset of data, typically transient in nature, so that future requests for that data are served faster. It trades storage capacity for speed, reducing the need to access the underlying slower storage layer.</p>
+
+  <div class="card-row">
+    <div class="card"><div class="card-title" style="color:var(--accent4);">What to Cache</div><p>Data that requires a slow and expensive query to acquire. Relatively static and frequently accessed data (e.g., user profiles). Information that can be stale for some time (e.g., a publicly traded stock price).</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent4);">Benefits</div><p>Improves application speed. Reduces response latency. Reduces database access time. Reduces cost by offloading read traffic from expensive database instances.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent4);">Caching Layers</div><p>Caches can be applied at multiple layers: client (browser), CDN/edge (CloudFront), web/application server, and database (ElastiCache, DAX). Each layer reduces load on the next.</p></div>
+  </div>
+
+  <h3>Edge Caching — Amazon CloudFront</h3>
+  <p>A <strong>Content Delivery Network (CDN)</strong> is a globally distributed system of caching servers that caches copies of commonly requested files (static content) and delivers a local copy from a nearby edge location, reducing latency.</p>
+  <p><strong>Amazon CloudFront</strong> is AWS's global CDN. It is optimized for all delivery use cases with a multi-tier cache by default, provides an extra layer of security, and supports WebSockets and HTTP/HTTPS.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num" style="background:rgba(78,203,160,0.2);color:var(--accent4);">1</div>
+      <div class="step-content"><strong>Specify an Origin Server</strong><span>The source of your content: S3 bucket, EC2 instance, Application Load Balancer, MediaPackage channel, MediaStore container, or any custom HTTP server.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:rgba(78,203,160,0.2);color:var(--accent4);">2</div>
+      <div class="step-content"><strong>Configure the Distribution</strong><span>Set access controls, security settings, cookie/query-string forwarding, geo-restrictions, and access logs.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:rgba(78,203,160,0.2);color:var(--accent4);">3</div>
+      <div class="step-content"><strong>CloudFront Assigns a Domain</strong><span>CloudFront assigns a domain name (e.g., d111111abcdef8.cloudfront.net) which can be aliased to your custom domain.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:rgba(78,203,160,0.2);color:var(--accent4);">4</div>
+      <div class="step-content"><strong>Configuration Distributed to Edge Locations</strong><span>CloudFront sends your distribution's configuration to its global network of edge locations. Requests are routed to the nearest edge location.</span></div>
+    </div>
+  </div>
+
+  <h3>How CloudFront Serves Content</h3>
+  <p>When a user requests content, the request is routed to the nearest edge location. If the content is cached (cache hit), it is served directly. If not (cache miss), CloudFront retrieves the content from the origin server, caches it at the edge location, and delivers it to the user.</p>
+
+  <h3>Content Expiration Strategies</h3>
+  <div class="card-row">
+    <div class="card"><div class="card-title" style="color:var(--accent2);">TTL (Time to Live)</div><p>Set a fixed expiration period. CloudFront uses an If-Modified-Since header when checking with the origin. Best for content that changes on a known schedule.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent2);">Change Object Name</div><p>Rename the file (e.g., header-v1.jpg → header-v2.jpg). The new name forces an immediate cache refresh at edge locations. Most efficient method for immediate updates.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent2);">Invalidate Object</div><p>Manually remove an object from edge caches. Last resort — inefficient and incurs costs. Use only when immediate removal is critical and renaming is not feasible.</p></div>
+  </div>
+
+  <h3>CloudFront Use Cases</h3>
+  <div class="card-row">
+    <div class="card"><div class="card-title" style="color:var(--accent1);">Video on Demand</div><p>Source video → AWS Elemental MediaConvert → multiple output formats in S3 → CloudFront delivers adaptive bitrate stream to users on any device.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent1);">Dynamically Generated Content</div><p>Even dynamically generated content (e.g., map tiles) can be cached at CloudFront edge locations after the first request, dramatically reducing DB load.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent1);">DDoS Protection</div><p>CloudFront (combined with AWS WAF and Route 53) absorbs DDoS traffic at the edge, protecting your origin infrastructure. Malicious traffic is filtered before reaching your VPC.</p></div>
+  </div>
+
+  <h3>Session Management</h3>
+  <p>Web sessions store user authentication and data while the user interacts with an application. The challenge: in a horizontally scaled environment, any server may receive any request.</p>
+
+  <div class="compare-row">
+    <div>
+      <p style="font-size:0.8rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent3);margin-bottom:0.8rem;">Sticky Sessions (ELB Feature)</p>
+      <div class="card"><div class="card-title">How It Works</div><p>ELB routes a user's requests to the same server using client-side cookies. Cost-effective and speeds up retrieval.</p></div>
+      <div class="card"><div class="card-title" style="color:var(--accent3);">Disadvantages</div><p>If the instance fails, all its sessions are lost. Creates uneven load distribution. Limits scalability and increases latency.</p></div>
+    </div>
+    <div>
+      <p style="font-size:0.8rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent4);margin-bottom:0.8rem;">External Session Storage (Recommended)</p>
+      <div class="card"><div class="card-title">Distributed Cache Cluster</div><p>Sessions stored in ElastiCache (Redis or Memcached). Any server in the Auto Scaling group can retrieve any user's session. Fully fault-tolerant — no sessions lost if a server fails.</p></div>
+      <div class="card"><div class="card-title">Amazon DynamoDB</div><p>Sessions persisted in a DynamoDB table. Each server queries DynamoDB for the session on each request. Millisecond-scale latency. Durable and highly available by default.</p></div>
+    </div>
+  </div>
+
+  <h3>Database Caching — Amazon ElastiCache</h3>
+  <p>ElastiCache provides web applications with an <strong>in-memory data store</strong> in the cloud. It works as a side cache — supplements your primary database by removing unnecessary pressure, typically in the form of frequently accessed read data.</p>
+
+  <table>
+    <thead><tr><th>Feature</th><th>Memcached</th><th>Redis</th></tr></thead>
+    <tbody>
+      <tr><td>Sub-millisecond latency</td><td>✅ Yes</td><td>✅ Yes</td></tr>
+      <tr><td>Scale horizontally for writes &amp; storage</td><td>✅ Yes (up to 20 nodes)</td><td>❌ No (up to 250 nodes, vertical)</td></tr>
+      <tr><td>Multi-threaded performance</td><td>✅ Yes</td><td>❌ No</td></tr>
+      <tr><td>Advanced data structures</td><td>❌ No</td><td>✅ Yes</td></tr>
+      <tr><td>Pub/subscribe messaging</td><td>❌ No</td><td>✅ Yes</td></tr>
+      <tr><td>Multi-AZ with auto failover</td><td>❌ No</td><td>✅ Yes</td></tr>
+      <tr><td>Persistence</td><td>❌ No</td><td>✅ Yes</td></tr>
+    </tbody>
+  </table>
+
+  <div class="highlight hl-b">
+    <strong>Rule of Thumb:</strong> Choose <strong>Memcached</strong> when you need simplicity, horizontal write scaling, and multi-threading. Choose <strong>Redis</strong> when you need persistence, advanced data structures, pub/sub, Multi-AZ failover, or leaderboards/sorted sets.
+  </div>
+
+  <h3>Caching Strategies</h3>
+  <div class="compare-row">
+    <div class="card"><div class="card-title" style="color:var(--accent4);">Lazy Loading</div><p>Only load data into cache when requested. On cache miss: fetch from DB, write to cache. Avoids filling cache with unused data. Disadvantage: first request is slow (cache miss penalty). Stale data possible if not combined with TTL.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent4);">Write-Through</div><p>Write to cache and DB simultaneously on every update. Cache is never stale. Disadvantage: write penalty on every update. Cache may fill with data that is never read. Best combined with TTL to expire unused keys.</p></div>
+  </div>
+
+  <h3>DynamoDB Accelerator (DAX)</h3>
+  <p>DAX is a <strong>fully managed, highly available, in-memory cache for DynamoDB</strong>. It delivers performance improvements of up to 10x — from milliseconds to <em>microseconds</em> — for read-heavy and bursty workloads. Fully integrated with DynamoDB, flexible, secure, and scalable.</p>
+
+  <div class="callout">
+    <div class="callout-head">Exam Tip — Caching Services Quick Reference</div>
+    <p><strong>CloudFront</strong>: CDN edge caching for static/dynamic content + DDoS protection. <strong>ElastiCache Redis</strong>: in-memory side cache for RDS, persistence, pub/sub, Multi-AZ. <strong>ElastiCache Memcached</strong>: simple, horizontally scalable in-memory cache. <strong>DAX</strong>: in-memory cache specifically for DynamoDB (microsecond response). <strong>DynamoDB</strong>: session state persistence with millisecond response.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- MODULE 5: DISASTER RECOVERY -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="module anchor" id="lec9">
+  <div class="module-header">
+    <div class="module-number num-a">11</div>
+    <div>
+      <h2>Planning for Disaster Recovery</h2>
+      <span>Lec9_CSVC_Planning_for_Disaster_Recovery_VE.pptx — RPO, RTO &amp; DR Patterns</span>
+    </div>
+  </div>
+
+  <h3>The DR Mindset</h3>
+  <p>"Everything fails, all the time." — Werner Vogels (AWS CTO). Disasters range from small-scale events (single instance failure) to large-scale (AZ outage) to colossal (regional disaster). You must design and plan for all of them intentionally.</p>
+
+  <div class="highlight hl-c">
+    <strong>AWS Well-Architected Framework Principles:</strong> Operational Excellence — "Anticipate failure" and "Refine operational procedures frequently." Reliability — "Test recovery procedures" and "Automatically recover from failure."
+  </div>
+
+  <h3>RPO &amp; RTO — The Two Key Metrics</h3>
+  <div class="compare-row">
+    <div class="quad quad-ii">
+      <div class="quad-label" style="color:var(--accent3);">RPO — Recovery Point Objective</div>
+      <div class="quad-title">Maximum Acceptable Data Loss</div>
+      <div class="quad-desc">The maximum amount of data (measured in time) that can be lost during a disaster. It answers: "How often must data be backed up?" Example: RPO of 8 hours → back up at least every 8 hours.</div>
+    </div>
+    <div class="quad quad-i">
+      <div class="quad-label" style="color:var(--accent2);">RTO — Recovery Time Objective</div>
+      <div class="quad-title">Maximum Acceptable Downtime</div>
+      <div class="quad-desc">The maximum amount of time a business process can remain out of commission after disaster strikes. It answers: "How quickly must applications and data be recovered?" Example: RTO of 1 hour → be back online within 1 hour of the disaster.</div>
+    </div>
+  </div>
+
+  <h3>Storage Backup Building Blocks</h3>
+  <div class="card-row">
+    <div class="card"><div class="card-title" style="color:var(--accent2);">S3 Cross-Region Replication</div><p>Most S3 storage classes replicate data across AZs within a single Region. Configure CRR for higher-level data security across Regions. Automatically and asynchronously replicates newly created objects. Also reduces latency for geographically distributed users.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent2);">EBS Volume Snapshots</div><p>Point-in-time snapshots of EBS volumes stored in S3. Incremental (only changed blocks). Can be copied across Regions. Restore data to a new EBS volume. Use Amazon Data Lifecycle Manager to automate creation, retention, and deletion. Cannot snapshot EC2 instance storage.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent2);">File System Replication</div><p>Replicate EFS or FSx for Windows File Server file systems across Regions using AWS DataSync. Also replicate on-premises file systems to the cloud. Optional AWS Direct Connect for fast, consistent transfers.</p></div>
+  </div>
+
+  <h3>Compute &amp; Networking for DR</h3>
+  <div class="card-row">
+    <div class="card"><div class="card-title" style="color:var(--accent4);">Custom AMIs &amp; Auto Scaling</div><p>Obtain and boot new server instances within minutes using pre-built AMIs or container images. Prefer automated rebuild from configuration/code repos over instance-level backups. Use cross-region AMI copies for regional DR.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent4);">Route 53 Failover</div><p>Configure health checks on primary endpoints. Route 53 automatically switches traffic to a secondary endpoint when the primary fails. Essential for multi-region DR architectures.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent4);">AWS Direct Connect</div><p>Fast, consistent replication and backups of large on-premises environments to the cloud. Provides dedicated private connection — avoiding internet variability.</p></div>
+  </div>
+
+  <h3>Database DR Features</h3>
+  <div class="compare-row">
+    <div class="card"><div class="card-title" style="color:var(--accent1);">Amazon RDS</div><p>Take snapshot data and save it in a separate Region. Combine read replicas with Multi-AZ deployments for a resilient DR strategy. Retain automated backups (up to 35 days). Multi-AZ provides synchronous standby replica for automatic failover.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent1);">Amazon DynamoDB</div><p>Back up entire tables in seconds. Point-in-time recovery (PITR) continuously backs up tables for up to 35 days — restore to any second within the window. Global Tables: multi-region, multi-master database for fast local performance and global availability.</p></div>
+  </div>
+
+  <h3>The Four DR Patterns</h3>
+
+  <table>
+    <thead><tr><th>Pattern</th><th>RPO</th><th>RTO</th><th>Cost</th><th>Key Characteristic</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Backup &amp; Restore</strong></td><td>Hours</td><td>Hours</td><td>Lowest</td><td>Backups stored in S3; restore compute from AMIs on disaster</td></tr>
+      <tr><td><strong>Pilot Light</strong></td><td>Minutes</td><td>Tens of minutes</td><td>Low</td><td>Core services replicated/running; non-critical servers stopped until needed</td></tr>
+      <tr><td><strong>Warm Standby</strong></td><td>Minutes</td><td>Minutes</td><td>Medium</td><td>Scaled-down but functional version always running; scale up on disaster</td></tr>
+      <tr><td><strong>Multi-Site</strong></td><td>Near-zero</td><td>Near-zero</td><td>Highest</td><td>Full-capacity duplicate always running; immediate failover</td></tr>
+    </tbody>
+  </table>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num" style="background:rgba(78,203,160,0.2);color:var(--accent4);">1</div>
+      <div class="step-content"><strong>Backup &amp; Restore</strong><span>Back up configuration and state data to S3 with lifecycle policies (Standard-IA → Glacier for cost savings). On disaster: retrieve backups from S3, restore infrastructure via pre-built AMIs and CloudFormation, restore data from backup, adjust DNS. Lowest cost, highest RTO. Good for lower-priority use cases.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:rgba(91,138,240,0.2);color:var(--accent2);">2</div>
+      <div class="step-content"><strong>Pilot Light</strong><span>Replicate/mirror core data continuously to AWS. Non-critical servers exist but are stopped. On disaster: start stopped servers (takes minutes), scale AWS resources around the replicated dataset, adjust DNS to Route 53. Good for core services needing lower RTO/RPO than Backup &amp; Restore.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:rgba(232,168,56,0.2);color:var(--accent1);">3</div>
+      <div class="step-content"><strong>Warm Standby</strong><span>All necessary components running 24/7 at low capacity in the DR site. Continuous testing — trickle a statistical subset of production traffic to the DR site. On disaster: immediately fail over critical load, adjust DNS, automatically scale further to handle all production load. For business-critical services needing minutes RTO/RPO.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:rgba(224,92,107,0.2);color:var(--accent3);">4</div>
+      <div class="step-content"><strong>Multi-Site</strong><span>Full-capacity production environment always running in both primary and DR sites (on-premises or AWS). Route 53 distributes traffic between both. On disaster: immediately fail over all production load — no warm-up needed. Fastest RTO/RPO but most expensive. For automatic failover requirements.</span></div>
+    </div>
+  </div>
+
+  <h3>AWS Storage Gateway</h3>
+  <p>AWS Storage Gateway enables seamless integration between on-premises infrastructure and AWS cloud storage. It is critical for hybrid backup and Backup &amp; Restore DR patterns.</p>
+
+  <table>
+    <thead><tr><th>Gateway Type</th><th>Protocol</th><th>Data Destination</th><th>Use Case</th></tr></thead>
+    <tbody>
+      <tr><td><strong>File Gateway</strong></td><td>NFS or SMB</td><td>Amazon S3</td><td>Store and retrieve files as S3 objects from on-premises apps</td></tr>
+      <tr><td><strong>Volume Gateway</strong></td><td>iSCSI</td><td>EBS Snapshots (in S3)</td><td>Present cloud-backed iSCSI volumes to on-premises apps</td></tr>
+      <tr><td><strong>Tape Gateway</strong></td><td>VTL (iSCSI)</td><td>S3 Glacier vault</td><td>Replace physical tape backup infrastructure with virtual tapes</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Automation Services for DR</h3>
+  <div class="card-row">
+    <div class="card"><div class="card-title" style="color:var(--accent3);">AWS CloudFormation</div><p>Use templates to quickly deploy collections of resources in a new Region or VPC in minutes. Duplicate production environments on demand. Fully repeatable, version-controlled infrastructure deployment.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent3);">AWS Elastic Beanstalk</div><p>Quickly redeploy your entire application stack in only a few clicks. Handles infrastructure automatically — focus only on your code.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent3);">AWS OpsWorks</div><p>Automatic host replacement. Combine with CloudFormation in the recovery phase — provision a new stack that supports the defined RTO using Chef or Puppet automation.</p></div>
+  </div>
+
+  <h3>DR Best Practices</h3>
+  <div class="card-row">
+    <div class="card"><div class="card-title" style="color:var(--accent2);">Start Simple</div><p>Begin with Backup &amp; Restore and move to more complex patterns as your business needs dictate. Don't over-engineer from the start.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent2);">Check Licensing</div><p>Software licensing may impose restrictions on running instances in a DR region. Verify before your DR event — not during it.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent2);">Practice Game Day</div><p>Regularly simulate disaster scenarios and practice recovery procedures. You don't want to learn your DR plan doesn't work during an actual disaster.</p></div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-head">Exam Tip — DR Pattern Decision Tree</div>
+    <p><strong>Lowest cost, can tolerate hours of downtime?</strong> → Backup &amp; Restore (S3 + Storage Gateway). <strong>Need faster recovery for core services?</strong> → Pilot Light (replicate data, stopped servers). <strong>Business-critical, need minutes RTO?</strong> → Warm Standby (scaled-down always running). <strong>Mission-critical, automatic failover, money no object?</strong> → Multi-Site (full active-active). Storage Gateway for on-premises-to-cloud backup in any pattern.</p>
+  </div>
+
+</div>
 </main>
 </body>
 </html>
