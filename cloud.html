@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSVC Cloud Computing — Complete Study Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600&display=swap');
+
+  :root {
+    --bg: #0d0f14;
+    --surface: #161922;
+    --surface2: #1e2230;
+    --border: #2a2f42;
+    --accent1: #e8a838;
+    --accent2: #5b8af0;
+    --accent3: #e05c6b;
+    --accent4: #4ecba0;
+    --text: #dce3f0;
+    --muted: #7a85a0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 300;
+    line-height: 1.75;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    background: rgba(13,15,20,0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; gap: 0;
+    height: 56px; z-index: 100;
+    overflow-x: auto;
+  }
+  nav a {
+    color: var(--muted); text-decoration: none;
+    font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em;
+    text-transform: uppercase; white-space: nowrap;
+    padding: 0 0.9rem; height: 56px; display: flex; align-items: center;
+    border-bottom: 2px solid transparent;
+    transition: color .2s, border-color .2s;
+  }
+  nav a:hover { color: var(--text); border-color: var(--accent1); }
+
+  /* HERO */
+  .hero {
+    margin-top: 56px;
+    padding: 5rem 2rem 4rem;
+    text-align: center;
+    background: linear-gradient(160deg, #111520 0%, #0d0f14 100%);
+    border-bottom: 1px solid var(--border);
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 60% at 50% 0%, rgba(91,138,240,0.12), transparent);
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 900; line-height: 1.1;
+    position: relative;
+  }
+  .hero p {
+    color: var(--muted); font-size: 1.05rem; margin-top: 1rem;
+    position: relative;
+  }
+  .pill-row {
+    display: flex; flex-wrap: wrap; gap: 0.6rem;
+    justify-content: center; margin-top: 2rem;
+    position: relative;
+  }
+  .pill {
+    padding: 0.35rem 1rem; border-radius: 999px;
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .pill-a { background: rgba(232,168,56,0.15); color: var(--accent1); border: 1px solid rgba(232,168,56,0.3); }
+  .pill-b { background: rgba(91,138,240,0.15); color: var(--accent2); border: 1px solid rgba(91,138,240,0.3); }
+  .pill-c { background: rgba(224,92,107,0.15); color: var(--accent3); border: 1px solid rgba(224,92,107,0.3); }
+  .pill-d { background: rgba(78,203,160,0.15); color: var(--accent4); border: 1px solid rgba(78,203,160,0.3); }
+
+  /* LAYOUT */
+  main { max-width: 900px; margin: 0 auto; padding: 3rem 1.5rem 6rem; }
+
+  /* MODULE */
+  .module { margin-bottom: 5rem; }
+  .module-header {
+    display: flex; align-items: center; gap: 1rem;
+    margin-bottom: 2.5rem; padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .module-number {
+    width: 42px; height: 42px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 900;
+    flex-shrink: 0;
+  }
+  .num-a { background: rgba(232,168,56,0.15); color: var(--accent1); border: 1px solid rgba(232,168,56,0.3); }
+  .num-b { background: rgba(91,138,240,0.15); color: var(--accent2); border: 1px solid rgba(91,138,240,0.3); }
+  .num-c { background: rgba(224,92,107,0.15); color: var(--accent3); border: 1px solid rgba(224,92,107,0.3); }
+  .num-d { background: rgba(78,203,160,0.15); color: var(--accent4); border: 1px solid rgba(78,203,160,0.3); }
+
+  .module-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.65rem; font-weight: 700;
+  }
+  .module-header span { font-size: 0.78rem; color: var(--muted); font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; display: block; margin-top: 0.1rem; }
+
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem; font-weight: 700;
+    margin: 2.5rem 0 1rem;
+    color: var(--text);
+  }
+  p { margin-bottom: 1rem; color: var(--text); }
+
+  /* CARDS */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.4rem 1.6rem;
+    margin-bottom: 1rem;
+  }
+  .card-title {
+    font-weight: 600; font-size: 0.95rem;
+    margin-bottom: 0.4rem;
+  }
+  .card p { font-size: 0.92rem; color: var(--muted); margin: 0; }
+  .card-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+
+  /* HIGHLIGHT */
+  .highlight {
+    border-left: 3px solid;
+    padding: 1rem 1.4rem;
+    background: var(--surface);
+    border-radius: 0 10px 10px 0;
+    margin: 1.5rem 0;
+    font-size: 0.93rem;
+  }
+  .hl-a { border-color: var(--accent1); }
+  .hl-b { border-color: var(--accent2); }
+  .hl-c { border-color: var(--accent3); }
+  .hl-d { border-color: var(--accent4); }
+  .highlight strong { font-weight: 600; }
+
+  /* QUADRANT GRID */
+  .quadrant-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1rem; margin: 1.5rem 0;
+  }
+  .quad {
+    border-radius: 10px; padding: 1.1rem 1.3rem;
+    border: 1px solid var(--border);
+  }
+  .quad-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.3rem; }
+  .quad-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.3rem; }
+  .quad-desc { font-size: 0.85rem; color: var(--muted); }
+  .quad-i { background: rgba(91,138,240,0.08); }
+  .quad-ii { background: rgba(224,92,107,0.08); }
+  .quad-iii { background: rgba(78,203,160,0.08); }
+  .quad-iv { background: rgba(232,168,56,0.08); }
+
+  /* TABLE */
+  table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.88rem; }
+  th {
+    background: var(--surface2); text-align: left;
+    padding: 0.7rem 1rem; font-weight: 600;
+    border-bottom: 2px solid var(--border);
+    font-size: 0.78rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted);
+  }
+  td { padding: 0.65rem 1rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:last-child td { border: none; }
+  tr:hover td { background: var(--surface); }
+
+  /* STEP FLOW */
+  .steps { display: flex; flex-direction: column; gap: 0; margin: 1.5rem 0; }
+  .step { display: flex; gap: 1rem; align-items: flex-start; padding: 1rem 0; border-bottom: 1px solid var(--border); }
+  .step:last-child { border: none; }
+  .step-num {
+    width: 32px; height: 32px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.8rem; font-weight: 700; flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+  .step-content strong { display: block; font-weight: 600; margin-bottom: 0.2rem; }
+  .step-content span { font-size: 0.88rem; color: var(--muted); }
+
+  /* DIVIDER */
+  hr { border: none; border-top: 1px solid var(--border); margin: 3rem 0; }
+
+  /* CALLOUT */
+  .callout {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.4rem 1.6rem;
+    margin: 1.5rem 0;
+  }
+  .callout-head { font-weight: 700; font-size: 0.82rem; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.6rem; }
+
+  /* TAG */
+  .tag {
+    display: inline-block; padding: 0.15rem 0.6rem;
+    border-radius: 4px; font-size: 0.7rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.05em;
+    margin-right: 0.3rem; margin-bottom: 0.3rem;
+  }
+  .tag-a { background: rgba(232,168,56,0.15); color: var(--accent1); }
+  .tag-b { background: rgba(91,138,240,0.15); color: var(--accent2); }
+  .tag-c { background: rgba(224,92,107,0.15); color: var(--accent3); }
+  .tag-d { background: rgba(78,203,160,0.15); color: var(--accent4); }
+
+  /* SCROLL target */
+  .anchor { scroll-margin-top: 72px; }
+
+  /* COMPARISON */
+  .compare-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0; }
+
+  @media (max-width: 600px) {
+    .quadrant-grid, .compare-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#lec1">Intro to Cloud</a>
+  <a href="#lec2">Storage (S3)</a>
+  <a href="#lec3">Compute (EC2)</a>
+  <a href="#lec4">Database Layer</a>
+  <a href="#lec10">Microservices</a>
+  <a href="#lec11">Automation</a>
+</nav>
+
+<div class="hero">
+  <h1>CT097-3-3 CSVC<br>Cloud Computing Study Guide</h1>
+  <p>Complete notes from all 6 lectures — Architecture, Services, and AWS Best Practices</p>
+  <div class="pill-row">
+    <span class="pill pill-a">Lec 1 — Intro to Cloud</span>
+    <span class="pill pill-b">Lec 2 — Storage / S3</span>
+    <span class="pill pill-c">Lec 3 — Compute / EC2</span>
+    <span class="pill pill-d">Lec 4 — Database</span>
+    <span class="pill pill-a">Lec 10 — Microservices &amp; Serverless</span>
+    <span class="pill pill-b">Lec 11 — Automating Architecture</span>
+  </div>
+</div>
+
+<main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- MODULE 1: INTRODUCTION TO CLOUD COMPUTING -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="module anchor" id="lec1">
+  <div class="module-header">
+    <div class="module-number num-a">1</div>
+    <div>
+      <h2>Introduction to Cloud Computing</h2>
+      <span>Lec1_CSVC_Introduction_Cloud_Computing_VE.pptx</span>
+    </div>
+  </div>
+
+  <h3>What is Cloud Computing?</h3>
+  <p>Cloud Computing is a general term for a new class of network-based computing that takes place over the Internet. It is a collection of integrated and networked hardware, software, and Internet infrastructure (a <em>platform</em>) that hides the complexity of the underlying infrastructure from users via simple graphical interfaces or APIs. The key concept is <strong>utility computing</strong> — pay only for what you use, available anywhere and anytime.</p>
+  <div class="highlight hl-a">
+    <strong>Simple Definition:</strong> A shared pool of configurable computing resources (networks, servers, storage, applications, services) that can be rapidly provisioned and released with minimal management effort or service provider interaction.
+  </div>
+
+  <h3>Cloud Computing Characteristics</h3>
+  <div class="compare-row">
+    <div>
+      <p style="font-size:0.8rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent2);margin-bottom:0.8rem;">Essential Characteristics</p>
+      <div class="card"><div class="card-title">On-Demand Self-Service</div><p>Users can provision resources automatically without requiring human interaction with each service provider.</p></div>
+      <div class="card"><div class="card-title">Broad Network Access</div><p>Capabilities available over the network, accessible by standard mechanisms via thin or thick clients.</p></div>
+      <div class="card"><div class="card-title">Resource Pooling</div><p>Provider's resources pooled to serve multiple consumers using a multi-tenant model, dynamically assigned.</p></div>
+      <div class="card"><div class="card-title">Rapid Elasticity</div><p>Capabilities can be elastically provisioned and released to scale rapidly outward and inward with demand.</p></div>
+      <div class="card"><div class="card-title">Measured Service</div><p>Resource usage is monitored, controlled, and reported — providing transparency for provider and consumer.</p></div>
+    </div>
+    <div>
+      <p style="font-size:0.8rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent1);margin-bottom:0.8rem;">Common Characteristics</p>
+      <div class="card"><div class="card-title">Low Cost Software</div><p>Use of open-source or commodity software reduces licensing costs.</p></div>
+      <div class="card"><div class="card-title">Virtualization</div><p>Abstracts physical resources into logical pools for efficient sharing.</p></div>
+      <div class="card"><div class="card-title">Massive Scale &amp; Homogeneity</div><p>Enormous scale with standardized hardware/software for simplicity.</p></div>
+      <div class="card"><div class="card-title">Resilient Computing</div><p>Systems designed to recover from failures automatically.</p></div>
+      <div class="card"><div class="card-title">Geographic Distribution</div><p>Resources spread across multiple locations for availability and compliance.</p></div>
+    </div>
+  </div>
+
+  <h3>Cloud Service Models</h3>
+  <table>
+    <thead><tr><th>Model</th><th>What It Provides</th><th>Who Manages Infrastructure</th><th>Examples</th></tr></thead>
+    <tbody>
+      <tr><td><strong>IaaS</strong> — Infrastructure as a Service</td><td>Raw compute, storage, and networking. Most control to the user.</td><td>AWS manages physical hardware; you manage OS, middleware, apps.</td><td>Amazon EC2, AWS VPC, Amazon S3</td></tr>
+      <tr><td><strong>PaaS</strong> — Platform as a Service</td><td>A development platform; deploy apps without managing underlying infrastructure.</td><td>AWS manages infrastructure + runtime; you manage applications.</td><td>AWS Elastic Beanstalk, Google App Engine, Heroku</td></tr>
+      <tr><td><strong>SaaS</strong> — Software as a Service</td><td>Complete applications delivered over the Internet.</td><td>Provider manages everything; you just use the software.</td><td>Salesforce CRM, Microsoft 365, Google Apps</td></tr>
+    </tbody>
+  </table>
+
+  <h3>SaaS Maturity Model</h3>
+  <div class="quadrant-grid">
+    <div class="quad quad-iii">
+      <div class="quad-label" style="color:var(--accent4);">Level 1</div>
+      <div class="quad-title">Ad-Hoc / Custom</div>
+      <div class="quad-desc">One instance per customer. Not scalable — each customer has their own isolated deployment.</div>
+    </div>
+    <div class="quad quad-i">
+      <div class="quad-label" style="color:var(--accent2);">Level 2</div>
+      <div class="quad-title">Configurable Per Customer</div>
+      <div class="quad-desc">Single codebase but configurable per tenant. Still one instance per customer.</div>
+    </div>
+    <div class="quad quad-ii">
+      <div class="quad-label" style="color:var(--accent3);">Level 3</div>
+      <div class="quad-title">Configurable &amp; Multi-Tenant</div>
+      <div class="quad-desc">All customers share one instance. Efficient but performance can suffer under load.</div>
+    </div>
+    <div class="quad quad-iv">
+      <div class="quad-label" style="color:var(--accent1);">Level 4</div>
+      <div class="quad-title">Scalable, Configurable &amp; Multi-Tenant</div>
+      <div class="quad-desc">The gold standard. Multiple instances auto-scaled behind a load balancer; fully efficient for all tenants.</div>
+    </div>
+  </div>
+
+  <h3>Cloud Computing Service Layers</h3>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num" style="background:rgba(232,168,56,0.2);color:var(--accent1);">6</div>
+      <div class="step-content"><strong>Services (Application-Focused)</strong><span>Complete business services — PayPal, OpenID, OAuth, Google Maps, Alexa. Consumed, not configured.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:rgba(232,168,56,0.2);color:var(--accent1);">5</div>
+      <div class="step-content"><strong>Application (SaaS)</strong><span>Cloud-based software eliminating local installation — Google Apps, Microsoft Online.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:rgba(91,138,240,0.2);color:var(--accent2);">4</div>
+      <div class="step-content"><strong>Development (PaaS)</strong><span>Software development platforms for building custom cloud apps — SalesForce, Google App Engine, AWS.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:rgba(91,138,240,0.2);color:var(--accent2);">3</div>
+      <div class="step-content"><strong>Platform (IaaS)</strong><span>Virtualized platforms — Amazon EC2, Sun Grid. You control the OS and middleware.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:rgba(78,203,160,0.2);color:var(--accent4);">2</div>
+      <div class="step-content"><strong>Storage (IaaS)</strong><span>Cloud-based data storage / NAS — Amazon S3, iDisk, CTERA.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:rgba(78,203,160,0.2);color:var(--accent4);">1</div>
+      <div class="step-content"><strong>Hosting</strong><span>Physical data centers — IBM, HP, NaviSite. Raw infrastructure, fully managed by provider.</span></div>
+    </div>
+  </div>
+
+  <h3>Virtualization</h3>
+  <p>Virtualization is the abstraction of physical hardware into multiple virtual machines (VMs). A <strong>Hypervisor</strong> (also called a Virtual Machine Monitor / VMM) intercepts and emulates instructions from VMs, allowing multiple guest OSes to run on a single physical host.</p>
+  <div class="card-row">
+    <div class="card">
+      <div class="card-title" style="color:var(--accent2);">How It Works</div>
+      <p>Hardware → Hypervisor (Xen, VMWare, KVM) → Multiple Guest OSes (Linux, Windows, NetBSD) → Apps on each. Para-virtualization (e.g., Xen) achieves near-raw hardware performance.</p>
+    </div>
+    <div class="card">
+      <div class="card-title" style="color:var(--accent2);">Virtual Workspaces</div>
+      <p>An abstraction of an execution environment dynamically available to authorized clients with defined resource quotas (CPU, memory) and software configurations (OS, services).</p>
+    </div>
+    <div class="card">
+      <div class="card-title" style="color:var(--accent2);">Cloud Benefit</div>
+      <p>Clouds use clusters of PC servers + open-source software + in-house applications. Transparent to users — can be built with branded products, proprietary or open source, hardware or software.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- MODULE 2: STORAGE LAYER — S3 -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="module anchor" id="lec2">
+  <div class="module-header">
+    <div class="module-number num-b">2</div>
+    <div>
+      <h2>Storage Layer — Amazon S3</h2>
+      <span>Lec2_CSVC__Storage_Layer_VE.pptx</span>
+    </div>
+  </div>
+
+  <h3>What is Amazon S3?</h3>
+  <p>Amazon Simple Storage Service (S3) is an <strong>object storage service</strong> that stores massive, unlimited amounts of unstructured data. Data files are stored as objects inside user-defined <em>buckets</em>. Each object has a REST-accessible globally unique URL, a key, version ID, value, metadata, and subresources.</p>
+
+  <div class="callout">
+    <div class="callout-head">Key Specs</div>
+    <p>Maximum single object size: <strong>5 TB</strong> &nbsp;|&nbsp; Durability: <strong>99.999999999%</strong> (eleven 9s) &nbsp;|&nbsp; Availability: <strong>99.99%</strong> (S3 Standard)</p>
+  </div>
+
+  <h3>S3 Benefits</h3>
+  <div class="card-row">
+    <div class="card"><div class="card-title" style="color:var(--accent2);">Durability</div><p>Data is never lost. S3 Standard provides eleven 9s of durability by storing data redundantly across multiple AZs.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent2);">Availability</div><p>Access your data when needed. Designed for 99.99% availability.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent2);">Scalability</div><p>Virtually unlimited capacity. Any single object up to 5 TB.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent2);">Security</div><p>Fine-grained access control at bucket and object level.</p></div>
+  </div>
+
+  <h3>Common S3 Use Cases</h3>
+  <div class="card-row">
+    <div class="card"><div class="card-title">Store &amp; Distribute Media</div><p>Host video, photo, or music uploads/downloads in a redundant, scalable, highly available infrastructure.</p></div>
+    <div class="card"><div class="card-title">Static Website Hosting</div><p>Host a fully static website (HTML, CSS, JS, images) directly from S3 with a public URL.</p></div>
+    <div class="card"><div class="card-title">Data Backup &amp; Archive</div><p>Store backup copies and archives cost-effectively. Use lifecycle policies to transition to cheaper tiers automatically.</p></div>
+    <div class="card"><div class="card-title">Data Lakes &amp; Analytics</div><p>Central repository for raw data at any scale, feeding analytics pipelines.</p></div>
+  </div>
+
+  <h3>Access Control</h3>
+  <p>Three general approaches to configuring S3 access:</p>
+  <div class="card-row">
+    <div class="card"><div class="card-title" style="color:var(--accent3);">Default (Private)</div><p>By default, only the bucket owner has access. All public access is blocked.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent1);">Bucket Policies</div><p>JSON-based policies attached to a bucket to grant or deny access to AWS accounts, users, or the public.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent4);">Public Access</div><p>Explicitly enabled to make content publicly readable — used for static website hosting.</p></div>
+  </div>
+
+  <h3>S3 Storage Classes</h3>
+  <table>
+    <thead><tr><th>Storage Class</th><th>Best For</th><th>Key Trait</th></tr></thead>
+    <tbody>
+      <tr><td><strong>S3 Standard</strong></td><td>Frequently accessed data</td><td>11 9s durability, 99.99% availability. Highest cost.</td></tr>
+      <tr><td><strong>S3 Standard-IA</strong></td><td>Long-lived, infrequently accessed</td><td>Lower storage cost but retrieval fee. 99.9% availability.</td></tr>
+      <tr><td><strong>S3 One Zone-IA</strong></td><td>Infrequent, non-critical data</td><td>Stored in a single AZ — cheapest IA option but lower resilience.</td></tr>
+      <tr><td><strong>S3 Intelligent-Tiering</strong></td><td>Unknown access patterns</td><td>Automatically moves objects between tiers based on usage.</td></tr>
+      <tr><td><strong>S3 Glacier</strong></td><td>Rarely accessed archives</td><td>Very low cost, retrieval in minutes to hours.</td></tr>
+      <tr><td><strong>S3 Glacier Deep Archive</strong></td><td>Long-term compliance archives</td><td>Lowest cost; retrieval within 12 hours.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>S3 Lifecycle Policies</h3>
+  <p>Configure an S3 Lifecycle Policy to automatically move or delete objects based on their age. Example: Standard (day 0) → Standard-IA (day 30) → Glacier (day 60) → Delete (day 365).</p>
+
+  <h3>S3 Pricing</h3>
+  <div class="compare-row">
+    <div class="card" style="border-color:rgba(224,92,107,0.4)">
+      <div class="card-title" style="color:var(--accent3);">You Are Charged For</div>
+      <p>GBs of objects stored per month (per Region, per storage class). Transfers OUT to other Regions or the internet. PUT, COPY, POST, LIST, GET, SELECT requests. Lifecycle transitions.</p>
+    </div>
+    <div class="card" style="border-color:rgba(78,203,160,0.4)">
+      <div class="card-title" style="color:var(--accent4);">No Charge For</div>
+      <p>Data transfers IN from the internet. Transfers between S3 buckets or to services in the same Region. Transfers OUT to Amazon CloudFront. DELETE and CANCEL requests.</p>
+    </div>
+  </div>
+
+  <h3>Moving Data To/From S3</h3>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num" style="background:rgba(91,138,240,0.2);color:var(--accent2);">1</div>
+      <div class="step-content"><strong>AWS Management Console</strong><span>Upload or download via browser. Simple, no setup required.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:rgba(91,138,240,0.2);color:var(--accent2);">2</div>
+      <div class="step-content"><strong>AWS CLI</strong><span>Upload or download from a terminal prompt or script. Example: <code>aws s3 cp test.txt s3://my-bucket/test.txt</code></span></div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:rgba(91,138,240,0.2);color:var(--accent2);">3</div>
+      <div class="step-content"><strong>Multipart Upload API</strong><span>For files larger than 100 MB. Splits the file into parts, uploads in parallel, reassembles in S3. Allows pause/resume and quick recovery from network failures.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:rgba(91,138,240,0.2);color:var(--accent2);">4</div>
+      <div class="step-content"><strong>S3 Transfer Acceleration</strong><span>Routes data through CloudFront edge locations to reach S3 faster. Typical 50–500% speed improvement for large cross-country transfers.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:rgba(232,168,56,0.2);color:var(--accent1);">5</div>
+      <div class="step-content"><strong>AWS Snowball</strong><span>Petabyte-scale physical data transport device. Encrypted. For massive transfers where internet speed is impractical (e.g., 10 PB over 10 Gbps would take 100+ days).</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:rgba(232,168,56,0.2);color:var(--accent1);">6</div>
+      <div class="step-content"><strong>AWS Snowmobile</strong><span>Exabyte-scale transport — a 45-foot shipping container pulled by a semi-trailer truck. Transfers up to 100 PB. Has GPS tracking, 24/7 surveillance, 256-bit encryption.</span></div>
+    </div>
+  </div>
+
+  <h3>Choosing a Region</h3>
+  <div class="card-row">
+    <div class="card"><div class="card-title" style="color:var(--accent4);">Compliance &amp; Data Residency</div><p>Some countries have laws requiring data to stay within borders. Check relevant data privacy laws and governance obligations before selecting a Region.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent4);">Proximity to Users</div><p>Small latency differences can noticeably impact customer experience. Choose the Region closest to your primary user base.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent4);">Service Availability</div><p>Not all AWS services are available in all Regions. Consult the AWS Region Table; services expand regularly.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent4);">Cost-Effectiveness</div><p>Pricing varies by Region. Factor in data transfer costs when replicating environments across Regions.</p></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- MODULE 3: COMPUTE LAYER — EC2 -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="module anchor" id="lec3">
+  <div class="module-header">
+    <div class="module-number num-c">3</div>
+    <div>
+      <h2>Compute Layer — Amazon EC2</h2>
+      <span>Lec3_CSVC_Compute_Layer_VE.pptx</span>
+    </div>
+  </div>
+
+  <h3>AWS Compute Choices Overview</h3>
+  <table>
+    <thead><tr><th>Type</th><th>Service</th><th>Best For</th></tr></thead>
+    <tbody>
+      <tr><td>Virtual Machines</td><td>Amazon EC2, Amazon Lightsail</td><td>Full OS control, any workload type</td></tr>
+      <tr><td>Containers</td><td>Amazon ECS, AWS Fargate</td><td>Microservices, containerized apps</td></tr>
+      <tr><td>PaaS</td><td>AWS Elastic Beanstalk</td><td>Easy web app deployment without managing servers</td></tr>
+      <tr><td>Serverless</td><td>AWS Lambda</td><td>Event-driven code, no server management</td></tr>
+      <tr><td>Specialized</td><td>AWS Outposts, AWS Batch</td><td>On-premises AWS hardware, batch computing</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Amazon EC2</h3>
+  <p>Amazon EC2 provides <strong>resizable compute capacity</strong> in the cloud. It provisions virtual machine servers in minutes, scales capacity up or down automatically, and charges only for what you use.</p>
+  <div class="highlight hl-c">
+    <strong>Use EC2 when you need:</strong> Complete control of computing resources including OS and processor type, options for cost optimization (On-Demand, Reserved, Spot), or the ability to run any type of workload.
+  </div>
+
+  <h3>Provisioning an EC2 Instance — Key Parameters</h3>
+  <div class="card-row">
+    <div class="card"><div class="card-title" style="color:var(--accent1);">AMI</div><p>Amazon Machine Image — defines the OS and pre-installed software for the instance.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent1);">Instance Type</div><p>Determines the CPU, memory, storage, and networking capacity.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent1);">Network / VPC</div><p>Which VPC and subnet the instance runs in; whether it has a public IP.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent1);">Security Group</div><p>Acts as a virtual firewall controlling inbound/outbound traffic.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent1);">User Data</div><p>Bootstrap script that runs when the instance first starts — install packages, configure software.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent1);">Storage</div><p>Instance Store (ephemeral) or Amazon EBS (persistent block storage).</p></div>
+  </div>
+
+  <h3>Amazon Machine Image (AMI)</h3>
+  <p>An AMI is a template containing a root volume (OS + software), launch permissions, and block device mappings. Multiple identical instances can be launched from a single AMI.</p>
+
+  <div class="card-row">
+    <div class="card"><div class="card-title" style="color:var(--accent4);">Repeatability</div><p>Launch identically configured instances from the same AMI repeatedly with precision.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent4);">Recoverability</div><p>Create an AMI from a configured instance as a restorable backup. Replace a failed instance by launching from the same AMI.</p></div>
+  </div>
+
+  <table>
+    <thead><tr><th>Characteristic</th><th>EBS-Backed AMI</th><th>Instance Store-Backed AMI</th></tr></thead>
+    <tbody>
+      <tr><td>Boot time</td><td>Faster</td><td>Slower</td></tr>
+      <tr><td>Max root device size</td><td>16 TiB</td><td>10 GiB</td></tr>
+      <tr><td>Stop instance</td><td>✅ Yes</td><td>❌ No (only reboot or terminate)</td></tr>
+      <tr><td>Change instance type</td><td>✅ Yes (stop then change)</td><td>❌ No</td></tr>
+      <tr><td>Persistence</td><td>Data persists on stop</td><td>Data lost on stop/terminate</td></tr>
+    </tbody>
+  </table>
+
+  <h3>EC2 Instance Types</h3>
+  <p>Instance types define the hardware configuration. They are grouped into families based on use case:</p>
+  <div class="card-row">
+    <div class="card"><div class="card-title" style="color:var(--accent2);">T Family — Burstable</div><p>Low baseline with ability to burst above it. Range: 1 vCPU/1 GB RAM → 8 vCPU/32 GB RAM. Ideal for small or variable workloads.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent2);">M Family — General Purpose</div><p>Balanced compute, memory, and networking. Range: 2 vCPU/8 GB → 96 vCPU/384 GB. Good for query-intensive apps and high connection counts.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent2);">R Family — Memory Optimized</div><p>High memory relative to CPU. Range: 2 vCPU/16 GB → 96 vCPU/768 GB. Ideal for CPU-intensive and in-memory databases.</p></div>
+  </div>
+
+  <h3>EC2 Lifecycle States</h3>
+  <div class="steps">
+    <div class="step"><div class="step-num" style="background:rgba(78,203,160,0.2);color:var(--accent4);">→</div><div class="step-content"><strong>Pending</strong><span>Instance is being launched; resources are allocated.</span></div></div>
+    <div class="step"><div class="step-num" style="background:rgba(78,203,160,0.2);color:var(--accent4);">→</div><div class="step-content"><strong>Running</strong><span>Instance is active and billing begins. You can reboot, stop, hibernate, or terminate from here.</span></div></div>
+    <div class="step"><div class="step-num" style="background:rgba(232,168,56,0.2);color:var(--accent1);">→</div><div class="step-content"><strong>Stopped</strong><span>Instance is off. EBS data persists. No compute charges (EBS charges continue). Can start or terminate.</span></div></div>
+    <div class="step"><div class="step-num" style="background:rgba(224,92,107,0.2);color:var(--accent3);">→</div><div class="step-content"><strong>Terminated</strong><span>Instance is permanently deleted. All instance store data is gone. EBS root volume deleted by default.</span></div></div>
+  </div>
+
+  <h3>EC2 Pricing Models</h3>
+  <table>
+    <thead><tr><th>Pricing Model</th><th>How It Works</th><th>Best For</th></tr></thead>
+    <tbody>
+      <tr><td><strong>On-Demand</strong></td><td>Pay per second/hour with no upfront commitment.</td><td>New or unpredictable workloads, short-term spiky loads.</td></tr>
+      <tr><td><strong>Reserved Instances</strong></td><td>1 or 3-year commitment in exchange for up to 75% discount.</td><td>Known, steady-state workloads that run continuously.</td></tr>
+      <tr><td><strong>Savings Plans</strong></td><td>Flexible commitment to consistent usage ($/hr) for 1 or 3 years.</td><td>Flexible but predictable usage across instance types.</td></tr>
+      <tr><td><strong>Spot Instances</strong></td><td>Bid for unused capacity at up to 90% discount. Can be interrupted.</td><td>Fault-tolerant, stateless, flexible, interruptible workloads.</td></tr>
+      <tr><td><strong>Dedicated Hosts</strong></td><td>Physical server fully dedicated to your use. Highest cost.</td><td>Compliance requirements, bring-your-own-license (BYOL) scenarios.</td></tr>
+    </tbody>
+  </table>
+  <div class="highlight hl-b">
+    <strong>Optimization Strategy:</strong> Use <em>Reserved Instances / Savings Plans</em> for your steady baseline, <em>On-Demand</em> for spiky overflow, and <em>Spot Instances</em> for fault-tolerant batch or flexible workloads to minimize cost.
+  </div>
+
+  <h3>Placement Groups</h3>
+  <p>Placement groups control where instances run within an Availability Zone to influence network performance and fault tolerance.</p>
+  <div class="quadrant-grid">
+    <div class="quad quad-i">
+      <div class="quad-label" style="color:var(--accent2);">Cluster</div>
+      <div class="quad-title">Low Latency, High Throughput</div>
+      <div class="quad-desc">All instances in the same high-bisection-bandwidth network segment. Up to 10 Gbps per-flow TCP/IP. Launch all instances at once for best results. For HPC and big data.</div>
+    </div>
+    <div class="quad quad-ii">
+      <div class="quad-label" style="color:var(--accent3);">Partition</div>
+      <div class="quad-title">Fault Isolation at Scale</div>
+      <div class="quad-desc">Spreads across logical partitions, each with its own rack (separate network + power). Reduces correlated hardware failure. For Hadoop, Cassandra, Kafka.</div>
+    </div>
+    <div class="quad quad-iii">
+      <div class="quad-label" style="color:var(--accent4);">Spread</div>
+      <div class="quad-title">Max Fault Isolation</div>
+      <div class="quad-desc">Each instance on a distinct physical rack. Can span multiple AZs. For small numbers of critical instances that must not fail simultaneously.</div>
+    </div>
+    <div class="quad quad-iv">
+      <div class="quad-label" style="color:var(--accent1);">Limit</div>
+      <div class="quad-title">One Group Per Instance</div>
+      <div class="quad-desc">An instance can only be in one placement group at a time. Instances with dedicated host tenancy cannot be placed in a placement group.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- MODULE 4: DATABASE LAYER -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="module anchor" id="lec4">
+  <div class="module-header">
+    <div class="module-number num-d">4</div>
+    <div>
+      <h2>Database Layer — Amazon RDS &amp; DynamoDB</h2>
+      <span>Lec4_CSVC_Database_Layer_VE.pptx</span>
+    </div>
+  </div>
+
+  <h3>Database Selection Considerations</h3>
+  <div class="card-row">
+    <div class="card"><div class="card-title" style="color:var(--accent1);">Scalability</div><p>How much throughput is needed? Can the solution scale up later to handle growth?</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent1);">Storage Requirements</div><p>How large will the database be — GB, TB, or petabytes of data?</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent1);">Object Size &amp; Type</div><p>Simple data structures, large objects, or both? Structured vs unstructured?</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent1);">Durability</div><p>Required level of data durability, availability, recoverability. Any regulatory obligations?</p></div>
+  </div>
+
+  <h3>Relational vs Non-Relational Databases</h3>
+  <div class="compare-row">
+    <div class="card" style="border-color:rgba(91,138,240,0.4)">
+      <div class="card-title" style="color:var(--accent2);">Relational (SQL) — RDBMS</div>
+      <p><strong>Best when:</strong> You need strict schema rules, ACID compliance, data quality enforcement, and moderate read/write capacity.</p>
+      <p><strong>Benefits:</strong> Ease of use, data integrity, reduced storage, standard SQL language.</p>
+      <p><strong>Examples:</strong> MySQL, Oracle, Microsoft SQL Server, PostgreSQL.</p>
+    </div>
+    <div class="card" style="border-color:rgba(78,203,160,0.4)">
+      <div class="card-title" style="color:var(--accent4);">Non-Relational (NoSQL)</div>
+      <p><strong>Best when:</strong> You need horizontal scaling for massive data volume, data doesn't fit traditional schemas, or read/write rates exceed RDBMS capacity.</p>
+      <p><strong>Benefits:</strong> Flexibility, horizontal scalability, high performance, highly functional APIs.</p>
+      <p><strong>Examples:</strong> MongoDB, Cassandra, Redis.</p>
+    </div>
+  </div>
+
+  <h3>Amazon RDS — Relational Database Service</h3>
+  <p>Amazon RDS is a <strong>fully managed relational database service</strong>. AWS handles power, hardware, OS installation, patching, backups, scaling, and high availability — so you can focus on query optimization and application logic.</p>
+  <p><strong>Supported engines:</strong> MySQL, PostgreSQL, MariaDB, Oracle, Microsoft SQL Server, and Amazon Aurora.</p>
+
+  <h3>RDS High Availability — Multi-AZ</h3>
+  <p>Multi-AZ deploys a <strong>synchronous standby replica</strong> in a different Availability Zone. Automatic failover occurs (via Amazon Route 53) if the primary instance fails.</p>
+  <div class="card-row">
+    <div class="card"><div class="card-title" style="color:var(--accent4);">Automatic Failover Conditions</div><p>Loss of availability in primary AZ, loss of network connectivity to primary, compute unit failure, or storage failure on primary.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent4);">Benefits</div><p>Enhanced durability, increased availability, zero-downtime failover (automatic), and simplified operations.</p></div>
+  </div>
+
+  <h3>RDS Read Replicas — Performance</h3>
+  <p>Read replicas use <strong>asynchronous replication</strong> to offload read traffic from the primary instance. Up to <strong>5 read replicas</strong> per primary. Supported by MySQL, MariaDB, PostgreSQL, Oracle. For strict read-after-write consistency, always read from the primary.</p>
+
+  <h3>Amazon Aurora</h3>
+  <div class="highlight hl-b">
+    Amazon Aurora is a fully managed, MySQL- and PostgreSQL-compatible relational engine. It provides up to <strong>5× the throughput of MySQL</strong> and up to <strong>3× the throughput of PostgreSQL</strong>. Replicates data <strong>6 ways across 3 Availability Zones</strong> automatically.
+  </div>
+
+  <h3>Amazon Redshift — Data Warehousing</h3>
+  <p>Amazon Redshift is used for <strong>Online Analytics Processing (OLAP)</strong>. It stores very large, highly structured datasets and can query exabytes of data in Amazon S3 as well. Use Redshift for business intelligence and analytics, not transactional workloads.</p>
+
+  <h3>Amazon DynamoDB — NoSQL</h3>
+  <p>DynamoDB is a <strong>fully managed, serverless, key-value and document NoSQL</strong> database. It provides single-digit millisecond latency at any scale and is ideal for event-driven and serverless architectures.</p>
+  <div class="card-row">
+    <div class="card"><div class="card-title" style="color:var(--accent3);">Extreme Horizontal Scaling</div><p>Scales to handle millions of requests per second automatically, with no downtime.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent3);">Global Tables</div><p>Replicates data automatically to multiple AWS Regions for globally distributed, low-latency access.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent3);">Serverless</div><p>No servers to provision or manage. Fully managed by AWS — you only pay for reads/writes.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent3);">Consistency Options</div><p><em>Eventually Consistent</em> (default): All copies usually consistent within 1 second. <em>Strongly Consistent</em> (optional): Reflects all writes that occurred before the read.</p></div>
+  </div>
+
+  <h3>Database Security Controls</h3>
+  <table>
+    <thead><tr><th>Control</th><th>For RDS</th><th>For DynamoDB</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Network Isolation</strong></td><td>Run in a VPC — service isolation + IP firewall protection.</td><td>Configure VPC endpoints to prevent traffic traversing open internet.</td></tr>
+      <tr><td><strong>Authentication</strong></td><td>IAM policies determine who can manage RDS resources.</td><td>IAM roles to authenticate access; define fine-grained API permissions.</td></tr>
+      <tr><td><strong>Access Control</strong></td><td>Security groups control which IPs or EC2 instances can connect. Network access disabled by default.</td><td>IAM policies at table, item, or attribute level. Principle of least privilege.</td></tr>
+      <tr><td><strong>Encryption in Transit</strong></td><td>Use SSL/TLS for connection encryption.</td><td>All communications use HTTPS by default.</td></tr>
+      <tr><td><strong>Encryption at Rest</strong></td><td>Amazon RDS encryption for DB instances and snapshots.</td><td>Default encryption of all data in tables, indexes, streams, and backups.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>AWS Database Migration Service (AWS DMS)</h3>
+  <p>AWS DMS migrates data to and from most commercial and open-source databases. Supports both <strong>homogeneous</strong> (same engine) and <strong>heterogeneous</strong> (different engine) migrations. The <strong>AWS Schema Conversion Tool (AWS SCT)</strong> converts the schema when changing engines.</p>
+  <div class="callout">
+    <div class="callout-head">Migration Steps</div>
+    <p>1. Create a target database &nbsp;→&nbsp; 2. Migrate the schema &nbsp;→&nbsp; 3. Set up data replication &nbsp;→&nbsp; 4. Initiate data transfer &nbsp;→&nbsp; 5. Switch production to new database</p>
+    <p style="margin-top:0.8rem;font-size:0.9rem;color:var(--muted);">If the database is too large to migrate over the internet, use <strong>AWS Snowball Edge</strong> — multi-terabyte physical transfer without using the internet.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- MODULE 5: MICROSERVICES & SERVERLESS -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="module anchor" id="lec10">
+  <div class="module-header">
+    <div class="module-number num-a">5</div>
+    <div>
+      <h2>Microservices &amp; Serverless Architecture</h2>
+      <span>Lec10_CSVC_Microservices_Serverless_Archi_VE.pptx — ECS &amp; AWS Lambda</span>
+    </div>
+  </div>
+
+  <h3>What Are Microservices?</h3>
+  <p>Microservices are applications composed of <strong>independent services that communicate over well-defined APIs</strong>. Each service handles a specific business function and can be developed, deployed, and scaled independently.</p>
+
+  <div class="compare-row">
+    <div class="card" style="border-color:rgba(224,92,107,0.4)">
+      <div class="card-title" style="color:var(--accent3);">Monolithic Application</div>
+      <p>All functions (Users, Topics, Messages) are tightly coupled in a single deployment unit. A change to one function requires redeploying the entire application. Hard to scale individual parts.</p>
+    </div>
+    <div class="card" style="border-color:rgba(78,203,160,0.4)">
+      <div class="card-title" style="color:var(--accent4);">Microservice Application</div>
+      <p>Each function (Users service, Topics service, Messages service) is an independent service. Can be updated, scaled, and deployed individually without affecting others.</p>
+    </div>
+  </div>
+
+  <h3>Characteristics of Microservices</h3>
+  <div class="card-row">
+    <div class="card"><div class="card-title" style="color:var(--accent2);">Decentralized</div><p>No single controlling authority. Each service owns its own data and decision-making.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent2);">Independent</div><p>Services can be deployed, updated, and scaled without coordinating with other services.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent2);">Black Boxes</div><p>Internal implementation is hidden. Services communicate only via well-defined APIs.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent2);">Polyglot</div><p>Different services can use different programming languages, databases, and frameworks.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent2);">Specialized</div><p>Each service is focused on doing one thing very well.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent2);">You Build It, You Run It</div><p>The team that builds a service is responsible for operating it in production.</p></div>
+  </div>
+
+  <h3>Containers &amp; Amazon ECS</h3>
+  <p>A <strong>container</strong> packages your application code, dependencies, configurations, and runtime engine together so it runs reliably in any environment — from a developer's workstation to production.</p>
+  <p><strong>Amazon ECS (Elastic Container Service)</strong> is a fully managed container orchestration service. It manages when containers run, maintains and scales the fleet of instances running containers, and removes infrastructure complexity.</p>
+
+  <h3>ECS Launch Types</h3>
+  <div class="compare-row">
+    <div class="card" style="border-color:rgba(91,138,240,0.4)">
+      <div class="card-title" style="color:var(--accent2);">EC2 Launch Type</div>
+      <p>You manage the underlying EC2 instances (container instances). ECS schedules containers onto these instances. Gives you more control and visibility into the infrastructure.</p>
+    </div>
+    <div class="card" style="border-color:rgba(78,203,160,0.4)">
+      <div class="card-title" style="color:var(--accent4);">Fargate Launch Type</div>
+      <p>Fully serverless — AWS manages the underlying infrastructure entirely. You only define CPU and memory requirements. No EC2 instances to manage. Easiest path.</p>
+    </div>
+  </div>
+
+  <h3>Decomposing Monoliths with ECS</h3>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num" style="background:rgba(232,168,56,0.2);color:var(--accent1);">1</div>
+      <div class="step-content"><strong>Create Container Images</strong><span>Create a separate Docker image for each microservice and push them to Amazon ECR (Elastic Container Registry).</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:rgba(232,168,56,0.2);color:var(--accent1);">2</div>
+      <div class="step-content"><strong>Create Task Definitions &amp; Target Groups</strong><span>Define launch type, container image URL, CPU/memory allocation, and ports for each service. Create a target group for each service.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:rgba(232,168,56,0.2);color:var(--accent1);">3</div>
+      <div class="step-content"><strong>Connect Load Balancer to Services</strong><span>Use an Application Load Balancer with listener rules: <em>IF path = /api/users* THEN forward to users target group</em>. Each service gets its own route.</span></div>
+    </div>
+  </div>
+
+  <h3>Supporting Tools</h3>
+  <div class="card-row">
+    <div class="card"><div class="card-title" style="color:var(--accent3);">AWS Cloud Map</div><p>Fully managed service discovery. Defines custom names for application resources and maintains updated locations of dynamically changing resources.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent3);">AWS App Mesh</div><p>Service mesh that captures metrics, logs, and traces from microservices. Controls traffic flows between services for high availability. Exports to CloudWatch and X-Ray.</p></div>
+  </div>
+
+  <h3>Serverless Architecture</h3>
+  <p>Serverless means <strong>building and running applications without thinking about servers</strong>. AWS manages all the infrastructure provisioning, maintenance, and scaling.</p>
+
+  <div class="card-row">
+    <div class="card"><div class="card-title" style="color:var(--accent4);">No Infrastructure Management</div><p>No provisioning, patching, or maintaining servers. AWS handles everything below the application code.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent4);">Automatic Scaling</div><p>Scales automatically from zero to millions of requests without any configuration.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent4);">Pay for Value</div><p>Pay only when your code runs — no charge for idle time. Significantly lower total cost of ownership.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent4);">Highly Available &amp; Secure</div><p>Built-in availability and security across multiple AZs without any extra work.</p></div>
+  </div>
+
+  <h3>AWS Lambda</h3>
+  <p>AWS Lambda is a fully managed compute service that <strong>runs your code in response to events</strong> — changes to S3, DynamoDB, scheduled cron jobs, HTTP requests, etc. Supports Node.js, Python, Java, C#, Go, Ruby, PowerShell, and Runtime API.</p>
+
+  <div class="highlight hl-a">
+    <strong>Anatomy of a Lambda Function:</strong> <code>handler(event, context)</code> — The <em>handler</em> is the function invoked; the <em>event object</em> carries data sent during invocation; the <em>context object</em> provides methods to interact with runtime information (request ID, log group, etc.).
+  </div>
+
+  <h3>Lambda Configuration &amp; Billing</h3>
+  <div class="card-row">
+    <div class="card"><div class="card-title" style="color:var(--accent2);">Memory</div><p>You configure memory allocation. Cost per 100 ms of execution duration increases as memory increases.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent2);">Timeout</div><p>You set the maximum execution duration for your function.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent2);">Pricing</div><p>Charged based on <strong>number of requests</strong> + <strong>duration</strong> (measured in GB-seconds). No charge when idle.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent2);">Lambda Layers</div><p>Up to 5 layers (250 MB total) to share reusable code/dependencies across functions. Keeps deployment packages small and promotes separation of responsibilities.</p></div>
+  </div>
+
+  <h3>Amazon API Gateway</h3>
+  <p>API Gateway is a fully managed service for creating, publishing, and managing APIs at any scale. It acts as the "front door" for applications to access data, business logic, or functionality from backend services (including Lambda). Common architecture: <strong>Client → API Gateway → Lambda → Database</strong>.</p>
+
+  <h3>AWS Step Functions — Orchestrating Microservices</h3>
+  <p>Step Functions coordinates microservices using <strong>visual workflows</strong> (state machines). It automatically triggers and tracks each step, and provides simple error catching and logging.</p>
+
+  <h3>State Types in AWS Step Functions</h3>
+  <table>
+    <thead><tr><th>State Type</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Task</strong></td><td>A single unit of work performed by the state machine (e.g., invoke a Lambda function).</td></tr>
+      <tr><td><strong>Choice</strong></td><td>Adds branching logic — routes execution based on data conditions.</td></tr>
+      <tr><td><strong>Parallel</strong></td><td>Creates parallel branches to run simultaneously in the state machine.</td></tr>
+      <tr><td><strong>Map</strong></td><td>Dynamically iterates over a list of items, running steps for each element.</td></tr>
+      <tr><td><strong>Wait</strong></td><td>Delays execution for a specified time before continuing.</td></tr>
+      <tr><td><strong>Pass</strong></td><td>Passes its input to its output without doing any work. Useful for testing.</td></tr>
+      <tr><td><strong>Succeed</strong></td><td>Stops the state machine execution successfully.</td></tr>
+      <tr><td><strong>Fail</strong></td><td>Stops execution and marks it as a failure.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <div class="callout-head">Amazon States Language</div>
+    <p>State machines are defined in JSON using the <strong>Amazon States Language (ASL)</strong>. You specify a <code>StartAt</code> state, then define each <code>States</code> object with its <code>Type</code>, <code>Resource</code> (ARN), and <code>Next</code> state. The workflow is also visualized in the Step Functions console.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- MODULE 6: AUTOMATING ARCHITECTURE -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="module anchor" id="lec11">
+  <div class="module-header">
+    <div class="module-number num-b">6</div>
+    <div>
+      <h2>Automating Your Architecture</h2>
+      <span>Lec11_CSVC_Automating_Architecture_VE.pptx — AWS CloudFormation &amp; Elastic Beanstalk</span>
+    </div>
+  </div>
+
+  <h3>Why Automate?</h3>
+  <p>Manual infrastructure processes create serious problems at scale:</p>
+  <div class="card-row">
+    <div class="card"><div class="card-title" style="color:var(--accent3);">No Repeatability at Scale</div><p>How do you replicate the same deployment across multiple Regions consistently?</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent3);">No Version Control</div><p>How do you roll back to a prior version of the production environment if something breaks?</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent3);">No Audit Trail</div><p>How do you ensure compliance and track resource-level configuration changes over time?</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent3);">Inconsistent Data</div><p>How do you guarantee identical configurations across multiple EC2 instances?</p></div>
+  </div>
+
+  <div class="highlight hl-b">
+    <strong>AWS Well-Architected Framework:</strong> "Perform operations as code" and "Make frequent, small, reversible changes" (Operational Excellence). "Manage change in automation" (Reliability). Manual processes cannot meet these guidelines.
+  </div>
+
+  <h3>AWS CloudFormation — Infrastructure as Code (IaC)</h3>
+  <p>CloudFormation is AWS's built-in IaC tool. It lets you model, create, and manage a collection of AWS resources — called a <strong>stack</strong> — using a template file. No extra charge; you pay only for the resources created.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num" style="background:rgba(91,138,240,0.2);color:var(--accent2);">1</div>
+      <div class="step-content"><strong>Define Resources in a Template</strong><span>Write a YAML or JSON template file specifying all the AWS resources to create (EC2 instances, VPCs, S3 buckets, security groups, etc.).</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:rgba(91,138,240,0.2);color:var(--accent2);">2</div>
+      <div class="step-content"><strong>Upload the Template</strong><span>Upload directly to CloudFormation or point to a template stored in an S3 bucket.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:rgba(91,138,240,0.2);color:var(--accent2);">3</div>
+      <div class="step-content"><strong>Execute Create Stack</strong><span>Resources are created across multiple AWS services in your account as a running environment.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:rgba(91,138,240,0.2);color:var(--accent2);">4</div>
+      <div class="step-content"><strong>Manage the Stack</strong><span>The stack retains control. You can later update, detect drift, or delete the stack — which also deletes all resources it created.</span></div>
+    </div>
+  </div>
+
+  <h3>Infrastructure as Code Benefits</h3>
+  <div class="card-row">
+    <div class="card"><div class="card-title" style="color:var(--accent4);">Reusability</div><p>One template can deploy identical environments (dev, test, prod) on demand.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent4);">Repeatability</div><p>Every deployment from the same template is guaranteed to be identical. No human error.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent4);">Maintainability</div><p>Modify the template, run Update Stack on all stacks to propagate changes simultaneously.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent4);">Easy Cleanup</div><p>Deleting the stack deletes all resources it created — no orphaned infrastructure.</p></div>
+  </div>
+
+  <h3>CloudFormation Template Structure</h3>
+  <table>
+    <thead><tr><th>Section</th><th>Purpose</th><th>Required?</th></tr></thead>
+    <tbody>
+      <tr><td><strong>AWSTemplateFormatVersion</strong></td><td>Specifies the template format version.</td><td>Optional</td></tr>
+      <tr><td><strong>Parameters</strong></td><td>Values set at runtime (e.g., environment type, key pair name).</td><td>Optional</td></tr>
+      <tr><td><strong>Resources</strong></td><td>Defines what AWS resources to create. Can reference Parameters.</td><td>✅ Required</td></tr>
+      <tr><td><strong>Outputs</strong></td><td>Values returned after stack creation (e.g., instance ID, public IP).</td><td>Optional</td></tr>
+    </tbody>
+  </table>
+  <div class="highlight hl-a">
+    <strong>JSON vs YAML:</strong> YAML is less verbose (no <code>{}</code>, <code>""</code>), supports comments, and is the recommended format. JSON is more widely used by APIs. Both are fully supported. Treat templates as source code — store in a version control repository.
+  </div>
+
+  <h3>CloudFormation Advanced Features</h3>
+  <div class="card-row">
+    <div class="card"><div class="card-title" style="color:var(--accent2);">Change Sets</div><p>Preview changes to a stack before executing them. Shows you exactly what will be added, modified, or deleted without actually making changes.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent2);">Drift Detection</div><p>Detects when actual deployed resources differ from the template. If someone manually modifies a resource, drift detection shows which resources are MODIFIED vs IN_SYNC.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent2);">Conditions</div><p>A single template can deploy different infrastructure for different environments (e.g., multi-AZ for production but single-AZ for development).</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent2);">Quick Start Templates</div><p>Pre-built reference architectures from AWS and AWS Partners. Start from a vetted best-practice template instead of from scratch.</p></div>
+  </div>
+
+  <h3>AWS Systems Manager</h3>
+  <p>Systems Manager gives you operational visibility and control over AWS infrastructure. Key capabilities include <strong>Run Command</strong> (run scripts on fleets of instances without SSH), <strong>Automation</strong> (define runbooks for operational tasks), and <strong>Parameter Store</strong> (securely store configuration data and secrets).</p>
+
+  <h3>AWS OpsWorks</h3>
+  <p>OpsWorks is a configuration management service that automates how servers are configured, deployed, and managed. It provides managed instances of <strong>Chef</strong> and <strong>Puppet</strong> — popular automation platforms.</p>
+  <div class="card-row">
+    <div class="card"><div class="card-title" style="color:var(--accent1);">OpsWorks for Chef Automate</div><p>Uses Chef cookbooks and recipes to configure servers with reusable, testable code.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent1);">OpsWorks for Puppet Enterprise</div><p>Uses Puppet modules to manage server state declaratively.</p></div>
+    <div class="card"><div class="card-title" style="color:var(--accent1);">OpsWorks Stacks</div><p>Model your application as a stack of layers (load balancing, application server, database). Complements CloudFormation: use CF to build the infrastructure, OpsWorks to deploy the application layer on top.</p></div>
+  </div>
+
+  <h3>AWS Elastic Beanstalk</h3>
+  <p>Elastic Beanstalk is an <strong>easy, managed service for deploying web applications</strong>. You upload your code and Beanstalk automatically handles infrastructure provisioning, load balancing, auto scaling, health monitoring, analysis, debugging, and logging. <strong>No additional charge</strong> — pay only for the underlying resources used.</p>
+  <div class="highlight hl-d">
+    <strong>Supported Platforms:</strong> Java, .NET, PHP, Node.js, Python, Ruby, Go, and Docker. Deploys on Apache, NGINX, Passenger, Puma, and IIS web servers automatically.
+  </div>
+
+  <h3>Choosing the Right Automation Tool</h3>
+  <table>
+    <thead><tr><th>Tool</th><th>Control Level</th><th>Best For</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Do It Yourself (EC2)</strong></td><td>Maximum control</td><td>Full custom configuration; everything manually managed.</td></tr>
+      <tr><td><strong>AWS CloudFormation</strong></td><td>High (IaC)</td><td>Repeatable, version-controlled infrastructure deployment. Best for complex architectures.</td></tr>
+      <tr><td><strong>AWS OpsWorks</strong></td><td>Medium</td><td>Configuration management with Chef/Puppet for ongoing server state management.</td></tr>
+      <tr><td><strong>AWS Elastic Beanstalk</strong></td><td>Lower (convenience)</td><td>Simple web app deployments where you want to focus only on code.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <div class="callout-head">Exam Tip — Automation Rule of Thumb</div>
+    <p><strong>CloudFormation</strong>: Use when you need full control over AWS infrastructure provisioning and want IaC. <strong>Elastic Beanstalk</strong>: Use when you want the simplest path to deploy a standard web app and don't care about the underlying infrastructure. <strong>OpsWorks</strong>: Use when you have existing Chef/Puppet expertise and need ongoing configuration management.</p>
+  </div>
+</div>
+
+</main>
+</body>
+</html>
