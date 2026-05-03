@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSVC Cloud Computing — Study & Quiz Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f7f6f2;
+  --surface: #ffffff;
+  --surface2: #f0ede6;
+  --border: #e2ddd5;
+  --text: #1a1714;
+  --muted: #7a7268;
+  --accent: #d4691e;
+  --accent2: #2e6ca8;
+  --accent3: #217a55;
+  --accent4: #8b2fc9;
+  --accent5: #c43030;
+  --gold: #e8a838;
+  --nav-h: 60px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-weight: 400; line-height: 1.7; min-height: 100vh; }
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  height: var(--nav-h); background: var(--text);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 2rem; gap: 1rem;
+}
+.nav-logo { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 800; color: #fff; letter-spacing: -0.02em; }
+.nav-logo span { color: var(--gold); }
+.nav-actions { display: flex; gap: 0.5rem; }
+.nav-btn {
+  padding: 0.4rem 1rem; border-radius: 6px; font-size: 0.8rem; font-weight: 500;
+  border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.8);
+  background: transparent; cursor: pointer; transition: all .2s; font-family: 'DM Sans', sans-serif;
+}
+.nav-btn:hover { background: rgba(255,255,255,0.1); color: #fff; }
+.nav-btn.active { background: var(--gold); color: var(--text); border-color: var(--gold); font-weight: 600; }
+/* ── HERO ── */
+.hero {
+  margin-top: var(--nav-h); padding: 4rem 2rem 3.5rem;
+  background: var(--text); color: #fff; text-align: center; position: relative; overflow: hidden;
+}
+.hero::before {
+  content: ''; position: absolute; width: 600px; height: 600px;
+  border-radius: 50%; background: rgba(232,168,56,0.07);
+  top: -200px; left: 50%; transform: translateX(-50%);
+}
+.hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(2rem,5vw,3.4rem); font-weight: 800; line-height: 1.1; position: relative; }
+.hero h1 em { font-style: normal; color: var(--gold); }
+.hero p { color: rgba(255,255,255,0.6); font-size: 1rem; margin-top: 0.8rem; position: relative; }
+.hero-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin-top: 2rem; position: relative; }
+.hero-pill {
+  padding: 0.3rem 0.9rem; border-radius: 999px; font-size: 0.72rem; font-weight: 500;
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.7);
+  cursor: pointer; transition: all .2s; letter-spacing: 0.02em;
+}
+.hero-pill:hover, .hero-pill.active { background: var(--gold); border-color: var(--gold); color: var(--text); font-weight: 600; }
+/* ── MAIN LAYOUT ── */
+main { max-width: 1100px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+/* ── MODULE CARDS ── */
+#module-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px,1fr)); gap: 1.2rem; }
+.mod-card {
+  background: var(--surface); border: 1.5px solid var(--border); border-radius: 14px;
+  padding: 1.5rem; cursor: pointer; transition: all .2s; position: relative; overflow: hidden;
+}
+.mod-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+.mod-card:hover { transform: translateY(-2px); border-color: #c9c3ba; box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.mod-card-num {
+  font-family: 'Syne', sans-serif; font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem;
+}
+.mod-card h3 { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; }
+.mod-card p { font-size: 0.83rem; color: var(--muted); margin: 0; line-height: 1.5; }
+.mod-card-footer {
+  display: flex; align-items: center; justify-content: space-between; margin-top: 1.2rem;
+  padding-top: 1rem; border-top: 1px solid var(--border);
+}
+.mod-card-btn {
+  padding: 0.38rem 0.9rem; border-radius: 6px; font-size: 0.78rem; font-weight: 600;
+  border: none; cursor: pointer; transition: all .2s; font-family: 'DM Sans', sans-serif; letter-spacing: 0.01em;
+}
+.progress-ring { font-size: 0.72rem; color: var(--muted); }
+.progress-bar { height: 4px; background: var(--surface2); border-radius: 2px; margin-top: 0.8rem; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 2px; transition: width .4s; }
+/* Color themes */
+.c1::before { background: var(--accent); } .c1 .mod-card-num { color: var(--accent); } .c1 .mod-card-btn { background: var(--accent); color: #fff; } .c1 .mod-card-btn:hover { background: #b8571a; } .c1 .progress-fill { background: var(--accent); }
+.c2::before { background: var(--accent2); } .c2 .mod-card-num { color: var(--accent2); } .c2 .mod-card-btn { background: var(--accent2); color: #fff; } .c2 .mod-card-btn:hover { background: #255a8e; } .c2 .progress-fill { background: var(--accent2); }
+.c3::before { background: var(--accent3); } .c3 .mod-card-num { color: var(--accent3); } .c3 .mod-card-btn { background: var(--accent3); color: #fff; } .c3 .mod-card-btn:hover { background: #1a6344; } .c3 .progress-fill { background: var(--accent3); }
+.c4::before { background: var(--accent4); } .c4 .mod-card-num { color: var(--accent4); } .c4 .mod-card-btn { background: var(--accent4); color: #fff; } .c4 .mod-card-btn:hover { background: #7325aa; } .c4 .progress-fill { background: var(--accent4); }
+.c5::before { background: var(--accent5); } .c5 .mod-card-num { color: var(--accent5); } .c5 .mod-card-btn { background: var(--accent5); color: #fff; } .c5 .mod-card-btn:hover { background: #a82626; } .c5 .progress-fill { background: var(--accent5); }
+/* ── STUDY VIEW ── */
+#study-view, #quiz-view { display: none; }
+.back-btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-size: 0.82rem; font-weight: 500; color: var(--muted); cursor: pointer;
+  padding: 0.4rem 0; margin-bottom: 2rem; border: none; background: none;
+  font-family: 'DM Sans', sans-serif; transition: color .2s;
+}
+.back-btn:hover { color: var(--text); }
+.study-header { margin-bottom: 2.5rem; }
+.study-header h2 { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; line-height: 1.2; }
+.study-header p { color: var(--muted); margin-top: 0.4rem; }
+.study-section { margin-bottom: 2.5rem; }
+.study-section h3 { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--surface2); }
+.study-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px,1fr)); gap: 0.8rem; }
+.study-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.1rem 1.3rem; }
+.study-card strong { display: block; font-size: 0.88rem; font-weight: 600; margin-bottom: 0.3rem; }
+.study-card p { font-size: 0.83rem; color: var(--muted); margin: 0; }
+.highlight-box {
+  border-left: 3px solid; padding: 1rem 1.3rem;
+  background: var(--surface); border-radius: 0 8px 8px 0;
+  margin: 1.5rem 0; font-size: 0.9rem;
+}
+.study-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 1rem 0; }
+.study-table th { background: var(--surface2); text-align: left; padding: 0.6rem 0.9rem; font-weight: 600; border-bottom: 2px solid var(--border); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
+.study-table td { padding: 0.6rem 0.9rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+.study-table tr:last-child td { border: none; }
+.study-table tr:hover td { background: var(--surface2); }
+.start-quiz-bar {
+  position: sticky; bottom: 1.5rem;
+  background: var(--text); color: #fff; border-radius: 12px;
+  padding: 1.2rem 2rem; display: flex; align-items: center; justify-content: space-between;
+  margin-top: 3rem; box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+}
+.start-quiz-bar p { font-size: 0.9rem; color: rgba(255,255,255,0.7); margin: 0; }
+.start-quiz-bar h4 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; }
+.start-quiz-big-btn {
+  padding: 0.7rem 2rem; border-radius: 8px; background: var(--gold); color: var(--text);
+  font-weight: 700; font-size: 0.92rem; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif;
+  transition: all .2s; white-space: nowrap;
+}
+.start-quiz-big-btn:hover { background: #d4962f; }
+/* ── QUIZ VIEW ── */
+.quiz-header { margin-bottom: 2rem; }
+.quiz-meta { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+.quiz-meta-pill { font-size: 0.75rem; font-weight: 600; padding: 0.25rem 0.8rem; border-radius: 999px; background: var(--surface2); color: var(--muted); }
+.quiz-progress-wrap { background: var(--surface2); border-radius: 4px; height: 6px; margin-bottom: 0.5rem; overflow: hidden; }
+.quiz-progress-bar { height: 100%; border-radius: 4px; background: var(--accent2); transition: width .4s; }
+.quiz-counter { font-size: 0.78rem; color: var(--muted); }
+.question-card {
+  background: var(--surface); border: 1.5px solid var(--border); border-radius: 14px;
+  padding: 2rem; margin-bottom: 1.5rem;
+}
+.question-num { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.6rem; }
+.question-text { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 600; line-height: 1.4; margin-bottom: 1.5rem; }
+.options { display: flex; flex-direction: column; gap: 0.6rem; }
+.option-btn {
+  padding: 0.85rem 1.2rem; border-radius: 8px; border: 1.5px solid var(--border);
+  background: var(--surface); text-align: left; cursor: pointer; font-size: 0.9rem;
+  font-family: 'DM Sans', sans-serif; transition: all .15s; color: var(--text);
+  display: flex; align-items: flex-start; gap: 0.8rem;
+}
+.option-btn:hover:not(:disabled) { border-color: var(--accent2); background: #f0f5fb; }
+.option-btn.selected { border-color: var(--accent2); background: #e8f0fb; }
+.option-btn.correct { border-color: var(--accent3); background: #e8f5ed; color: var(--accent3); }
+.option-btn.wrong { border-color: var(--accent5); background: #fdf0f0; color: var(--accent5); }
+.option-btn:disabled { cursor: default; }
+.opt-letter {
+  width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid var(--border);
+  display: flex; align-items: center; justify-content: center; font-size: 0.72rem;
+  font-weight: 700; flex-shrink: 0; margin-top: 1px;
+}
+.option-btn.selected .opt-letter { background: var(--accent2); border-color: var(--accent2); color: #fff; }
+.option-btn.correct .opt-letter { background: var(--accent3); border-color: var(--accent3); color: #fff; }
+.option-btn.wrong .opt-letter { background: var(--accent5); border-color: var(--accent5); color: #fff; }
+.explanation {
+  margin-top: 1rem; padding: 1rem 1.2rem; border-radius: 8px; font-size: 0.85rem;
+  background: var(--surface2); border-left: 3px solid var(--accent2);
+  display: none;
+}
+.explanation.show { display: block; }
+.quiz-nav { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap; }
+.quiz-btn {
+  padding: 0.65rem 1.8rem; border-radius: 8px; font-weight: 600; font-size: 0.88rem;
+  border: 1.5px solid var(--border); background: var(--surface); cursor: pointer;
+  font-family: 'DM Sans', sans-serif; transition: all .2s; color: var(--text);
+}
+.quiz-btn:hover { background: var(--surface2); }
+.quiz-btn.primary { background: var(--accent2); color: #fff; border-color: var(--accent2); }
+.quiz-btn.primary:hover { background: #255a8e; }
+.quiz-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+/* ── RESULTS ── */
+#results-view { display: none; }
+.score-hero { text-align: center; padding: 3rem 2rem; }
+.score-circle {
+  width: 140px; height: 140px; border-radius: 50%; margin: 0 auto 1.5rem;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  border: 6px solid; font-family: 'Syne', sans-serif;
+}
+.score-number { font-size: 2.8rem; font-weight: 800; line-height: 1; }
+.score-label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
+.score-grade { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; margin-bottom: 0.3rem; }
+.score-sub { color: var(--muted); font-size: 0.95rem; }
+.result-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; max-width: 500px; margin: 2rem auto; }
+.result-stat { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1rem; text-align: center; }
+.result-stat .big { font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 800; }
+.result-stat .sm { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
+.result-actions { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; margin-top: 1.5rem; }
+.answers-review { margin-top: 2.5rem; }
+.answers-review h3 { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.2rem; }
+.review-item { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.2rem; margin-bottom: 0.8rem; }
+.review-item.rv-correct { border-left: 3px solid var(--accent3); }
+.review-item.rv-wrong { border-left: 3px solid var(--accent5); }
+.review-q { font-size: 0.88rem; font-weight: 600; margin-bottom: 0.5rem; }
+.review-ans { font-size: 0.82rem; display: flex; flex-direction: column; gap: 0.2rem; }
+.rv-correct-ans { color: var(--accent3); }
+.rv-wrong-ans { color: var(--accent5); }
+@media (max-width:600px) {
+  .result-stats { grid-template-columns: repeat(3,1fr); }
+  .study-cards { grid-template-columns: 1fr; }
+  .quiz-nav { flex-direction: column; }
+  .quiz-nav .quiz-btn { width: 100%; text-align: center; }
+  .start-quiz-bar { flex-direction: column; gap: 1rem; }
+  .start-quiz-big-btn { width: 100%; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">CSVC <span>Cloud</span></div>
+  <div class="nav-actions">
+    <button class="nav-btn active" onclick="showSection('home')">Modules</button>
+    <button class="nav-btn" onclick="showSection('home')">Progress</button>
+  </div>
+</nav>
+
+<div class="hero">
+  <h1>CT097-3-3 CSVC<br><em>Cloud Computing</em> Hub</h1>
+  <p>Study every lecture. Test yourself with 20 questions per module.</p>
+  <div class="hero-pills" id="quick-nav">
+    <span class="hero-pill" onclick="goStudy(0)">Intro to Cloud</span>
+    <span class="hero-pill" onclick="goStudy(1)">Storage / S3</span>
+    <span class="hero-pill" onclick="goStudy(2)">Compute / EC2</span>
+    <span class="hero-pill" onclick="goStudy(3)">Database</span>
+    <span class="hero-pill" onclick="goStudy(4)">Microservices</span>
+    <span class="hero-pill" onclick="goStudy(5)">Automation</span>
+    <span class="hero-pill" onclick="goStudy(6)">Networking</span>
+    <span class="hero-pill" onclick="goStudy(7)">IAM</span>
+    <span class="hero-pill" onclick="goStudy(8)">High Availability</span>
+    <span class="hero-pill" onclick="goStudy(9)">Caching</span>
+    <span class="hero-pill" onclick="goStudy(10)">Disaster Recovery</span>
+  </div>
+</div>
+
+<main>
+<!-- HOME -->
+<div id="home-view">
+  <div id="module-grid"></div>
+</div>
+
+<!-- STUDY -->
+<div id="study-view">
+  <button class="back-btn" onclick="showSection('home')">← Back to Modules</button>
+  <div id="study-content"></div>
+  <div class="start-quiz-bar">
+    <div>
+      <h4>Ready to test your knowledge?</h4>
+      <p>20 questions • Instant feedback • Full review</p>
+    </div>
+    <button class="start-quiz-big-btn" onclick="startQuiz(currentModule)">Start Quiz →</button>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div id="quiz-view">
+  <button class="back-btn" onclick="showSection('study')">← Back to Study</button>
+  <div class="quiz-header">
+    <div class="quiz-meta">
+      <span class="quiz-meta-pill" id="quiz-module-label"></span>
+      <span class="quiz-meta-pill">20 Questions</span>
+    </div>
+    <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress-bar"></div></div>
+    <div class="quiz-counter" id="quiz-counter">Question 1 of 20</div>
+  </div>
+  <div id="question-area"></div>
+  <div class="quiz-nav">
+    <button class="quiz-btn" id="prev-btn" onclick="prevQ()">← Previous</button>
+    <div style="font-size:0.82rem;color:var(--muted);" id="answered-count"></div>
+    <button class="quiz-btn primary" id="next-btn" onclick="nextQ()">Next →</button>
+  </div>
+</div>
+
+<!-- RESULTS -->
+<div id="results-view">
+  <button class="back-btn" onclick="showSection('home')">← Back to Modules</button>
+  <div id="results-content"></div>
+</div>
+</main>
+
+<script>
+/* ═══════════════ DATA ═══════════════ */
+const MODULES = [
+  {
+    id: 0, color: 'c1', lecture: 'Lecture 1',
+    title: 'Introduction to Cloud Computing',
+    desc: 'Cloud definitions, service models (IaaS/PaaS/SaaS), virtualization, and the five essential characteristics.',
+    sections: [
+      {
+        title: 'What is Cloud Computing?',
+        cards: [
+          { t: 'Definition', p: 'A shared pool of configurable computing resources that can be rapidly provisioned and released with minimal management effort. Key concept: utility computing — pay only for what you use.' },
+          { t: 'Utility Computing', p: 'Resources available anywhere, anytime. Like electricity — you use it, you pay for it. No need to own the infrastructure.' },
+          { t: 'Platform', p: 'A collection of integrated hardware, software, and internet infrastructure that hides underlying complexity from users via simple interfaces or APIs.' }
+        ]
+      },
+      {
+        title: 'Five Essential Characteristics',
+        cards: [
+          { t: 'On-Demand Self-Service', p: 'Users can provision resources automatically without human interaction with the provider.' },
+          { t: 'Broad Network Access', p: 'Capabilities available over the network, accessible by standard mechanisms via thin or thick clients.' },
+          { t: 'Resource Pooling', p: "Provider's resources pooled to serve multiple consumers using a multi-tenant model, dynamically assigned." },
+          { t: 'Rapid Elasticity', p: 'Capabilities can be elastically provisioned and released to scale rapidly outward and inward with demand.' },
+          { t: 'Measured Service', p: 'Resource usage is monitored, controlled, and reported — transparency for provider and consumer.' }
+        ]
+      },
+      {
+        title: 'Cloud Service Models',
+        table: {
+          headers: ['Model', 'What It Provides', 'Examples'],
+          rows: [
+            ['IaaS', 'Raw compute, storage, networking. Most control to user.', 'Amazon EC2, AWS VPC, S3'],
+            ['PaaS', 'Development platform; deploy apps without managing infrastructure.', 'AWS Elastic Beanstalk, Heroku'],
+            ['SaaS', 'Complete applications delivered over the Internet.', 'Salesforce, Microsoft 365, Google Apps']
+          ]
+        }
+      },
+      {
+        title: 'Virtualization',
+        cards: [
+          { t: 'Hypervisor (VMM)', p: 'Intercepts and emulates instructions from VMs. Allows multiple guest OSes on a single physical host. Examples: Xen, VMWare, KVM.' },
+          { t: 'Para-virtualization', p: 'Guest OS is modified to be aware of the hypervisor (e.g., Xen). Achieves near-raw hardware performance.' },
+          { t: 'Cloud Benefit', p: 'Clouds use clusters of servers + open-source software. Transparent to users. Can be built with proprietary or open-source hardware/software.' }
+        ]
+      }
+    ],
+    quiz: [
+      { q: 'What is the primary concept behind cloud computing pricing?', opts: ['Flat monthly subscription', 'Utility computing — pay for what you use', 'One-time perpetual license', 'Free with ads'], ans: 1, exp: 'Cloud computing uses the utility model — like electricity. You pay only for the resources you consume, with no upfront commitment.' },
+      { q: 'Which of the five essential characteristics allows users to provision resources without human interaction from the provider?', opts: ['Rapid Elasticity', 'Measured Service', 'On-Demand Self-Service', 'Resource Pooling'], ans: 2, exp: 'On-Demand Self-Service means users can provision computing resources automatically without requiring human interaction with each service provider.' },
+      { q: 'In the multi-tenant model, resources are shared among many customers. Which characteristic describes this?', opts: ['Broad Network Access', 'Resource Pooling', 'Rapid Elasticity', 'Measured Service'], ans: 1, exp: 'Resource Pooling uses a multi-tenant model where the provider\'s resources are pooled to serve multiple consumers, with resources dynamically assigned and reassigned.' },
+      { q: 'Which service model gives you a development platform where you deploy apps without managing underlying infrastructure?', opts: ['IaaS', 'SaaS', 'PaaS', 'FaaS'], ans: 2, exp: 'PaaS (Platform as a Service) provides a development platform. AWS manages the infrastructure and runtime; you manage only your applications.' },
+      { q: 'Which service model is Salesforce CRM an example of?', opts: ['IaaS', 'PaaS', 'HaaS', 'SaaS'], ans: 3, exp: 'SaaS (Software as a Service) delivers complete applications over the Internet. The provider manages everything; users simply use the software.' },
+      { q: 'What is a Hypervisor?', opts: ['A type of cloud storage', 'Software that intercepts and emulates instructions from VMs', 'A DNS service', 'A network load balancer'], ans: 1, exp: 'A Hypervisor (Virtual Machine Monitor / VMM) intercepts and emulates instructions from VMs, allowing multiple guest OSes to run on a single physical host.' },
+      { q: 'Which SaaS maturity level is considered the gold standard?', opts: ['Level 1 — Ad-Hoc', 'Level 2 — Configurable Per Customer', 'Level 3 — Configurable & Multi-Tenant', 'Level 4 — Scalable, Configurable & Multi-Tenant'], ans: 3, exp: 'Level 4 is the gold standard: multiple instances auto-scaled behind a load balancer, fully efficient and configurable for all tenants.' },
+      { q: 'Which characteristic ensures you can see exactly how much resource you are using?', opts: ['Rapid Elasticity', 'Broad Network Access', 'Measured Service', 'Resource Pooling'], ans: 2, exp: 'Measured Service ensures resource usage is monitored, controlled, and reported — providing transparency for both the provider and consumer.' },
+      { q: 'What does IaaS stand for?', opts: ['Internet as a Service', 'Infrastructure as a Service', 'Integration as a Service', 'Identity as a Service'], ans: 1, exp: 'IaaS stands for Infrastructure as a Service — it provides raw compute, storage, and networking. The user has the most control over the environment.' },
+      { q: 'Amazon EC2 is an example of which service model?', opts: ['SaaS', 'PaaS', 'IaaS', 'FaaS'], ans: 2, exp: 'Amazon EC2 provides virtual machine servers (raw compute) — this is Infrastructure as a Service (IaaS).' },
+      { q: 'Which virtualization approach achieves near-raw hardware performance by modifying the guest OS?', opts: ['Full virtualization', 'Para-virtualization', 'Emulation', 'Containerization'], ans: 1, exp: 'Para-virtualization (e.g., Xen) modifies the guest OS to be aware of the hypervisor, achieving near-raw hardware performance.' },
+      { q: 'Which cloud characteristic allows capacity to scale in and out automatically with demand?', opts: ['Measured Service', 'Broad Network Access', 'Resource Pooling', 'Rapid Elasticity'], ans: 3, exp: 'Rapid Elasticity allows capabilities to be elastically provisioned and released to scale rapidly outward and inward to match demand.' },
+      { q: 'At SaaS Maturity Level 1, how is the application deployed?', opts: ['One shared instance for all customers', 'One instance per customer (not scalable)', 'Serverless functions', 'Containerized microservices'], ans: 1, exp: 'Level 1 (Ad-Hoc/Custom) deploys one isolated instance per customer. It is not scalable and each customer has their own deployment.' },
+      { q: 'Which layer of the Cloud Computing Service Layers handles complete business services like PayPal or OAuth?', opts: ['Storage', 'Platform (IaaS)', 'Application (SaaS)', 'Services'], ans: 3, exp: 'Layer 6 — Services — represents complete business services (PayPal, OpenID, OAuth, Google Maps, Alexa) that are consumed, not configured.' },
+      { q: 'What does Broad Network Access mean?', opts: ['Resources must be accessed via dedicated leased lines', 'Capabilities available over the network via standard mechanisms on thin or thick clients', 'Only enterprise users can access cloud resources', 'Access is restricted to specific geographic zones'], ans: 1, exp: 'Broad Network Access means capabilities are available over the network and can be accessed by standard mechanisms via thin or thick clients (phones, tablets, laptops).' },
+      { q: 'Which is NOT an example of a common cloud characteristic?', opts: ['Massive Scale & Homogeneity', 'Geographic Distribution', 'Single-tenant model', 'Resilient Computing'], ans: 2, exp: 'A single-tenant model is NOT a common cloud characteristic. Cloud computing uses multi-tenant models with resource pooling, not dedicated single-tenant infrastructure.' },
+      { q: 'Which cloud service layer is directly above Hosting in the service layers model?', opts: ['Application', 'Development', 'Storage', 'Services'], ans: 2, exp: 'Layer 2 — Storage — sits directly above Hosting. It provides cloud-based data storage (Amazon S3, iDisk, CTERA).' },
+      { q: 'What is the key benefit of virtualization in cloud computing?', opts: ['Increases hardware cost', 'Abstracts physical resources into logical pools for efficient sharing', 'Eliminates the need for any software', 'Reduces internet speed'], ans: 1, exp: 'Virtualization abstracts physical hardware into multiple virtual machines, allowing multiple guest OSes to run on a single physical host — enabling efficient resource sharing.' },
+      { q: 'AWS Elastic Beanstalk is an example of which cloud model?', opts: ['IaaS', 'SaaS', 'PaaS', 'HaaS'], ans: 2, exp: 'AWS Elastic Beanstalk is PaaS — it provides a development/deployment platform where you upload code and AWS manages the underlying infrastructure.' },
+      { q: 'Which SaaS maturity level shares one codebase but still runs one instance per customer?', opts: ['Level 1', 'Level 2', 'Level 3', 'Level 4'], ans: 1, exp: 'Level 2 (Configurable Per Customer) uses a single codebase configurable per tenant but still deploys one instance per customer. More efficient than Level 1 but not yet multi-tenant.' }
+    ]
+  },
+  {
+    id: 1, color: 'c2', lecture: 'Lecture 2',
+    title: 'Storage Layer — Amazon S3',
+    desc: 'Object storage, S3 storage classes, lifecycle policies, access control, pricing, and data transfer options.',
+    sections: [
+      {
+        title: 'Amazon S3 Fundamentals',
+        cards: [
+          { t: 'What is S3?', p: 'Object storage service that stores unlimited amounts of unstructured data. Data stored as objects inside user-defined buckets.' },
+          { t: 'Key Specs', p: 'Max single object: 5 TB. Durability: 99.999999999% (11 nines). Availability: 99.99% (S3 Standard).' },
+          { t: 'Object Components', p: 'Each object has: REST URL, key, version ID, value (data), metadata, and subresources.' }
+        ]
+      },
+      {
+        title: 'S3 Storage Classes',
+        table: {
+          headers: ['Storage Class', 'Best For', 'Key Trait'],
+          rows: [
+            ['S3 Standard', 'Frequently accessed data', '11 nines durability, 99.99% availability'],
+            ['S3 Standard-IA', 'Infrequently accessed', 'Lower cost but retrieval fee; 99.9% availability'],
+            ['S3 One Zone-IA', 'Non-critical infrequent', 'Single AZ only — cheapest IA option'],
+            ['S3 Intelligent-Tiering', 'Unknown access patterns', 'Auto-moves objects between tiers'],
+            ['S3 Glacier', 'Archive', 'Very low cost, retrieval in minutes to hours'],
+            ['S3 Glacier Deep Archive', 'Compliance archive', 'Lowest cost, retrieval within 12 hours']
+          ]
+        }
+      },
+      {
+        title: 'Access Control',
+        cards: [
+          { t: 'Default (Private)', p: 'By default, only the bucket owner has access. All public access is blocked.' },
+          { t: 'Bucket Policies', p: 'JSON-based policies attached to a bucket to grant/deny access to AWS accounts, users, or the public.' },
+          { t: 'Public Access', p: 'Explicitly enabled to make content publicly readable — used for static website hosting.' }
+        ]
+      },
+      {
+        title: 'Moving Data',
+        cards: [
+          { t: 'AWS CLI', p: 'Upload/download from terminal. Example: aws s3 cp test.txt s3://my-bucket/test.txt' },
+          { t: 'Multipart Upload', p: 'For files >100 MB. Splits file into parts, uploads in parallel, reassembles. Allows pause/resume.' },
+          { t: 'S3 Transfer Acceleration', p: 'Routes data through CloudFront edge locations. 50–500% speed improvement for large transfers.' },
+          { t: 'AWS Snowball', p: 'Petabyte-scale physical encrypted data transport device. For massive transfers where internet is impractical.' },
+          { t: 'AWS Snowmobile', p: 'Exabyte-scale — a 45-foot shipping container. Up to 100 PB. GPS tracking, 24/7 surveillance, 256-bit encryption.' }
+        ]
+      }
+    ],
+    quiz: [
+      { q: 'What is the maximum size of a single object in Amazon S3?', opts: ['1 TB', '5 GB', '5 TB', '10 TB'], ans: 2, exp: 'The maximum size of a single object in Amazon S3 is 5 TB.' },
+      { q: 'What durability does Amazon S3 Standard offer?', opts: ['99.9%', '99.99%', '99.999%', '99.999999999% (eleven 9s)'], ans: 3, exp: 'S3 Standard provides 99.999999999% (eleven 9s) durability by storing data redundantly across multiple Availability Zones.' },
+      { q: 'Which S3 storage class automatically moves objects between access tiers?', opts: ['S3 Standard-IA', 'S3 Glacier', 'S3 Intelligent-Tiering', 'S3 One Zone-IA'], ans: 2, exp: 'S3 Intelligent-Tiering automatically moves objects between access tiers based on usage patterns, without performance impact or retrieval fees.' },
+      { q: 'Which S3 storage class stores data in a single Availability Zone?', opts: ['S3 Standard', 'S3 Standard-IA', 'S3 One Zone-IA', 'S3 Glacier'], ans: 2, exp: 'S3 One Zone-IA stores data in a single AZ. It is the cheapest IA option but offers lower resilience since data is not replicated across multiple AZs.' },
+      { q: 'What is the retrieval time for S3 Glacier Deep Archive?', opts: ['Seconds', 'Minutes', 'Within 12 hours', '1-2 days'], ans: 2, exp: 'S3 Glacier Deep Archive has the lowest cost and a retrieval time within 12 hours, making it suited for long-term compliance archives.' },
+      { q: 'By default, who can access an S3 bucket?', opts: ['Anyone on the internet', 'All AWS users', 'Only the bucket owner', 'Users in the same region'], ans: 2, exp: 'By default, only the bucket owner has access to an S3 bucket. All public access is blocked by default.' },
+      { q: 'Which data transfer method should you use for files larger than 100 MB?', opts: ['AWS Console upload', 'AWS CLI single command', 'Multipart Upload API', 'FTP'], ans: 2, exp: 'Multipart Upload splits large files (recommended for >100 MB) into parts, uploads in parallel, allows pause/resume, and quickly recovers from network failures.' },
+      { q: 'What is AWS Snowmobile used for?', opts: ['Terabyte-scale transfers', 'Petabyte-scale encrypted transfers', 'Exabyte-scale physical data transport', 'Internet-based data migration'], ans: 2, exp: 'AWS Snowmobile is a 45-foot shipping container used for exabyte-scale transfers, moving up to 100 PB with GPS tracking, 24/7 surveillance, and 256-bit encryption.' },
+      { q: 'Which of the following is NOT charged in Amazon S3?', opts: ['Data transfer OUT to the internet', 'PUT requests', 'Lifecycle transitions', 'Data transfer IN from the internet'], ans: 3, exp: 'Data transfer IN from the internet to S3 is free of charge. You are charged for storage, transfers OUT, and requests.' },
+      { q: 'What is S3 Transfer Acceleration?', opts: ['Automatic data compression', 'Routes data through CloudFront edge locations for faster transfers', 'A machine learning service', 'A type of S3 storage class'], ans: 1, exp: 'S3 Transfer Acceleration routes upload/download traffic through CloudFront edge locations globally, providing 50-500% speed improvement for large cross-country transfers.' },
+      { q: 'What is the purpose of an S3 Lifecycle Policy?', opts: ['Encrypts objects automatically', 'Moves or deletes objects based on their age', 'Replicates objects across regions', 'Monitors bucket access'], ans: 1, exp: 'S3 Lifecycle Policies automatically move or delete objects based on their age. Example: Standard → Standard-IA after 30 days → Glacier after 60 days → Delete after 365 days.' },
+      { q: 'What is an S3 bucket?', opts: ['A virtual machine instance', 'A user-defined container for storing objects in S3', 'A network subnet', 'A type of load balancer'], ans: 1, exp: 'An S3 bucket is a user-defined container in which objects are stored. Data files are stored as objects inside buckets.' },
+      { q: 'Which factor should NOT be considered when choosing an AWS Region for S3?', opts: ['Compliance & data residency laws', 'Proximity to users', 'The color of the AWS console', 'Cost-effectiveness'], ans: 2, exp: 'The color of the AWS console has no bearing on region selection. Key factors are: compliance/data residency, proximity to users, service availability, and cost.' },
+      { q: 'S3 Standard-IA is best for which type of data?', opts: ['Frequently accessed data', 'Long-lived, infrequently accessed data', 'Archive data rarely accessed', 'Data with unknown access patterns'], ans: 1, exp: 'S3 Standard-IA (Infrequent Access) is designed for long-lived data that is not accessed frequently but needs to be retrieved quickly when needed. It has lower storage cost but a retrieval fee.' },
+      { q: 'What availability does S3 Standard offer?', opts: ['99%', '99.9%', '99.99%', '99.999%'], ans: 2, exp: 'S3 Standard provides 99.99% availability. This means it is designed to be accessible nearly all the time.' },
+      { q: 'Which S3 access control method uses JSON-based documents?', opts: ['ACL', 'Bucket Policies', 'Security Groups', 'NACLs'], ans: 1, exp: 'Bucket Policies use JSON-based documents attached to a bucket to grant or deny access to AWS accounts, IAM users, or the public.' },
+      { q: 'What type of storage is Amazon S3?', opts: ['Block storage', 'File storage', 'Object storage', 'Ephemeral storage'], ans: 2, exp: 'Amazon S3 is object storage. Data is stored as objects (not blocks or files) with a flat structure, each object identified by a unique key.' },
+      { q: 'AWS Snowball is used for which purpose?', opts: ['CDN caching', 'Physical petabyte-scale encrypted data transport', 'DNS management', 'Database migration'], ans: 1, exp: 'AWS Snowball is a petabyte-scale physical data transport device. It is encrypted and used for massive data migrations where internet speed is impractical.' },
+      { q: 'Which S3 storage class has the LOWEST retrieval speed?', opts: ['S3 Standard', 'S3 Intelligent-Tiering', 'S3 Standard-IA', 'S3 Glacier Deep Archive'], ans: 3, exp: 'S3 Glacier Deep Archive has the slowest retrieval time (within 12 hours) and the lowest cost, making it ideal for long-term archives accessed very rarely.' },
+      { q: 'What is the purpose of S3 static website hosting?', opts: ['Host dynamic web apps with databases', 'Run EC2 instances', 'Host HTML, CSS, JS files directly from S3', 'Store database backups'], ans: 2, exp: 'S3 static website hosting lets you serve a fully static website (HTML, CSS, JavaScript, images) directly from an S3 bucket with a public URL, without needing a web server.' }
+    ]
+  },
+  {
+    id: 2, color: 'c3', lecture: 'Lecture 3',
+    title: 'Compute Layer — Amazon EC2',
+    desc: 'EC2 instances, AMIs, instance types, lifecycle states, pricing models, and placement groups.',
+    sections: [
+      {
+        title: 'Amazon EC2 Basics',
+        cards: [
+          { t: 'What is EC2?', p: 'Resizable compute capacity in the cloud. Provisions virtual machine servers in minutes. Charges only for what you use.' },
+          { t: 'AMI (Amazon Machine Image)', p: 'Template containing root volume (OS + software), launch permissions, and block device mappings. Multiple identical instances can be launched from one AMI.' },
+          { t: 'Key Parameters', p: 'When launching: AMI, Instance Type, Network/VPC, Security Group, User Data (bootstrap script), and Storage type.' }
+        ]
+      },
+      {
+        title: 'Instance Types',
+        cards: [
+          { t: 'T Family — Burstable', p: '1–8 vCPU, 1–32 GB RAM. Low baseline with burst capability. Ideal for small or variable workloads.' },
+          { t: 'M Family — General Purpose', p: '2–96 vCPU, 8–384 GB RAM. Balanced compute, memory, networking. Good for query-intensive apps.' },
+          { t: 'R Family — Memory Optimized', p: '2–96 vCPU, 16–768 GB RAM. High memory relative to CPU. For in-memory databases.' }
+        ]
+      },
+      {
+        title: 'EC2 Pricing Models',
+        table: {
+          headers: ['Model', 'How It Works', 'Best For'],
+          rows: [
+            ['On-Demand', 'Pay per second/hour, no commitment', 'New or unpredictable workloads'],
+            ['Reserved Instances', '1 or 3-year commitment, up to 75% discount', 'Known, steady-state workloads'],
+            ['Spot Instances', 'Bid for unused capacity, up to 90% discount, can be interrupted', 'Fault-tolerant, interruptible workloads'],
+            ['Dedicated Hosts', 'Physical server dedicated to your use', 'Compliance, BYOL scenarios']
+          ]
+        }
+      },
+      {
+        title: 'Placement Groups',
+        cards: [
+          { t: 'Cluster', p: 'All instances in same high-bandwidth network segment. Up to 10 Gbps. For HPC and big data.' },
+          { t: 'Partition', p: 'Spreads across logical partitions, each with own rack. For Hadoop, Cassandra, Kafka.' },
+          { t: 'Spread', p: 'Each instance on a distinct physical rack. Max fault isolation. For small numbers of critical instances.' }
+        ]
+      }
+    ],
+    quiz: [
+      { q: 'What does EC2 stand for?', opts: ['Elastic Compute Cloud', 'Extended Compute Cluster', 'Enterprise Cloud Computing', 'Elastic Container Cluster'], ans: 0, exp: 'EC2 stands for Elastic Compute Cloud — it provides resizable compute capacity in the cloud.' },
+      { q: 'What is an Amazon Machine Image (AMI)?', opts: ['A type of S3 bucket', 'A template for launching EC2 instances (OS + software + config)', 'A networking service', 'A database snapshot'], ans: 1, exp: 'An AMI is a template containing a root volume (OS + software), launch permissions, and block device mappings. Multiple identical instances can be launched from one AMI.' },
+      { q: 'Which EC2 pricing model lets you bid for unused capacity at up to 90% discount?', opts: ['On-Demand', 'Reserved Instances', 'Spot Instances', 'Dedicated Hosts'], ans: 2, exp: 'Spot Instances allow you to bid for unused EC2 capacity at up to 90% discount. They can be interrupted by AWS with a 2-minute warning when capacity is needed.' },
+      { q: 'Which pricing model should you use for steady-state, predictable workloads running 24/7?', opts: ['On-Demand', 'Spot Instances', 'Reserved Instances', 'Dedicated Hosts'], ans: 2, exp: 'Reserved Instances offer up to 75% discount in exchange for a 1 or 3-year commitment — ideal for predictable, steady-state workloads.' },
+      { q: 'What is the purpose of User Data in EC2?', opts: ['Stores application data on EBS', 'Bootstrap script that runs when instance first starts', 'Sets IAM permissions', 'Defines security group rules'], ans: 1, exp: 'User Data is a bootstrap script that runs automatically when an EC2 instance first starts — used to install packages, configure software, etc.' },
+      { q: 'Which EC2 storage persists data even when the instance is stopped?', opts: ['Instance Store', 'Amazon EBS (Elastic Block Store)', 'Ephemeral storage', 'Local SSD'], ans: 1, exp: 'Amazon EBS (Elastic Block Store) provides persistent block storage. Data persists on stop and can be detached and reattached to other instances.' },
+      { q: 'Which placement group type provides the lowest network latency between instances?', opts: ['Spread', 'Partition', 'Cluster', 'Distributed'], ans: 2, exp: 'Cluster placement groups pack instances close together in the same network segment, providing up to 10 Gbps per-flow TCP/IP for HPC and big data workloads.' },
+      { q: 'Which EC2 instance family is best for in-memory databases?', opts: ['T Family (Burstable)', 'M Family (General Purpose)', 'R Family (Memory Optimized)', 'C Family (Compute Optimized)'], ans: 2, exp: 'The R Family is Memory Optimized — high memory relative to CPU. Range: 16 GB to 768 GB RAM. Ideal for in-memory databases and CPU-intensive workloads.' },
+      { q: 'What happens to instance store data when an EC2 instance is terminated?', opts: ['Data is backed up to S3', 'Data persists indefinitely', 'Data is lost permanently', 'Data moves to EBS automatically'], ans: 2, exp: 'Instance store is ephemeral — data is lost when the instance is stopped or terminated. It cannot be detached and reattached like EBS.' },
+      { q: 'Which lifecycle state does an EC2 instance enter when it is first launched?', opts: ['Running', 'Pending', 'Stopped', 'Terminated'], ans: 1, exp: 'When launched, an EC2 instance enters the Pending state while resources are allocated. It then transitions to Running when ready.' },
+      { q: 'In which EC2 lifecycle state does billing for compute begin?', opts: ['Pending', 'Running', 'Stopped', 'Terminated'], ans: 1, exp: 'Billing for compute begins in the Running state. When stopped, compute charges stop (but EBS charges continue). Terminated instances have no charges.' },
+      { q: 'What is the benefit of using a Dedicated Host?', opts: ['Lowest cost option', 'Compliance requirements and bring-your-own-license (BYOL) scenarios', 'Best for interruptible workloads', 'Automatic scaling'], ans: 1, exp: 'Dedicated Hosts provide a physical server fully dedicated to your use. They are the highest cost option but needed for compliance requirements and BYOL software licenses.' },
+      { q: 'Which EBS-backed vs Instance Store characteristic is correct?', opts: ['Instance store has 16 TiB max root device', 'EBS-backed instances cannot be stopped', 'EBS-backed instances can change instance type after stopping', 'Instance store data persists on stop'], ans: 2, exp: 'EBS-backed instances can be stopped and then the instance type can be changed. Instance store-backed instances cannot be stopped (only rebooted or terminated).' },
+      { q: 'What is the Spread placement group best used for?', opts: ['HPC workloads needing low latency', 'Hadoop clusters', 'Small numbers of critical instances that must not fail simultaneously', 'All instances in one AZ'], ans: 2, exp: 'Spread placement groups put each instance on a distinct physical rack, providing maximum fault isolation. Best for small groups of critical instances.' },
+      { q: 'Which optimization strategy best minimizes EC2 costs?', opts: ['Always use On-Demand', 'Reserved for baseline + On-Demand for peaks + Spot for flexible workloads', 'Always use Spot Instances', 'Always use Dedicated Hosts'], ans: 1, exp: 'Best practice: Reserved Instances/Savings Plans for steady baseline, On-Demand for spiky overflow, and Spot Instances for fault-tolerant batch workloads.' },
+      { q: 'What does a Security Group act as in EC2?', opts: ['A DNS resolver', 'A virtual firewall controlling inbound/outbound traffic', 'A load balancer', 'An auto-scaling trigger'], ans: 1, exp: 'A Security Group acts as a virtual firewall for EC2 instances, controlling inbound and outbound traffic at the instance/network interface level.' },
+      { q: 'What is AWS Elastic Beanstalk best categorized as?', opts: ['IaaS', 'SaaS', 'PaaS', 'FaaS'], ans: 2, exp: 'AWS Elastic Beanstalk is PaaS. It handles provisioning, load balancing, auto scaling, and health monitoring automatically when you upload your application code.' },
+      { q: 'Which is NOT a valid EC2 instance lifecycle state?', opts: ['Pending', 'Running', 'Hibernated', 'Sleeping'], ans: 3, exp: 'Sleeping is not a valid EC2 lifecycle state. Valid states include: Pending, Running, Stopped (or Hibernate), and Terminated.' },
+      { q: 'Which placement group type is best for Hadoop and Cassandra clusters?', opts: ['Cluster', 'Partition', 'Spread', 'Network'], ans: 1, exp: 'Partition placement groups spread instances across logical partitions with separate racks (network + power), reducing correlated hardware failure — ideal for Hadoop, Cassandra, Kafka.' },
+      { q: 'What characteristic makes T family instances unique?', opts: ['Highest memory-to-CPU ratio', 'Low baseline CPU with ability to burst above it', 'Dedicated hardware', 'Highest network throughput'], ans: 1, exp: 'T family instances are Burstable — they have a low CPU baseline but can burst above it for short periods, making them ideal for variable/small workloads.' }
+    ]
+  },
+  {
+    id: 3, color: 'c4', lecture: 'Lecture 4',
+    title: 'Database Layer — RDS & DynamoDB',
+    desc: 'Relational vs NoSQL, Amazon RDS, Aurora, DynamoDB, Multi-AZ, Read Replicas, and database migration.',
+    sections: [
+      {
+        title: 'Relational vs Non-Relational',
+        cards: [
+          { t: 'Relational (SQL)', p: 'Strict schema rules, ACID compliance, data integrity. Best for moderate read/write. Examples: MySQL, PostgreSQL, Oracle.' },
+          { t: 'Non-Relational (NoSQL)', p: 'Horizontal scaling, flexible schema, massive data volume. Best when read/write exceeds RDBMS capacity. Examples: DynamoDB, MongoDB.' }
+        ]
+      },
+      {
+        title: 'Amazon RDS',
+        cards: [
+          { t: 'What is RDS?', p: 'Fully managed relational database service. AWS handles hardware, OS, patching, backups, and scaling. You focus on query optimization.' },
+          { t: 'Multi-AZ', p: 'Synchronous standby replica in a different AZ. Automatic failover via Route 53 if primary fails. Enhances durability and availability.' },
+          { t: 'Read Replicas', p: 'Asynchronous replication to offload read traffic. Up to 5 replicas per primary. Supported by MySQL, MariaDB, PostgreSQL, Oracle.' },
+          { t: 'Amazon Aurora', p: 'MySQL & PostgreSQL-compatible engine. Up to 5x MySQL throughput, 3x PostgreSQL. Replicates data 6 ways across 3 AZs.' }
+        ]
+      },
+      {
+        title: 'Amazon DynamoDB',
+        cards: [
+          { t: 'What is DynamoDB?', p: 'Fully managed, serverless, key-value and document NoSQL database. Single-digit millisecond latency at any scale.' },
+          { t: 'Consistency Options', p: 'Eventually Consistent (default): all copies consistent within ~1 second. Strongly Consistent (optional): reflects all writes before the read.' },
+          { t: 'Global Tables', p: 'Automatically replicates data to multiple AWS Regions for globally distributed, low-latency access.' },
+          { t: 'DynamoDB Pricing', p: 'On-Demand: pay per request. Provisioned: specify read/write units. Auto Scaling adjusts provisioned throughput automatically.' }
+        ]
+      }
+    ],
+    quiz: [
+      { q: 'What does RDS stand for?', opts: ['Relational Database System', 'Relational Database Service', 'Redundant Data Storage', 'Remote Data Service'], ans: 1, exp: 'RDS stands for Relational Database Service — it is a fully managed relational database service offered by AWS.' },
+      { q: 'Which database engine is NOT supported by Amazon RDS?', opts: ['MySQL', 'PostgreSQL', 'MongoDB', 'Oracle'], ans: 2, exp: 'MongoDB is a NoSQL database and is NOT a supported engine on Amazon RDS. RDS supports MySQL, PostgreSQL, MariaDB, Oracle, SQL Server, and Aurora.' },
+      { q: 'What does Multi-AZ in RDS provide?', opts: ['Read performance improvement', 'A synchronous standby replica in a different AZ for automatic failover', 'Cross-region replication', 'Serverless scaling'], ans: 1, exp: 'Multi-AZ deploys a synchronous standby replica in a different Availability Zone. If the primary fails, RDS automatically fails over to the standby via Amazon Route 53.' },
+      { q: 'What type of replication do RDS Read Replicas use?', opts: ['Synchronous', 'Asynchronous', 'Semi-synchronous', 'Real-time'], ans: 1, exp: 'Read Replicas use asynchronous replication. This means there may be a slight lag. For strict read-after-write consistency, always read from the primary.' },
+      { q: 'What is Amazon Aurora?', opts: ['A NoSQL database', 'A MySQL and PostgreSQL-compatible fully managed relational engine', 'A caching service', 'A data warehouse'], ans: 1, exp: 'Amazon Aurora is a fully managed, MySQL- and PostgreSQL-compatible relational engine. It provides up to 5x MySQL throughput and 3x PostgreSQL throughput.' },
+      { q: 'How many ways does Aurora replicate data across Availability Zones?', opts: ['2 ways across 2 AZs', '3 ways across 3 AZs', '6 ways across 3 AZs', '6 ways across 6 AZs'], ans: 2, exp: 'Aurora automatically replicates data 6 ways across 3 Availability Zones, providing extremely high durability and availability.' },
+      { q: 'What is Amazon DynamoDB?', opts: ['A fully managed relational database', 'A fully managed serverless key-value and document NoSQL database', 'A data warehouse for analytics', 'An in-memory cache'], ans: 1, exp: 'DynamoDB is a fully managed, serverless key-value and document NoSQL database providing single-digit millisecond latency at any scale.' },
+      { q: 'What latency does DynamoDB provide?', opts: ['Sub-second (hundreds of ms)', 'Single-digit milliseconds', 'Sub-microseconds', 'Seconds'], ans: 1, exp: 'DynamoDB delivers single-digit millisecond latency at any scale, regardless of load.' },
+      { q: 'What is the default consistency model for DynamoDB reads?', opts: ['Strongly Consistent', 'Eventually Consistent', 'Linearizable', 'Serializable'], ans: 1, exp: 'DynamoDB defaults to Eventually Consistent reads, where all copies are usually consistent within 1 second. You can opt for Strongly Consistent reads when needed.' },
+      { q: 'Amazon Redshift is used for which type of workload?', opts: ['OLTP (Online Transaction Processing)', 'OLAP (Online Analytics Processing)', 'In-memory caching', 'Key-value storage'], ans: 1, exp: 'Amazon Redshift is used for OLAP — it stores large, highly structured datasets for business intelligence and analytics. Not for transactional workloads.' },
+      { q: 'What tool converts database schemas when migrating between different database engines?', opts: ['AWS DMS', 'AWS SCT (Schema Conversion Tool)', 'AWS DataSync', 'AWS Glue'], ans: 1, exp: 'AWS SCT (Schema Conversion Tool) converts the source schema to the target database engine when performing heterogeneous migrations (different engines).' },
+      { q: 'What is AWS DMS used for?', opts: ['Deploying microservices', 'Migrating data to and from databases', 'Load balancing', 'Caching database queries'], ans: 1, exp: 'AWS DMS (Database Migration Service) migrates data to and from most commercial and open-source databases, supporting both homogeneous and heterogeneous migrations.' },
+      { q: 'What is the maximum number of Read Replicas for standard RDS?', opts: ['2', '5', '10', '15'], ans: 1, exp: 'Standard RDS supports up to 5 read replicas per primary instance. Amazon Aurora supports up to 15 read replicas.' },
+      { q: 'Which DynamoDB feature allows multi-region, multi-master database access?', opts: ['Read Replicas', 'Multi-AZ', 'Global Tables', 'DAX'], ans: 2, exp: 'DynamoDB Global Tables replicate data automatically to multiple AWS Regions for globally distributed, low-latency access with a multi-master configuration.' },
+      { q: 'What is a key advantage of NoSQL over relational databases for large workloads?', opts: ['Strict schema enforcement', 'Horizontal scalability for massive data volumes', 'Better ACID compliance', 'Lower cost per query'], ans: 1, exp: 'NoSQL databases are horizontally scalable — they can distribute data across many servers to handle massive volumes and high read/write rates that exceed RDBMS capacity.' },
+      { q: 'Which database encryption feature protects data stored in RDS?', opts: ['IAM policies', 'Amazon RDS encryption for DB instances and snapshots', 'S3 bucket policies', 'VPC security groups only'], ans: 1, exp: 'Amazon RDS encryption encrypts the database instance and its snapshots. This protects data at rest.' },
+      { q: 'What AWS service is used for very large database migrations that exceed internet capacity?', opts: ['AWS DataSync', 'AWS Snowball Edge', 'AWS Direct Connect', 'AWS Transfer Family'], ans: 1, exp: 'AWS Snowball Edge is used for multi-terabyte physical database migrations when the database is too large to migrate efficiently over the internet.' },
+      { q: 'What condition triggers automatic failover in RDS Multi-AZ?', opts: ['High CPU on primary', 'Loss of availability in primary AZ or storage failure', 'Too many read queries', 'Maintenance window'], ans: 1, exp: 'Multi-AZ automatically fails over on: loss of primary AZ availability, network connectivity issues, compute unit failure, or storage failure on the primary instance.' },
+      { q: 'Which security control prevents DynamoDB traffic from going over the public internet?', opts: ['Security Groups', 'VPC Endpoints', 'NACLs', 'Bastion Hosts'], ans: 1, exp: 'VPC endpoints for DynamoDB allow instances in your VPC to communicate with DynamoDB without traffic traversing the open internet.' },
+      { q: 'In DynamoDB, Strongly Consistent reads return data that reflects...', opts: ['All reads from the past hour', 'All writes that occurred before the read', 'Only eventually consistent data', 'Cached data only'], ans: 1, exp: 'Strongly Consistent reads in DynamoDB reflect all writes that occurred before the read — guaranteeing you always get the latest version of the data.' }
+    ]
+  },
+  {
+    id: 4, color: 'c5', lecture: 'Lecture 10',
+    title: 'Microservices & Serverless',
+    desc: 'Microservices architecture, Amazon ECS, AWS Lambda, API Gateway, and AWS Step Functions.',
+    sections: [
+      {
+        title: 'Microservices',
+        cards: [
+          { t: 'What are Microservices?', p: 'Applications composed of independent services communicating over well-defined APIs. Each handles a specific business function.' },
+          { t: 'Monolith vs Microservice', p: 'Monolith: all functions tightly coupled in one deployment. Microservice: each function is independent — can scale and deploy individually.' },
+          { t: 'Key Characteristics', p: 'Decentralized, Independent, Black Boxes (communicate via API only), Polyglot, Specialized, "You Build It, You Run It".' }
+        ]
+      },
+      {
+        title: 'Containers & ECS',
+        cards: [
+          { t: 'What is a Container?', p: 'Packages application code, dependencies, configurations, and runtime together so it runs reliably in any environment.' },
+          { t: 'Amazon ECS', p: 'Fully managed container orchestration service. Manages when containers run and maintains the fleet running containers.' },
+          { t: 'EC2 Launch Type', p: 'You manage the underlying EC2 instances. ECS schedules containers onto these instances. More control.' },
+          { t: 'Fargate Launch Type', p: 'Fully serverless — AWS manages all infrastructure. You only define CPU and memory requirements. Easiest path.' }
+        ]
+      },
+      {
+        title: 'AWS Lambda',
+        cards: [
+          { t: 'What is Lambda?', p: 'Runs your code in response to events (S3, DynamoDB, HTTP, scheduled cron, etc.). Fully managed. No servers to manage.' },
+          { t: 'Billing', p: 'Charged on number of requests + duration (GB-seconds). No charge when idle. Most cost-effective for event-driven workloads.' },
+          { t: 'Lambda Layers', p: 'Up to 5 layers (250 MB total) to share reusable code across functions. Keeps deployment packages small.' },
+          { t: 'API Gateway', p: 'Acts as the front door for Lambda functions. Common pattern: Client → API Gateway → Lambda → Database.' }
+        ]
+      }
+    ],
+    quiz: [
+      { q: 'What is the key advantage of microservices over monolithic applications?', opts: ['Easier to write code', 'Services can be updated and scaled independently', 'All services share the same database', 'Requires less infrastructure'], ans: 1, exp: 'In microservices, each service can be updated, scaled, and deployed independently without affecting others — unlike monoliths where a change requires redeploying the entire application.' },
+      { q: 'What does "Polyglot" mean in microservices context?', opts: ['All services use the same programming language', 'Different services can use different languages and databases', 'Services communicate in multiple languages', 'A type of database'], ans: 1, exp: 'Polyglot means different microservices can use different programming languages, databases, and frameworks — each team picks the best tools for their service.' },
+      { q: 'What is Amazon ECS?', opts: ['Elastic Compute Service', 'A fully managed container orchestration service', 'A serverless function platform', 'A DNS service'], ans: 1, exp: 'Amazon ECS (Elastic Container Service) is a fully managed container orchestration service that manages when containers run and maintains/scales the fleet of instances.' },
+      { q: 'In ECS Fargate launch type, who manages the underlying infrastructure?', opts: ['You manage EC2 instances', 'AWS manages all infrastructure — fully serverless', 'A third-party provider', 'The container itself'], ans: 1, exp: 'Fargate is fully serverless — AWS manages all underlying infrastructure entirely. You only need to define CPU and memory requirements for your containers.' },
+      { q: 'What triggers an AWS Lambda function?', opts: ['Only HTTP requests', 'Events (S3 changes, DynamoDB, HTTP, cron, etc.)', 'Only database changes', 'Only file uploads'], ans: 1, exp: 'Lambda runs code in response to events — changes to S3, DynamoDB, scheduled cron jobs, HTTP requests via API Gateway, and many other AWS service events.' },
+      { q: 'How is AWS Lambda billed?', opts: ['Per hour of server uptime', 'Number of requests + duration (GB-seconds)', 'Per EC2 instance used', 'Flat monthly fee'], ans: 1, exp: 'Lambda is billed based on number of requests and duration (measured in GB-seconds of compute time used). There is no charge when the function is not running.' },
+      { q: 'What is the purpose of Amazon API Gateway?', opts: ['DNS management', 'Fully managed service for creating and managing APIs — acts as front door for backend services', 'Database proxy', 'Container registry'], ans: 1, exp: 'API Gateway is a fully managed service for creating, publishing, and managing APIs at any scale. It acts as the "front door" for backends including Lambda functions.' },
+      { q: 'What are Lambda Layers?', opts: ['VPC subnets for Lambda', 'Shared reusable code/dependencies across multiple Lambda functions', 'Memory limits', 'IAM policies'], ans: 1, exp: 'Lambda Layers allow you to share reusable code or dependencies across functions. Up to 5 layers (250 MB total) can be attached, keeping deployment packages small.' },
+      { q: 'Which characteristic describes microservices as "Black Boxes"?', opts: ['Services have no API', 'Internal implementation is hidden; services communicate only via well-defined APIs', 'Services share all code', 'All services use the same database'], ans: 1, exp: 'Black Boxes means the internal implementation of each service is hidden. Other services cannot see or access internals — they can only interact via the well-defined API.' },
+      { q: 'What is AWS Step Functions used for?', opts: ['Container orchestration', 'Coordinating microservices using visual workflows (state machines)', 'DNS routing', 'API management'], ans: 1, exp: 'AWS Step Functions coordinates microservices using visual workflows (state machines). It automatically triggers and tracks each step, with error catching and logging.' },
+      { q: 'Which Step Functions state type adds branching logic to a workflow?', opts: ['Task', 'Wait', 'Choice', 'Pass'], ans: 2, exp: 'The Choice state adds branching logic — it routes execution based on data conditions, similar to an if/else or switch statement.' },
+      { q: 'What language is used to define Step Functions state machines?', opts: ['YAML', 'Python', 'Amazon States Language (JSON)', 'XML'], ans: 2, exp: 'State machines in AWS Step Functions are defined in JSON using the Amazon States Language (ASL). You specify StartAt, States with their Type, Resource (ARN), and Next.' },
+      { q: 'In the common serverless pattern, what does the architecture look like?', opts: ['Client → EC2 → RDS', 'Client → API Gateway → Lambda → Database', 'Client → ELB → ECS', 'Client → S3 → Lambda'], ans: 1, exp: 'The most common serverless API pattern is: Client → API Gateway → Lambda → Database (e.g., DynamoDB). This is fully managed with no servers to provision.' },
+      { q: 'What is AWS Cloud Map used for?', opts: ['DNS routing', 'Fully managed service discovery for microservices', 'Monitoring metrics', 'Container image registry'], ans: 1, exp: 'AWS Cloud Map provides fully managed service discovery. It defines custom names for application resources and maintains updated locations of dynamically changing resources.' },
+      { q: 'Which Step Functions state type runs steps for each element in a list?', opts: ['Parallel', 'Choice', 'Task', 'Map'], ans: 3, exp: 'The Map state dynamically iterates over a list of items, running the same steps for each element in the list.' },
+      { q: 'What is the maximum number of Lambda Layers per function?', opts: ['1', '3', '5', '10'], ans: 2, exp: 'A Lambda function can have up to 5 layers attached, with a total unzipped size of 250 MB.' },
+      { q: 'What does "You Build It, You Run It" mean in microservices?', opts: ['Developers own only the code', 'The team that builds a service is responsible for operating it in production', 'Only DevOps teams run services', 'Developers never deploy to production'], ans: 1, exp: '"You Build It, You Run It" is a microservices principle meaning the team that builds a service is also responsible for operating and maintaining it in production.' },
+      { q: 'What does AWS App Mesh provide?', opts: ['Container registry', 'Service mesh that captures metrics, logs, and traces; controls traffic between microservices', 'API management', 'Database routing'], ans: 1, exp: 'AWS App Mesh is a service mesh that captures metrics, logs, and traces from microservices. It controls traffic flows between services for high availability and exports to CloudWatch and X-Ray.' },
+      { q: 'Which ECS launch type gives you more control over the underlying infrastructure?', opts: ['Fargate Launch Type', 'EC2 Launch Type', 'Lambda Launch Type', 'Serverless Launch Type'], ans: 1, exp: 'EC2 Launch Type requires you to manage the underlying EC2 container instances. ECS schedules containers onto these instances, giving you more visibility and control.' },
+      { q: 'What is the Step Functions "Pass" state used for?', opts: ['Stopping execution', 'Waiting for a timer', 'Passes input to output without doing work — useful for testing', 'Invoking a Lambda function'], ans: 2, exp: 'The Pass state passes its input to its output without performing any work. It is mainly useful for testing and debugging state machine logic.' }
+    ]
+  },
+  {
+    id: 5, color: 'c1', lecture: 'Lecture 11',
+    title: 'Automating Your Architecture',
+    desc: 'AWS CloudFormation, Elastic Beanstalk, OpsWorks, and infrastructure as code best practices.',
+    sections: [
+      {
+        title: 'Why Automate?',
+        cards: [
+          { t: 'No Repeatability', p: 'How do you replicate the same deployment across multiple Regions consistently?' },
+          { t: 'No Version Control', p: 'How do you roll back to a prior version of the production environment?' },
+          { t: 'No Audit Trail', p: 'How do you track resource-level configuration changes over time for compliance?' },
+          { t: 'Inconsistency', p: 'How do you guarantee identical configurations across multiple EC2 instances?' }
+        ]
+      },
+      {
+        title: 'AWS CloudFormation',
+        cards: [
+          { t: 'What is CloudFormation?', p: 'IaC tool. Model, create, and manage AWS resources as a "stack" using YAML or JSON template files. No extra charge.' },
+          { t: 'Stack', p: 'A collection of AWS resources that are created, updated, and deleted together as a single unit.' },
+          { t: 'Template Sections', p: 'AWSTemplateFormatVersion (optional), Parameters (optional), Resources (REQUIRED), Outputs (optional).' },
+          { t: 'Change Sets', p: 'Preview changes to a stack before executing. Shows what will be added, modified, or deleted without making changes.' },
+          { t: 'Drift Detection', p: 'Detects when actual deployed resources differ from the template. Shows MODIFIED vs IN_SYNC status.' }
+        ]
+      },
+      {
+        title: 'AWS Elastic Beanstalk',
+        cards: [
+          { t: 'What is it?', p: 'Easy, managed service for deploying web applications. Upload code — Beanstalk handles infrastructure, load balancing, auto scaling, health monitoring.' },
+          { t: 'Supported Platforms', p: 'Java, .NET, PHP, Node.js, Python, Ruby, Go, and Docker. Deploys on Apache, NGINX, Passenger, Puma, IIS.' },
+          { t: 'Cost', p: 'No additional charge for Elastic Beanstalk. Pay only for the underlying AWS resources used.' }
+        ]
+      }
+    ],
+    quiz: [
+      { q: 'What is AWS CloudFormation used for?', opts: ['Container orchestration', 'Infrastructure as Code — modeling and managing AWS resources via templates', 'Database management', 'Content delivery'], ans: 1, exp: 'CloudFormation is AWS\'s IaC tool. It lets you model, create, and manage a collection of AWS resources (a "stack") using YAML or JSON template files.' },
+      { q: 'What is a CloudFormation Stack?', opts: ['A queue of Lambda functions', 'A collection of AWS resources managed as a single unit', 'A VPC subnet', 'An S3 storage class'], ans: 1, exp: 'A CloudFormation Stack is a collection of AWS resources that are created, updated, and deleted together as a single unit via a template.' },
+      { q: 'Which section of a CloudFormation template is REQUIRED?', opts: ['Parameters', 'Outputs', 'Resources', 'AWSTemplateFormatVersion'], ans: 2, exp: 'The Resources section is the only required section in a CloudFormation template. It defines what AWS resources to create.' },
+      { q: 'What is the purpose of CloudFormation Change Sets?', opts: ['Rollback configuration', 'Preview changes to a stack before executing them', 'Monitor stack health', 'Migrate between regions'], ans: 1, exp: 'Change Sets let you preview exactly what will be added, modified, or deleted in your stack without actually making those changes — safe previewing before execution.' },
+      { q: 'What does CloudFormation Drift Detection do?', opts: ['Monitors network traffic', 'Detects when actual deployed resources differ from the template', 'Checks for security vulnerabilities', 'Tracks billing usage'], ans: 1, exp: 'Drift Detection identifies when actual deployed resources have been manually modified and differ from what\'s defined in the CloudFormation template (showing MODIFIED vs IN_SYNC).' },
+      { q: 'What format does CloudFormation support for templates?', opts: ['Only JSON', 'Only YAML', 'Both YAML and JSON', 'XML and Python'], ans: 2, exp: 'CloudFormation supports both YAML and JSON formats. YAML is recommended (less verbose, supports comments), but both are fully supported.' },
+      { q: 'Why is YAML preferred over JSON for CloudFormation templates?', opts: ['JSON is harder to parse', 'YAML is less verbose, supports comments, and is easier to read', 'YAML executes faster', 'JSON is not supported'], ans: 1, exp: 'YAML is preferred because it is less verbose (no curly braces or quotes required), supports comments, and is generally easier to read and maintain.' },
+      { q: 'What is AWS Elastic Beanstalk best described as?', opts: ['IaaS for raw compute', 'Easy managed service for deploying web apps — upload code, Beanstalk handles the rest', 'A container orchestration tool', 'A database service'], ans: 1, exp: 'Elastic Beanstalk is an easy, managed service for deploying web applications. You upload code and it automatically handles provisioning, load balancing, auto scaling, and monitoring.' },
+      { q: 'What additional cost does Elastic Beanstalk add?', opts: ['$0.10 per hour', '$1 per deployment', 'No additional charge — pay only for underlying resources', '$50 per month'], ans: 2, exp: 'Elastic Beanstalk has no additional charge. You pay only for the underlying AWS resources (EC2, RDS, ELB, etc.) that Beanstalk provisions.' },
+      { q: 'Which platforms does Elastic Beanstalk support?', opts: ['Only Java and .NET', 'Java, .NET, PHP, Node.js, Python, Ruby, Go, and Docker', 'Only Python and Node.js', 'Only Docker containers'], ans: 1, exp: 'Elastic Beanstalk supports Java, .NET, PHP, Node.js, Python, Ruby, Go, and Docker. It deploys on Apache, NGINX, Passenger, Puma, and IIS web servers.' },
+      { q: 'What is AWS OpsWorks?', opts: ['A container registry', 'Configuration management service using Chef and Puppet for server automation', 'A monitoring tool', 'A deployment pipeline'], ans: 1, exp: 'OpsWorks is a configuration management service that provides managed instances of Chef and Puppet — automating how servers are configured, deployed, and managed.' },
+      { q: 'What is the IaC benefit of "Repeatability"?', opts: ['You can write templates in multiple languages', 'Every deployment from the same template is guaranteed to be identical — no human error', 'Templates repeat automatically every hour', 'Resources repeat when they fail'], ans: 1, exp: 'Repeatability means every deployment from the same CloudFormation template is guaranteed to be identical, eliminating human error and configuration drift.' },
+      { q: 'What happens when you delete a CloudFormation Stack?', opts: ['Nothing — resources remain', 'All resources created by the stack are deleted', 'Only the template is deleted', 'Resources move to another stack'], ans: 1, exp: 'Deleting a CloudFormation Stack deletes all resources it created — no orphaned infrastructure remains. This makes cleanup easy and complete.' },
+      { q: 'Which automation tool should you choose when you need full control over AWS infrastructure via code?', opts: ['Elastic Beanstalk', 'OpsWorks', 'CloudFormation', 'Systems Manager'], ans: 2, exp: 'CloudFormation provides the highest level of control for infrastructure provisioning via code — it is the best choice for complex, repeatable, version-controlled architectures.' },
+      { q: 'What is AWS Systems Manager Run Command used for?', opts: ['Creating CloudFormation stacks', 'Running scripts on fleets of instances without SSH', 'Auto scaling EC2 groups', 'DNS management'], ans: 1, exp: 'Systems Manager Run Command allows you to run scripts on fleets of EC2 instances without needing SSH access — great for patch management and configuration.' },
+      { q: 'What is OpsWorks Stacks used for?', opts: ['Modelling application as a stack of layers managed by Chef/Puppet', 'Creating VPCs', 'Running Lambda functions', 'Managing S3 buckets'], ans: 0, exp: 'OpsWorks Stacks models your application as a stack of layers (load balancing, application server, database). Complements CloudFormation: CF builds infrastructure, OpsWorks deploys the application on top.' },
+      { q: 'Which Well-Architected principle does infrastructure automation directly support?', opts: ['Cost Optimization only', '"Perform operations as code" and "Make frequent, small, reversible changes"', 'Security only', 'Performance Efficiency only'], ans: 1, exp: 'The AWS Well-Architected Framework\'s Operational Excellence pillar states "Perform operations as code" and "Make frequent, small, reversible changes" — both directly require automation.' },
+      { q: 'What is the CloudFormation Parameters section used for?', opts: ['Defining output values', 'Values set at runtime (e.g., environment type, key pair name)', 'Defining required IAM permissions', 'Specifying network CIDR blocks'], ans: 1, exp: 'The Parameters section defines values that can be set at runtime when creating/updating the stack, such as environment type (dev/prod) or key pair name.' },
+      { q: 'What does CloudFormation Conditions allow?', opts: ['Conditional IAM permissions', 'A single template can deploy different infrastructure for different environments', 'Triggering alarms', 'Setting TTL values'], ans: 1, exp: 'Conditions in CloudFormation allow a single template to deploy different infrastructure for different environments — e.g., multi-AZ for production but single-AZ for development.' },
+      { q: 'What is the CloudFormation Outputs section used for?', opts: ['Error messages', 'Values returned after stack creation (e.g., instance ID, public IP)', 'Input parameters', 'Resource deletion configuration'], ans: 1, exp: 'The Outputs section defines values that are returned after stack creation completes, such as an instance ID, public IP address, or load balancer DNS name.' }
+    ]
+  },
+  {
+    id: 6, color: 'c2', lecture: 'Lecture 5',
+    title: 'Networking Layer — Amazon VPC',
+    desc: 'VPC design, subnets, internet gateways, NAT gateways, security groups, and NACLs.',
+    sections: [
+      {
+        title: 'VPC Fundamentals',
+        cards: [
+          { t: 'What is a VPC?', p: 'Logically isolated section of AWS Cloud. You control IP addresses, subnets, routing, and security rules.' },
+          { t: 'VPC Scope', p: 'A VPC belongs to one AWS Region but spans all AZs in that Region. A subnet belongs to exactly one AZ.' },
+          { t: 'CIDR', p: 'Defines IP address ranges. AWS reserves 5 IPs per subnet. VPC size range: /28 (16 IPs) to /16 (65,536 IPs).' }
+        ]
+      },
+      {
+        title: 'VPC Components',
+        cards: [
+          { t: 'Internet Gateway (IGW)', p: 'Allows VPC resources to communicate with the internet. Horizontally scaled, redundant, highly available. Attach to VPC to make a subnet public.' },
+          { t: 'Route Tables', p: 'Direct traffic between VPC resources. A route to 0.0.0.0/0 pointing at an IGW makes traffic internet-routable.' },
+          { t: 'NAT Gateway', p: 'Enables private subnet instances to access the internet without the internet initiating connections to them. Sits in a public subnet.' },
+          { t: 'Bastion Host', p: 'Server in the public subnet providing SSH/RDP access to private subnet instances from external networks.' }
+        ]
+      },
+      {
+        title: 'Security Controls',
+        cards: [
+          { t: 'Security Groups (Stateful)', p: 'Instance-level. Return traffic automatically allowed. Default: block all inbound, allow all outbound. Only allow rules.' },
+          { t: 'Network ACLs (Stateless)', p: 'Subnet-level. Must explicitly allow both inbound AND outbound (return) traffic. Rules evaluated in number order. Allow AND deny rules.' },
+          { t: 'Key Difference', p: 'Security Groups = stateful (remember connection). NACLs = stateless (treat each packet independently).' }
+        ]
+      }
+    ],
+    quiz: [
+      { q: 'What does VPC stand for?', opts: ['Virtual Private Computer', 'Virtual Private Cloud', 'Virtual Public Cluster', 'Virtual Production Cloud'], ans: 1, exp: 'VPC stands for Virtual Private Cloud — a logically isolated section of the AWS Cloud where you can launch resources in a virtual network that you define.' },
+      { q: 'How many Availability Zones can a VPC span?', opts: ['Only one AZ', 'Only two AZs', 'All AZs in its Region', 'AZs across multiple Regions'], ans: 2, exp: 'A VPC belongs to one AWS Region but can span ALL Availability Zones within that Region. However, each subnet belongs to exactly one AZ.' },
+      { q: 'How many IP addresses does AWS reserve per subnet?', opts: ['2', '3', '5', '10'], ans: 2, exp: 'AWS reserves 5 IP addresses per subnet: network address, VPC router, DNS, future use, and broadcast address.' },
+      { q: 'What is the maximum size of a VPC in CIDR notation?', opts: ['/28', '/24', '/20', '/16'], ans: 3, exp: 'The maximum VPC size is /16, providing 65,536 IP addresses. The minimum practical subnet size is /28 (16 IPs).' },
+      { q: 'What is an Internet Gateway (IGW)?', opts: ['A DNS service', 'A device that allows VPC resources to communicate with the internet', 'A load balancer', 'A VPN connection'], ans: 1, exp: 'An Internet Gateway is horizontally scaled, redundant, and highly available. It provides a target in route tables for internet-routable traffic — attach to VPC to make subnets public.' },
+      { q: 'What is a NAT Gateway used for?', opts: ['Giving internet access to public subnets', 'Allowing private subnet instances to access internet without internet initiating connections to them', 'DNS resolution', 'Cross-region VPC peering'], ans: 1, exp: 'NAT Gateway enables private subnet instances to initiate outbound internet traffic, while preventing the internet from initiating inbound connections to those instances.' },
+      { q: 'What is a Bastion Host?', opts: ['A type of database', 'A server in a public subnet providing SSH/RDP access to private subnet instances', 'A load balancer', 'An Internet Gateway'], ans: 1, exp: 'A Bastion Host (jump server) is a server in the public subnet that allows administrators to SSH/RDP into instances in private subnets from external networks.' },
+      { q: 'Security Groups are what type of firewall?', opts: ['Stateless', 'Stateful', 'Packet-filter', 'Application-layer only'], ans: 1, exp: 'Security Groups are stateful firewalls — they remember connection state, so return traffic is automatically allowed without needing an explicit outbound rule.' },
+      { q: 'Network ACLs are what type of firewall?', opts: ['Stateful', 'Stateless', 'Connection-aware', 'Layer 7'], ans: 1, exp: 'Network ACLs are stateless — they do not track connection state. You must explicitly define rules for both inbound AND outbound (including return) traffic.' },
+      { q: 'At what level do Security Groups operate?', opts: ['Region level', 'VPC level', 'Instance/network interface level', 'Subnet level'], ans: 2, exp: 'Security Groups operate at the instance or network interface level, controlling traffic for specific EC2 instances or other AWS resources.' },
+      { q: 'At what level do Network ACLs operate?', opts: ['Instance level', 'Region level', 'VPC level', 'Subnet level'], ans: 3, exp: 'Network ACLs operate at the subnet level — they control traffic going in and out of the entire subnet, affecting all resources within that subnet.' },
+      { q: 'What is the default Security Group behavior for inbound traffic?', opts: ['Allow all', 'Block all', 'Allow from same SG only', 'Allow HTTP and HTTPS'], ans: 1, exp: 'By default, a Security Group blocks ALL inbound traffic. You must explicitly add allow rules for inbound traffic. All outbound traffic is allowed by default.' },
+      { q: 'Which is true about Network ACL rules?', opts: ['Only allow rules are possible', 'Rules can both Allow and Deny; evaluated in number order', 'Only apply to EC2 instances', 'Return traffic is automatically allowed'], ans: 1, exp: 'NACLs support both Allow and Deny rules, evaluated in order from lowest to highest rule number, with a catch-all Deny (*) at the end.' },
+      { q: 'What route in a route table makes traffic internet-routable?', opts: ['10.0.0.0/8 → IGW', '0.0.0.0/0 → IGW', '172.16.0.0/12 → NAT', '192.168.0.0/16 → VPN'], ans: 1, exp: 'A route of 0.0.0.0/0 pointing to an Internet Gateway in a subnet\'s route table makes all internet-bound traffic routable — making the subnet "public".' },
+      { q: 'What is the maximum number of VPCs per region by default?', opts: ['3', '5', '10', 'Unlimited'], ans: 1, exp: 'AWS limits 5 VPCs per Region per account by default. This is a soft limit that can be increased by contacting AWS support.' },
+      { q: 'What is an Elastic IP address?', opts: ['An automatically assigned private IP', 'A static, public IPv4 address associated with your AWS account', 'A VPC CIDR block', 'A load balancer IP'], ans: 1, exp: 'An Elastic IP is a static, public IPv4 address associated with your AWS account. It can be associated with an instance or network interface and remapped for redundancy.' },
+      { q: 'Which VPC design best practice involves not allocating all addresses at once?', opts: ['No Overlap', 'Reserve Space', 'Divide Evenly', 'One Subnet per AZ'], ans: 1, exp: 'Reserving space means not allocating all network addresses at once — leaving room for future growth and additional subnets as your architecture evolves.' },
+      { q: 'When should you use Multiple AWS Accounts instead of Multiple VPCs?', opts: ['Single team environments', 'Large organizations with multiple IT teams and strict isolation requirements', 'Small single applications', 'HPC workloads'], ans: 1, exp: 'Multiple AWS Accounts are recommended for large organizations, multiple IT teams, and rapid-growth companies needing strong isolation between business units or environments.' },
+      { q: 'What does "Chaining Security Groups" allow?', opts: ['Combining VPCs', 'Restricting traffic between tiers — e.g., web tier allows internet, app tier only allows from web SG, DB tier only from app SG', 'Load balancing across AZs', 'Cross-region replication'], ans: 1, exp: 'Chaining SGs across tiers creates layered security: Web SG allows HTTP/HTTPS from internet; App SG allows only from Web SG; DB SG allows only from App SG. All other ports blocked.' },
+      { q: 'What must you do to create a public subnet?', opts: ['Only create a subnet in a public AZ', 'Attach IGW, add 0.0.0.0/0 → IGW route, ensure instances have public IPs, configure SGs/NACLs', 'Assign a dedicated IP range', 'Enable VPC Flow Logs'], ans: 1, exp: 'Creating a public subnet requires: (1) Attach IGW to VPC, (2) Route 0.0.0.0/0 → IGW in subnet route table, (3) Instances need public/elastic IPs, (4) SGs and NACLs allow relevant traffic.' }
+    ]
+  },
+  {
+    id: 7, color: 'c3', lecture: 'Lecture 6',
+    title: 'Securing User Identity — AWS IAM',
+    desc: 'IAM users, groups, roles, policies, RBAC vs ABAC, federation, and AWS Organizations.',
+    sections: [
+      {
+        title: 'IAM Core Components',
+        cards: [
+          { t: 'IAM User', p: 'Identity with long-term credentials. Uses username/password or access keys to authenticate via console or CLI/SDK.' },
+          { t: 'IAM Group', p: 'Collection of IAM users granted identical authorization. Reflects job functions (Developers, Admins, etc.).' },
+          { t: 'IAM Policy', p: 'JSON document defining which resources can be accessed and at what level. Explicit Deny always overrides Allow.' },
+          { t: 'IAM Role', p: 'Temporary security credentials. Not tied to one person — assumable by users, applications, or AWS services.' }
+        ]
+      },
+      {
+        title: 'Permission Evaluation',
+        cards: [
+          { t: 'Evaluation Order', p: 'Is action explicitly denied? → DENY. Explicitly allowed? → ALLOW. Otherwise → Implicit DENY.' },
+          { t: 'Explicit Deny Wins', p: 'An explicit Deny ALWAYS wins, even if an Allow statement also exists in another policy.' },
+          { t: 'Principle of Least Privilege', p: 'Grant only the minimum permissions required to perform a task. Do not grant more than needed.' }
+        ]
+      },
+      {
+        title: 'IAM Roles & Federation',
+        cards: [
+          { t: 'AWS STS', p: 'Security Token Service — issues temporary, limited-privilege credentials for IAM or federated users. Credentials expire automatically.' },
+          { t: 'SAML Federation', p: 'User authenticates via corporate IdP → SAML assertion → posted to AWS sign-in endpoint → STS issues temp credentials.' },
+          { t: 'Amazon Cognito', p: 'Fully managed auth for web/mobile apps. Supports federated identities (Facebook, Google, SAML) and User Pools. OIDC-compatible.' },
+          { t: 'AWS Organizations / SCPs', p: 'Service Control Policies restrict which AWS services are available to member accounts. Cannot be overridden by local admin.' }
+        ]
+      }
+    ],
+    quiz: [
+      { q: 'What is the AWS IAM root account used for?', opts: ['Day-to-day administrative tasks', 'Only for initial setup — should be locked away after creating an IAM admin user', 'Running EC2 instances', 'Managing S3 buckets only'], ans: 1, exp: 'Best practice: create an IAM admin user immediately after account creation, then lock away root credentials. The root account has full unrestricted access and should rarely be used.' },
+      { q: 'What is an IAM Policy?', opts: ['A list of EC2 instances', 'A JSON document defining which resources can be accessed and at what level', 'A network firewall rule', 'A type of database'], ans: 1, exp: 'IAM Policy is a JSON document with a Statement array. Each statement contains Effect (Allow/Deny), Action (API operation), Resource (ARN), and optional Conditions.' },
+      { q: 'An explicit Deny in IAM policy evaluation...', opts: ['Can be overridden by an explicit Allow in another policy', 'Always wins — overrides any Allow statement', 'Only applies to S3 resources', 'Only applies to cross-account access'], ans: 1, exp: 'An explicit Deny ALWAYS wins in IAM policy evaluation, regardless of any Allow statements in other attached policies.' },
+      { q: 'What is the default result when no IAM policy matches an action?', opts: ['Allow', 'Implicit Deny', 'Error', 'Log and allow'], ans: 1, exp: 'Without an explicit Allow, the default result is an implicit Deny. No policy = no access. You must explicitly grant permissions.' },
+      { q: 'What is an IAM Role?', opts: ['A permanent credential tied to one user', 'Temporary security credentials assumable by users, apps, or AWS services', 'A type of security group', 'A billing category'], ans: 1, exp: 'IAM Roles provide temporary security credentials. They are not tied to a specific person — they can be assumed by IAM users, EC2 instances, Lambda functions, or other AWS services.' },
+      { q: 'What is AWS STS?', opts: ['Simple Transfer Service', 'Security Token Service — issues temporary, limited-privilege credentials', 'Standard Threat System', 'Secure Traffic Service'], ans: 1, exp: 'AWS STS (Security Token Service) issues temporary, limited-privilege credentials for IAM or federated users. Credentials expire automatically — no long-term access keys needed.' },
+      { q: 'What does ABAC stand for in AWS IAM?', opts: ['Access-Based Account Control', 'Attribute-Based Access Control', 'Authentication-Based Access Control', 'AWS Basic Access Control'], ans: 1, exp: 'ABAC (Attribute-Based Access Control) grants permissions based on attributes/tags (e.g., Team=Developers). It is highly scalable as permissions automatically apply to matching tags.' },
+      { q: 'What is the difference between RBAC and ABAC?', opts: ['RBAC uses tags, ABAC uses roles', 'RBAC uses distinct roles per permission combination; ABAC uses attributes/tags for scalable permissions', 'They are identical', 'ABAC is only for S3'], ans: 1, exp: 'RBAC creates distinct roles for each permission combination. ABAC uses tags/attributes to grant permissions automatically — more scalable as org grows without updating policies for each new resource.' },
+      { q: 'What is Amazon Cognito used for?', opts: ['EC2 management', 'Fully managed authentication for web/mobile apps with federated identity support', 'Database access control', 'Network routing'], ans: 1, exp: 'Cognito provides authentication, authorization, and user management for web and mobile apps. It supports federated identities (Amazon, Facebook, Google, SAML) and user pools.' },
+      { q: 'What is a Service Control Policy (SCP) in AWS Organizations?', opts: ['IAM policy for individual users', 'Restricts which AWS services are available to member accounts — cannot be overridden by local admin', 'A CloudFormation feature', 'A VPC security rule'], ans: 1, exp: 'SCPs in AWS Organizations define maximum permissions for member accounts. They cannot be overridden by the local account administrator — even if they grant full admin access.' },
+      { q: 'What does AWS CloudTrail do?', opts: ['Monitors network traffic', 'Logs and monitors all user activity across the AWS account (console, CLI, SDK)', 'Auto-scales EC2 instances', 'Manages VPC routes'], ans: 1, exp: 'CloudTrail logs all user activity across your AWS account — who accessed it, when, from where, and what action they took. Provides 90-day history by default for security and compliance.' },
+      { q: 'Which IAM policy type is attached directly to a resource (like an S3 bucket)?', opts: ['AWS Managed Policy', 'Customer Managed Policy', 'Resource-Based Policy', 'Inline User Policy'], ans: 2, exp: 'Resource-Based Policies are attached directly to AWS resources (e.g., S3 buckets). They always specify a Principal element indicating who can access the resource.' },
+      { q: 'What is the purpose of IAM Groups?', opts: ['To manage EC2 instances', 'To grant identical permissions to multiple users — reflecting job functions', 'To control VPC routing', 'To create temporary credentials'], ans: 1, exp: 'IAM Groups let you grant the same permissions to multiple users. All users in the group inherit the group\'s permissions. Best practice: create groups reflecting job functions (Developers, Admins).' },
+      { q: 'In SAML federation, what happens after the user authenticates with the corporate IdP?', opts: ['User gets a permanent IAM user created', 'IdP returns SAML assertion → posted to AWS sign-in endpoint → STS issues temp credentials', 'User manually creates access keys', 'Route 53 redirects the user'], ans: 1, exp: 'SAML flow: User authenticates with IdP → IdP returns SAML assertion → assertion posted to AWS sign-in endpoint → STS issues temp credentials → user redirected to console/app.' },
+      { q: 'What is the Principle of Least Privilege?', opts: ['Give all users admin access by default', 'Grant only the minimum permissions required to perform a task', 'Allow all actions except delete', 'Grant permissions based on IP address'], ans: 1, exp: 'The Principle of Least Privilege means granting only the permissions required to perform a specific task. Users should not have more access than necessary for their job function.' },
+      { q: 'What is an Organizational Unit (OU) in AWS Organizations?', opts: ['A type of EC2 instance', 'A group of accounts in a hierarchy where policies applied to parent OU are inherited by child accounts', 'A VPC subdivision', 'A billing category'], ans: 1, exp: 'OUs let you group accounts into a hierarchy. Policies (like SCPs) attached to a parent OU are inherited by all child accounts and OUs — enabling centralized governance.' },
+      { q: 'Which type of IAM policy is pre-built and managed by AWS?', opts: ['Customer Managed Policy', 'Inline Policy', 'AWS Managed Policy', 'Resource-Based Policy'], ans: 2, exp: 'AWS Managed Policies are pre-built policies created and managed by AWS. They cover common use cases like PowerUser, ReadOnly, S3FullAccess, etc.' },
+      { q: 'What is the IAM policy element that specifies the AWS API operation?', opts: ['Effect', 'Resource', 'Action', 'Condition'], ans: 2, exp: 'The Action element specifies the AWS API operation. Example: "Action": "s3:GetObject" allows GetObject API calls. Actions are combined with Resource to grant specific access.' },
+      { q: 'What is Consolidated Billing in AWS Organizations?', opts: ['A type of IAM policy', 'One payment method for all accounts with volume discounts aggregated across the organization', 'Monthly usage reports', 'Cross-account IAM roles'], ans: 1, exp: 'Consolidated Billing allows one payment method for all accounts in an organization. Volume discounts aggregate across all accounts, potentially lowering costs for the entire org.' },
+      { q: 'Why should IAM roles be used instead of long-term credentials on EC2 instances?', opts: ['Roles are cheaper', 'Roles provide temporary credentials that expire automatically — no static keys to manage or rotate', 'Roles allow more API calls', 'EC2 cannot use access keys'], ans: 1, exp: 'Using IAM roles on EC2 provides temporary credentials that rotate automatically. This eliminates the security risk of static access keys being exposed in code or configuration files.' }
+    ]
+  },
+  {
+    id: 8, color: 'c4', lecture: 'Lecture 7',
+    title: 'High Availability & Elasticity',
+    desc: 'EC2 Auto Scaling, Elastic Load Balancing, Route 53, CloudWatch monitoring, and scaling patterns.',
+    sections: [
+      {
+        title: 'Scaling Concepts',
+        cards: [
+          { t: 'Horizontal Scaling', p: 'Scale out (add instances) and scale in (remove instances). Best for stateless apps. Effectively unlimited scale ceiling.' },
+          { t: 'Vertical Scaling', p: 'Scale up (bigger instance) or scale down (smaller instance). Simple but has a hard ceiling. Usually requires restart.' },
+          { t: 'Elasticity', p: 'Infrastructure that expands AND contracts automatically as capacity needs change. Handles day-to-day fluctuations.' }
+        ]
+      },
+      {
+        title: 'EC2 Auto Scaling',
+        cards: [
+          { t: 'ASG Configuration', p: 'Three values: Minimum (never go below), Maximum (never exceed), and Desired (current target, fluctuates with events).' },
+          { t: 'Scheduled Scaling', p: 'Scale based on date/time. For predictable workloads — turn off dev instances at night, scale up for known campaigns.' },
+          { t: 'Dynamic Scaling', p: 'Responds to real-time conditions. Target tracking (keep CPU at 50%), step scaling, or simple scaling.' },
+          { t: 'Predictive Scaling', p: 'Uses ML to predict demand and proactively provision capacity. For complex demand patterns.' }
+        ]
+      },
+      {
+        title: 'Load Balancing & Route 53',
+        table: {
+          headers: ['Type', 'Layer', 'Best For'],
+          rows: [
+            ['Application LB (ALB)', 'Layer 7 — HTTP/HTTPS', 'Content-based routing, microservices'],
+            ['Network LB (NLB)', 'Layer 4 — TCP/UDP', 'Ultra-high performance, static IP'],
+            ['Classic LB', 'Layer 4 & 7', 'Legacy — not recommended for new architectures']
+          ]
+        }
+      }
+    ],
+    quiz: [
+      { q: 'What is the difference between horizontal and vertical scaling?', opts: ['Horizontal = bigger machines; Vertical = more machines', 'Horizontal = more machines (scale out/in); Vertical = bigger/smaller machines (scale up/down)', 'They are identical', 'Horizontal only works with containers'], ans: 1, exp: 'Horizontal scaling adds/removes instances (scale out/in). Vertical scaling changes the size of an existing instance (scale up/down). Horizontal is preferred for stateless apps.' },
+      { q: 'What are the three capacity values in an Auto Scaling Group?', opts: ['Start, End, Peak', 'Minimum, Maximum, Desired', 'Low, High, Target', 'Base, Burst, Limit'], ans: 1, exp: 'An ASG defines Minimum (never drop below this count), Maximum (never exceed this count), and Desired (the current target count, adjusted by scaling events).' },
+      { q: 'Which scaling option uses machine learning to predict demand?', opts: ['Scheduled Scaling', 'Dynamic Scaling', 'Predictive Scaling', 'Manual Scaling'], ans: 2, exp: 'Predictive Scaling uses ML to analyze historical load patterns and proactively provision capacity before demand spikes, ideal for complex or recurring demand patterns.' },
+      { q: 'What is the Application Load Balancer (ALB) best suited for?', opts: ['Ultra-high performance TCP traffic', 'Content-based routing, HTTP/HTTPS, microservices', 'Static IP requirements', 'Legacy applications only'], ans: 1, exp: 'ALB operates at Layer 7 (application layer) and supports content-based routing (by path, host, header), making it ideal for microservices and HTTP/HTTPS applications.' },
+      { q: 'What is the Network Load Balancer (NLB) best suited for?', opts: ['HTTP content-based routing', 'Ultra-high performance, static IP, extreme low latency at Layer 4', 'Microservices architectures', 'WebSocket connections only'], ans: 1, exp: 'NLB operates at Layer 4 (TCP/UDP) and is designed for ultra-high performance with millions of requests per second, static IP addresses, and extreme low latency.' },
+      { q: 'What does 99.99% availability translate to in maximum downtime per year?', opts: ['3.65 days', '8.76 hours', '52.6 minutes', '5.25 minutes'], ans: 2, exp: '99.99% availability (four nines) allows approximately 52.6 minutes of downtime per year — about 8.6 seconds of downtime per day.' },
+      { q: 'Which Route 53 routing policy routes traffic based on which region has lowest latency for the user?', opts: ['Geolocation', 'Weighted Round Robin', 'Latency-Based', 'Failover'], ans: 2, exp: 'Latency-Based routing evaluates which AWS region has the lowest network latency for the user and routes traffic there for the best user experience.' },
+      { q: 'What Route 53 routing policy is used for active-passive disaster recovery?', opts: ['Geolocation', 'Simple', 'Weighted Round Robin', 'Failover'], ans: 3, exp: 'Failover routing routes traffic to primary; if the health check fails, Route 53 automatically routes to the secondary (passive) resource — essential for DR.' },
+      { q: 'What does Amazon CloudWatch collect and track?', opts: ['Only billing data', 'Metrics, logs, and events for resources and applications', 'Only EC2 instances', 'DNS records'], ans: 1, exp: 'CloudWatch collects and tracks metrics, logs, and events from AWS services and custom applications. Metric data is retained for 15 months.' },
+      { q: 'What can a CloudWatch Alarm trigger?', opts: ['Only email notifications', 'SNS notifications, Auto Scaling actions, or Lambda functions', 'Only Auto Scaling', 'Only billing alerts'], ans: 1, exp: 'CloudWatch Alarms can trigger: SNS notifications, Auto Scaling actions (add/remove instances), Lambda function execution, and other automated responses.' },
+      { q: 'What is Dynamic Scaling Target Tracking?', opts: ['Scale based on a date', 'Automatically maintains a target metric value (e.g., keep CPU at 50%)', 'Scale proportionally to alarm breach size', 'Scale once per alarm'], ans: 1, exp: 'Target Tracking scaling automatically adjusts capacity to maintain a specific metric value (e.g., 50% CPU utilization). The best choice for most load-balanced applications.' },
+      { q: 'What is DynamoDB Adaptive Capacity?', opts: ['Automatically resizes table partitions', 'Automatically increases throughput for "hot" partitions (enabled by default)', 'Adds read replicas automatically', 'Distributes traffic across regions'], ans: 1, exp: 'Adaptive Capacity automatically increases throughput capacity for hot partitions that receive more traffic. Enabled by default for every table. Note: it does NOT fix bad partition key design.' },
+      { q: 'What is Aurora Serverless?', opts: ['A type of EC2 auto scaling', 'Aurora that automatically scales capacity, starts up, and shuts down — pay per ACU used', 'A container orchestration service', 'A type of load balancer'], ans: 1, exp: 'Aurora Serverless automatically scales capacity (in Aurora Capacity Units / ACUs), starts up, and shuts down based on demand. Ideal for intermittent or unpredictable workloads.' },
+      { q: 'What is database sharding?', opts: ['Encrypting database data', 'Splitting data across multiple databases (e.g., even IDs in one DB, odd in another) to improve write performance', 'Creating read replicas', 'Backing up database tables'], ans: 1, exp: 'Database sharding splits data into large chunks (shards) across multiple database instances, improving write performance by distributing the write load.' },
+      { q: 'How many AZs should you use as a minimum for a highly available architecture?', opts: ['1 AZ', '2 AZs', '3 AZs', 'All available AZs'], ans: 1, exp: 'Start with a minimum of 2 Availability Zones per AWS Region for high availability. If resources in one AZ are unreachable, the application should continue without failure.' },
+      { q: 'What is Amazon EventBridge?', opts: ['A physical networking device', 'A serverless event bus that routes real-time data from AWS services to targets based on rules', 'A type of load balancer', 'A DNS service'], ans: 1, exp: 'Amazon EventBridge is a serverless event bus that routes real-time data from AWS services, SaaS apps, and custom apps to targets (Lambda, SQS, SNS, Step Functions) based on rules.' },
+      { q: 'What is the purpose of Weighted Round Robin routing in Route 53?', opts: ['Route to lowest latency', 'Route different percentages of traffic to different resources (A/B testing, migrations)', 'Route based on geography', 'Route based on health checks'], ans: 1, exp: 'Weighted Round Robin routes a specified percentage of traffic to different resources. Useful for A/B testing new features or gradually migrating traffic to a new deployment.' },
+      { q: 'Which scaling type is best for turning off dev/test instances at night?', opts: ['Dynamic Scaling', 'Predictive Scaling', 'Scheduled Scaling', 'Target Tracking'], ans: 2, exp: 'Scheduled Scaling is based on date and time — perfect for predictable patterns like turning off non-production instances at night and scaling up for known business events.' },
+      { q: 'What does ELB stand for?', opts: ['Elastic Load Benchmark', 'Elastic Load Balancing', 'Enterprise Load Balancer', 'Event Load Buffer'], ans: 1, exp: 'ELB stands for Elastic Load Balancing — a managed service that distributes incoming application traffic across multiple targets (EC2, containers, IPs, Lambda).' },
+      { q: 'What does the Route 53 Multivalue Answer routing policy do?', opts: ['Routes to the closest location', 'Returns multiple IP addresses and can function as a simple load balancer with health checks', 'Blocks traffic from specific countries', 'Only works with DNS failover'], ans: 1, exp: 'Multivalue Answer routing returns up to 8 healthy records per query and can function as a simple load balancer with health checks — useful for simple traffic distribution.' }
+    ]
+  },
+  {
+    id: 9, color: 'c5', lecture: 'Lecture 8',
+    title: 'Caching Content',
+    desc: 'Amazon CloudFront, ElastiCache (Redis vs Memcached), DAX, session management, and caching strategies.',
+    sections: [
+      {
+        title: 'Caching Fundamentals',
+        cards: [
+          { t: 'What is a Cache?', p: 'High-speed data storage layer storing a subset of data so future requests are served faster. Trades storage for speed.' },
+          { t: 'What to Cache', p: 'Data from slow/expensive queries. Relatively static and frequently accessed data. Information that can tolerate some staleness.' },
+          { t: 'Caching Layers', p: 'Client (browser), CDN/Edge (CloudFront), Web/App server, Database (ElastiCache, DAX). Each layer reduces load on the next.' }
+        ]
+      },
+      {
+        title: 'Amazon CloudFront',
+        cards: [
+          { t: 'What is CloudFront?', p: "AWS's global CDN. Delivers content from edge locations nearest to the user. Reduces latency by caching at the edge." },
+          { t: 'How it Works', p: 'User request → nearest edge location. Cache hit: serve from edge. Cache miss: fetch from origin, cache at edge, serve to user.' },
+          { t: 'DDoS Protection', p: 'CloudFront + WAF + Route 53 absorbs DDoS traffic at the edge, protecting origin infrastructure.' }
+        ]
+      },
+      {
+        title: 'ElastiCache: Redis vs Memcached',
+        table: {
+          headers: ['Feature', 'Memcached', 'Redis'],
+          rows: [
+            ['Sub-ms latency', 'Yes', 'Yes'],
+            ['Multi-threaded', 'Yes', 'No'],
+            ['Horizontal write scaling', 'Yes (20 nodes)', 'No'],
+            ['Advanced data structures', 'No', 'Yes'],
+            ['Multi-AZ failover', 'No', 'Yes'],
+            ['Persistence', 'No', 'Yes'],
+            ['Pub/Subscribe', 'No', 'Yes']
+          ]
+        }
+      },
+      {
+        title: 'Caching Strategies',
+        cards: [
+          { t: 'Lazy Loading', p: 'Only load data into cache when requested. On miss: fetch from DB, write to cache. Avoids filling cache with unused data.' },
+          { t: 'Write-Through', p: 'Write to cache AND DB on every update. Cache never stale. Disadvantage: write penalty, cache fills with rarely-read data.' },
+          { t: 'DynamoDB DAX', p: 'Fully managed in-memory cache for DynamoDB. Up to 10x faster — milliseconds to microseconds. Fully integrated.' }
+        ]
+      }
+    ],
+    quiz: [
+      { q: 'What is the purpose of a CDN like Amazon CloudFront?', opts: ['Database management', 'Globally distributed caching servers delivering content from nearby edge locations to reduce latency', 'Auto scaling EC2 instances', 'VPN connection management'], ans: 1, exp: 'A CDN is a globally distributed system of caching servers. CloudFront caches commonly requested content at edge locations nearest the user, dramatically reducing latency.' },
+      { q: 'What happens when a CloudFront edge location has a cache miss?', opts: ['Request fails', 'CloudFront fetches from the origin, caches at edge, and delivers to user', 'User is redirected to the origin directly', 'CloudFront waits 5 minutes'], ans: 1, exp: 'On a cache miss, CloudFront retrieves the content from the origin server, caches it at the edge location for future requests, and delivers it to the requesting user.' },
+      { q: 'What is Amazon ElastiCache?', opts: ['A CDN service', 'An in-memory data store for web applications — speeds up data retrieval', 'A database service', 'A load balancer'], ans: 1, exp: 'ElastiCache provides web applications with an in-memory data store in the cloud, removing read pressure from primary databases by caching frequently accessed data.' },
+      { q: 'Which ElastiCache engine supports Multi-AZ with auto failover?', opts: ['Memcached', 'Redis', 'Both', 'Neither'], ans: 1, exp: 'Redis supports Multi-AZ with automatic failover — if the primary Redis node fails, ElastiCache automatically promotes a replica. Memcached does not support Multi-AZ.' },
+      { q: 'Which ElastiCache engine supports data persistence?', opts: ['Memcached', 'Redis', 'Both', 'Neither'], ans: 1, exp: 'Redis supports data persistence — it can save a point-in-time snapshot of the dataset to disk. Memcached is in-memory only with no persistence.' },
+      { q: 'What is the Lazy Loading caching strategy?', opts: ['Cache all data upfront', 'Load data into cache only when requested — on miss, fetch from DB and cache it', 'Write to cache and DB simultaneously', 'Delete cache on every write'], ans: 1, exp: 'Lazy Loading only populates the cache when data is requested. On cache miss, it fetches from the database, writes to cache, and returns the result. Avoids filling cache with unused data.' },
+      { q: 'What is the Write-Through caching strategy?', opts: ['Only write to the database', 'Write to cache and DB simultaneously on every update — cache is never stale', 'Write to cache first, then async to DB', 'Never write to cache'], ans: 1, exp: 'Write-Through writes to both cache and database simultaneously on every update, ensuring the cache is never stale. Disadvantage: write penalty and cache may fill with rarely-read data.' },
+      { q: 'Which ElastiCache engine is better for multi-threading and horizontal write scaling?', opts: ['Redis', 'Memcached', 'Both are equal', 'Neither supports this'], ans: 1, exp: 'Memcached supports multi-threaded performance and horizontal write scaling (up to 20 nodes). Redis is single-threaded and scales vertically for writes.' },
+      { q: 'What is DynamoDB DAX?', opts: ['A type of DynamoDB table', 'Fully managed in-memory cache for DynamoDB providing up to 10x performance improvement', 'A DynamoDB backup service', 'A DynamoDB global table feature'], ans: 1, exp: 'DAX (DynamoDB Accelerator) is a fully managed, in-memory cache for DynamoDB. It provides up to 10x performance improvement — from milliseconds to microseconds for read-heavy workloads.' },
+      { q: 'What is the recommended session management approach for horizontally scaled applications?', opts: ['Sticky Sessions', 'External session storage in ElastiCache or DynamoDB', 'Store sessions in EC2 local storage', 'No session management needed'], ans: 1, exp: 'External session storage (ElastiCache Redis or DynamoDB) is recommended. Any server can retrieve any user\'s session, providing full fault tolerance — no sessions lost if a server fails.' },
+      { q: 'What is a disadvantage of Sticky Sessions?', opts: ['Too expensive', 'If the instance fails, all its sessions are lost; creates uneven load distribution', 'Requires Redis', 'Not supported by AWS'], ans: 1, exp: 'Sticky Sessions tie a user to one server. If that server fails, all its sessions are lost. It also creates uneven load distribution, limiting scalability and increasing latency.' },
+      { q: 'What content expiration strategy causes an immediate cache refresh with no cost?', opts: ['Invalidate the object', 'Change the object name (e.g., header-v1.jpg → header-v2.jpg)', 'Set TTL to 0', 'Delete the CloudFront distribution'], ans: 1, exp: 'Changing the object name (version in the URL) forces an immediate cache refresh because the new name is a new cache key. Most efficient — no invalidation cost.' },
+      { q: 'CloudFront object invalidation should be used...', opts: ['As the primary cache update strategy', 'Only as a last resort — it is inefficient and incurs costs', 'For all content updates', 'Every 5 minutes'], ans: 1, exp: 'Invalidation is a last resort — it incurs costs and is operationally inefficient. Preferred methods are changing object names or setting appropriate TTLs.' },
+      { q: 'What is an S3 bucket used as in a CloudFront distribution?', opts: ['Load balancer', 'Origin server — the source of content for CloudFront to cache and distribute', 'DNS server', 'Compute layer'], ans: 1, exp: 'An S3 bucket can serve as an Origin Server in a CloudFront distribution — the source of static content that CloudFront caches at edge locations globally.' },
+      { q: 'What type of data is BEST suited for caching?', opts: ['Highly volatile data that changes every second', 'Relatively static, frequently accessed data from expensive queries', 'Sensitive financial transactions', 'Real-time stock trades'], ans: 1, exp: 'Best cache candidates: data that is relatively static, frequently accessed, results from slow/expensive queries, and can tolerate slight staleness (like a stock price for a few seconds).' },
+      { q: 'What is the advantage of Redis pub/subscribe messaging?', opts: ['Allows Redis to replace S3', 'Enables real-time message broadcasting between publishers and subscribers', 'Provides multi-AZ storage', 'Allows Redis to function as a load balancer'], ans: 1, exp: 'Redis pub/subscribe enables real-time messaging patterns where publishers send messages to channels and all subscribers receive them instantly — useful for chat apps, live notifications, etc.' },
+      { q: 'Which ElastiCache engine supports advanced data structures like sorted sets?', opts: ['Memcached', 'Redis', 'Both', 'Neither'], ans: 1, exp: 'Redis supports advanced data structures including strings, hashes, lists, sets, sorted sets, bitmaps, and more. Memcached only supports simple key-value pairs.' },
+      { q: 'What is a TTL (Time to Live) in CloudFront?', opts: ['How long before a distribution expires', 'Fixed expiration period after which CloudFront checks the origin for a newer version', 'How long a user stays connected', 'Lambda function timeout'], ans: 1, exp: 'TTL sets how long CloudFront keeps an object in cache before checking the origin with an If-Modified-Since header. Best for content that changes on a known schedule.' },
+      { q: 'CloudFront can be used for DDoS protection by...', opts: ['Encrypting all traffic', 'Absorbing DDoS traffic at edge locations with AWS WAF and Route 53, protecting origin infrastructure', 'Rate limiting by IP', 'Blocking all non-HTTPS traffic'], ans: 1, exp: 'CloudFront combined with AWS WAF and Route 53 absorbs DDoS traffic at the edge before it reaches your origin VPC, protecting your infrastructure from volumetric attacks.' },
+      { q: 'When should you choose Redis over Memcached?', opts: ['When you only need simple key-value caching with multi-threading', 'When you need persistence, Multi-AZ failover, pub/sub, advanced data structures, or sorted sets', 'When you need the simplest possible setup', 'When you have >20 cache nodes'], ans: 1, exp: 'Choose Redis when you need persistence, Multi-AZ with auto failover, pub/subscribe messaging, advanced data structures (like leaderboards/sorted sets), or complex data operations.' }
+    ]
+  },
+  {
+    id: 10, color: 'c1', lecture: 'Lecture 9',
+    title: 'Planning for Disaster Recovery',
+    desc: 'RPO, RTO, the four DR patterns, AWS Storage Gateway, and DR automation services.',
+    sections: [
+      {
+        title: 'DR Fundamentals',
+        cards: [
+          { t: 'RPO — Recovery Point Objective', p: 'Maximum acceptable data loss measured in time. Answers: "How often must data be backed up?" Example: RPO of 8 hours → back up every 8 hours.' },
+          { t: 'RTO — Recovery Time Objective', p: 'Maximum acceptable downtime. Answers: "How quickly must we be back online?" Example: RTO of 1 hour → back online within 1 hour of disaster.' },
+          { t: 'DR Mindset', p: '"Everything fails, all the time." — Werner Vogels (AWS CTO). Design and plan for failures intentionally.' }
+        ]
+      },
+      {
+        title: 'The Four DR Patterns',
+        table: {
+          headers: ['Pattern', 'RPO', 'RTO', 'Cost'],
+          rows: [
+            ['Backup & Restore', 'Hours', 'Hours', 'Lowest'],
+            ['Pilot Light', 'Minutes', 'Tens of minutes', 'Low'],
+            ['Warm Standby', 'Minutes', 'Minutes', 'Medium'],
+            ['Multi-Site', 'Near-zero', 'Near-zero', 'Highest']
+          ]
+        }
+      },
+      {
+        title: 'AWS Storage Gateway',
+        table: {
+          headers: ['Gateway Type', 'Protocol', 'Destination'],
+          rows: [
+            ['File Gateway', 'NFS or SMB', 'Amazon S3'],
+            ['Volume Gateway', 'iSCSI', 'EBS Snapshots in S3'],
+            ['Tape Gateway', 'VTL (iSCSI)', 'S3 Glacier vault']
+          ]
+        }
+      }
+    ],
+    quiz: [
+      { q: 'What does RPO stand for?', opts: ['Recovery Priority Order', 'Recovery Point Objective', 'Restoration Process Operations', 'Redundancy Protection Overhead'], ans: 1, exp: 'RPO (Recovery Point Objective) is the maximum acceptable amount of data loss measured in time. It determines how frequently data must be backed up.' },
+      { q: 'What does RTO stand for?', opts: ['Recovery Time Operations', 'Real-Time Objective', 'Recovery Time Objective', 'Restoration Timeline Override'], ans: 2, exp: 'RTO (Recovery Time Objective) is the maximum acceptable time a business process can be down after a disaster strikes. It determines how quickly you must recover.' },
+      { q: 'Which DR pattern has the LOWEST cost but HIGHEST RTO?', opts: ['Multi-Site', 'Warm Standby', 'Pilot Light', 'Backup & Restore'], ans: 3, exp: 'Backup & Restore is the lowest cost DR pattern but has the highest RTO (hours). Data is stored in S3; compute is restored from AMIs when disaster strikes.' },
+      { q: 'Which DR pattern has near-zero RPO and RTO but the highest cost?', opts: ['Backup & Restore', 'Pilot Light', 'Warm Standby', 'Multi-Site'], ans: 3, exp: 'Multi-Site runs a full-capacity production environment in both primary and DR sites. Route 53 distributes traffic. Immediate failover with near-zero RPO and RTO, but very expensive.' },
+      { q: 'In Pilot Light, what is running in the DR site?', opts: ['Full production capacity', 'Core data is replicated; non-critical servers are stopped and started only on disaster', 'Nothing — purely reactive', 'Scaled-down but functional version'], ans: 1, exp: 'Pilot Light keeps core data continuously replicated to AWS, but non-critical servers are stopped. On disaster: start stopped servers (takes minutes), scale resources, switch DNS.' },
+      { q: 'What characterizes Warm Standby DR?', opts: ['Nothing running in DR site', 'Core services replicated, non-critical stopped', 'Scaled-down but functional version always running 24/7, scale up on disaster', 'Full production always running in both sites'], ans: 2, exp: 'Warm Standby keeps all necessary components running at low capacity in the DR site 24/7. On disaster, immediately fail over critical load and scale up to handle all production traffic.' },
+      { q: 'What is S3 Cross-Region Replication (CRR) used for in DR?', opts: ['Accelerating reads within a region', 'Automatically and asynchronously replicating newly created objects to another region for higher data security', 'Compressing data', 'Encrypting objects'], ans: 1, exp: 'CRR automatically and asynchronously replicates newly created S3 objects to another Region, providing higher-level data security and reducing latency for distributed users.' },
+      { q: 'What is an EBS Snapshot?', opts: ['A running EC2 instance backup', 'Point-in-time incremental snapshots of EBS volumes stored in S3, copyable across regions', 'A type of S3 storage class', 'A database backup format'], ans: 1, exp: 'EBS Snapshots are point-in-time snapshots of EBS volumes stored in S3. They are incremental (only changed blocks), can be copied across regions, and can be restored to new EBS volumes.' },
+      { q: 'What does AWS Storage Gateway File Gateway connect?', opts: ['On-premises apps to EBS', 'On-premises apps to S3 using NFS or SMB protocol', 'On-premises apps to DynamoDB', 'On-premises apps to EC2'], ans: 1, exp: 'File Gateway presents an NFS or SMB file interface to on-premises applications, storing and retrieving files as objects in Amazon S3. Seamless on-premises to cloud integration.' },
+      { q: 'What is the Tape Gateway used to replace?', opts: ['Physical hard drives', 'Physical tape backup infrastructure — creates virtual tapes in S3 Glacier', 'Network-attached storage', 'Local SSDs'], ans: 1, exp: 'Tape Gateway replaces physical tape backup infrastructure with virtual tapes stored in S3 Glacier. Compatible with existing tape-based backup software via VTL (Virtual Tape Library) interface.' },
+      { q: 'What is AWS DataSync used for in DR?', opts: ['Database migration', 'Replicating EFS, FSx, or on-premises file systems to the cloud', 'Container deployment', 'DNS failover'], ans: 1, exp: 'AWS DataSync replicates Amazon EFS, FSx for Windows File Server, and on-premises file systems to the cloud for DR purposes. Works with Direct Connect for consistent transfers.' },
+      { q: 'Which AWS service provides automated EBS snapshot management (creation, retention, deletion)?', opts: ['AWS Backup only', 'Amazon Data Lifecycle Manager', 'CloudWatch Events', 'CloudFormation'], ans: 1, exp: 'Amazon Data Lifecycle Manager automates the creation, retention, and deletion of EBS snapshots based on policies you define — ensuring consistent backup without manual intervention.' },
+      { q: 'What is DynamoDB Point-in-Time Recovery (PITR)?', opts: ['A type of read replica', 'Continuously backs up DynamoDB tables and allows restore to any second within 35 days', 'A Global Table feature', 'An indexing feature'], ans: 1, exp: 'PITR continuously backs up your DynamoDB table and allows you to restore it to any second within the past 35 days — ideal for recovering from accidental deletes or writes.' },
+      { q: 'What is the recommended sequence for a Backup & Restore DR event?', opts: ['Terminate all instances first', 'Retrieve backups from S3 → restore via AMIs and CloudFormation → restore data → switch DNS', 'Call AWS support first', 'Rebuild from scratch manually'], ans: 1, exp: 'Backup & Restore recovery: retrieve backups from S3 (using lifecycle to lower cost), restore infrastructure via AMIs and CloudFormation templates, restore data from backup, then adjust DNS.' },
+      { q: 'What is the purpose of Route 53 Failover routing in DR?', opts: ['Speed up DNS queries', 'Automatically switch traffic to a secondary endpoint when primary health check fails', 'Distribute traffic by geography', 'Reduce DNS TTL'], ans: 1, exp: 'Route 53 Failover routing monitors primary endpoint health. When the primary fails health checks, Route 53 automatically routes all traffic to the secondary endpoint — essential for multi-region DR.' },
+      { q: 'AWS CloudFormation helps DR by...', opts: ['Storing backup data', 'Quickly deploying identical resource collections in a new Region in minutes from a template', 'Monitoring instance health', 'Managing database credentials'], ans: 1, exp: 'CloudFormation templates can be used to rapidly deploy a complete, identical infrastructure in a new Region in minutes, making it a key tool for DR automation.' },
+      { q: 'What DR best practice is "Game Day"?', opts: ['A scheduled maintenance window', 'Regularly simulating disaster scenarios to practice and validate recovery procedures', 'A billing review event', 'A team training day'], ans: 1, exp: '"Game Day" means regularly simulating actual disaster scenarios to practice and validate your recovery procedures. You never want to discover your DR plan doesn\'t work during a real disaster.' },
+      { q: 'AWS Direct Connect is used in DR for...', opts: ['Content delivery', 'Fast, consistent replication and backups of large on-premises environments to the cloud via dedicated private connection', 'DNS management', 'Auto scaling'], ans: 1, exp: 'AWS Direct Connect provides a dedicated private network connection between on-premises and AWS, enabling fast and consistent data replication and backups for hybrid DR strategies.' },
+      { q: 'In Multi-Site DR, how does Route 53 normally distribute traffic?', opts: ['Only to primary', 'Distributes traffic between both primary and DR sites simultaneously', 'Only to DR site', 'Randomly'], ans: 1, exp: 'In Multi-Site, Route 53 actively distributes traffic between both the primary and DR sites (active-active). On disaster, it immediately fails over all traffic to the surviving site.' },
+      { q: 'Which DR pattern is best for business-critical services needing minutes RTO with continuous validation?', opts: ['Backup & Restore', 'Pilot Light', 'Warm Standby', 'Multi-Site'], ans: 2, exp: 'Warm Standby is ideal for business-critical services needing minutes RTO. It runs a scaled-down version 24/7, trickles statistical production traffic for continuous validation, and scales up on disaster.' }
+    ]
+  }
+];
+
+/* ═══════════════════════════════════════════════════════ */
+/* STATE */
+let currentModule = 0;
+let currentSection = 'home';
+let quizState = { moduleId: 0, questions: [], current: 0, answers: {}, answered: 0 };
+const progress = JSON.parse(localStorage.getItem('csvc_progress') || '{}');
+
+function saveProgress() { localStorage.setItem('csvc_progress', JSON.stringify(progress)); }
+
+/* ═══════════════════════════════════════════════════════ */
+/* SECTION MANAGEMENT */
+function showSection(s) {
+  ['home-view','study-view','quiz-view','results-view'].forEach(id => document.getElementById(id).style.display='none');
+  document.getElementById(s+'-view').style.display='block';
+  currentSection = s;
+  window.scrollTo(0,0);
+}
+
+/* ═══════════════════════════════════════════════════════ */
+/* HOME GRID */
+function renderHome() {
+  const grid = document.getElementById('module-grid');
+  grid.innerHTML = MODULES.map(m => {
+    const done = progress[m.id] || {};
+    const best = done.best || 0;
+    const attempts = done.attempts || 0;
+    const pct = Math.round(best / 20 * 100);
+    return `
+    <div class="mod-card ${m.color}" onclick="goStudy(${m.id})">
+      <div class="mod-card-num">${m.lecture}</div>
+      <h3>${m.title}</h3>
+      <p>${m.desc}</p>
+      <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+      <div class="mod-card-footer">
+        <div class="progress-ring">${attempts > 0 ? `Best: ${best}/20 (${pct}%) · ${attempts} attempt${attempts>1?'s':''}` : 'Not started'}</div>
+        <div style="display:flex;gap:0.5rem">
+          <button class="mod-card-btn" onclick="event.stopPropagation();goStudy(${m.id})">Study</button>
+          <button class="mod-card-btn" style="background:transparent;border:1.5px solid currentColor;color:inherit;opacity:0.7" onclick="event.stopPropagation();startQuiz(${m.id})">Quiz</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ═══════════════════════════════════════════════════════ */
+/* STUDY VIEW */
+function goStudy(id) {
+  currentModule = id;
+  const m = MODULES[id];
+  const accentColors = {'c1':'var(--accent)','c2':'var(--accent2)','c3':'var(--accent3)','c4':'var(--accent4)','c5':'var(--accent5)'};
+  const ac = accentColors[m.color];
+
+  let html = `<div class="study-header">
+    <div style="font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:${ac};margin-bottom:0.4rem">${m.lecture}</div>
+    <h2>${m.title}</h2>
+    <p style="color:var(--muted)">${m.desc}</p>
+  </div>`;
+
+  m.sections.forEach(s => {
+    html += `<div class="study-section"><h3 style="border-bottom-color:${ac}20">${s.title}</h3>`;
+    if (s.cards) {
+      html += `<div class="study-cards">${s.cards.map(c => `<div class="study-card"><strong>${c.t}</strong><p>${c.p}</p></div>`).join('')}</div>`;
+    }
+    if (s.table) {
+      html += `<table class="study-table"><thead><tr>${s.table.headers.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>`;
+      html += s.table.rows.map(r=>`<tr>${r.map(cell=>`<td>${cell}</td>`).join('')}</tr>`).join('');
+      html += '</tbody></table>';
+    }
+    html += '</div>';
+  });
+
+  document.getElementById('study-content').innerHTML = html;
+  showSection('study');
+}
+
+/* ═══════════════════════════════════════════════════════ */
+/* QUIZ */
+function startQuiz(id) {
+  currentModule = id;
+  const m = MODULES[id];
+  // Shuffle questions
+  const shuffled = [...m.quiz].sort(() => Math.random() - 0.5);
+  quizState = { moduleId: id, questions: shuffled, current: 0, answers: {}, answered: 0 };
+  document.getElementById('quiz-module-label').textContent = m.title;
+  renderQuestion();
+  showSection('quiz');
+}
+
+function renderQuestion() {
+  const { questions, current, answers } = quizState;
+  const q = questions[current];
+  const total = questions.length;
+
+  document.getElementById('quiz-progress-bar').style.width = ((current+1)/total*100) + '%';
+  document.getElementById('quiz-counter').textContent = `Question ${current+1} of ${total}`;
+  document.getElementById('prev-btn').disabled = current === 0;
+
+  const answered = answers[current];
+  const isAnswered = answered !== undefined;
+
+  const opts = q.opts.map((opt, i) => {
+    let cls = 'option-btn';
+    if (isAnswered) {
+      if (i === q.ans) cls += ' correct';
+      else if (i === answered && i !== q.ans) cls += ' wrong';
+    } else if (i === answered) cls += ' selected';
+    return `<button class="${cls}" onclick="selectAnswer(${i})" ${isAnswered?'disabled':''}>
+      <span class="opt-letter">${'ABCD'[i]}</span>
+      <span>${opt}</span>
+    </button>`;
+  }).join('');
+
+  const exp = isAnswered ? `<div class="explanation show">💡 ${q.exp}</div>` : `<div class="explanation"></div>`;
+
+  document.getElementById('question-area').innerHTML = `
+    <div class="question-card">
+      <div class="question-num">Question ${current+1}</div>
+      <div class="question-text">${q.q}</div>
+      <div class="options">${opts}</div>
+      ${exp}
+    </div>`;
+
+  const answeredCount = Object.keys(quizState.answers).length;
+  document.getElementById('answered-count').textContent = `${answeredCount} of ${total} answered`;
+
+  const nextBtn = document.getElementById('next-btn');
+  if (current === total - 1) {
+    nextBtn.textContent = 'Finish Quiz →';
+    nextBtn.onclick = finishQuiz;
+  } else {
+    nextBtn.textContent = 'Next →';
+    nextBtn.onclick = nextQ;
+  }
+}
+
+function selectAnswer(i) {
+  if (quizState.answers[quizState.current] !== undefined) return;
+  quizState.answers[quizState.current] = i;
+  quizState.answered++;
+  renderQuestion();
+}
+
+function nextQ() {
+  if (quizState.current < quizState.questions.length - 1) {
+    quizState.current++;
+    renderQuestion();
+  }
+}
+
+function prevQ() {
+  if (quizState.current > 0) {
+    quizState.current--;
+    renderQuestion();
+  }
+}
+
+function finishQuiz() {
+  const { questions, answers, moduleId } = quizState;
+  let correct = 0;
+  questions.forEach((q, i) => { if (answers[i] === q.ans) correct++; });
+  const total = questions.length;
+  const pct = Math.round(correct / total * 100);
+
+  // Save progress
+  if (!progress[moduleId]) progress[moduleId] = { best: 0, attempts: 0 };
+  progress[moduleId].attempts++;
+  if (correct > progress[moduleId].best) progress[moduleId].best = correct;
+  saveProgress();
+  renderHome();
+
+  // Grade
+  let grade, gradeColor;
+  if (pct >= 90) { grade = 'Excellent! A+'; gradeColor = 'var(--accent3)'; }
+  else if (pct >= 80) { grade = 'Great Job! B+'; gradeColor = 'var(--accent2)'; }
+  else if (pct >= 70) { grade = 'Good Pass! C+'; gradeColor = 'var(--accent)'; }
+  else if (pct >= 60) { grade = 'Near Pass'; gradeColor = 'var(--gold)'; }
+  else { grade = 'Keep Studying'; gradeColor = 'var(--accent5)'; }
+
+  const m = MODULES[moduleId];
+  const reviewItems = questions.map((q, i) => {
+    const isCorrect = answers[i] === q.ans;
+    const userAns = answers[i] !== undefined ? q.opts[answers[i]] : 'Not answered';
+    return `<div class="review-item ${isCorrect ? 'rv-correct' : 'rv-wrong'}">
+      <div class="review-q">Q${i+1}: ${q.q}</div>
+      <div class="review-ans">
+        ${!isCorrect ? `<span class="rv-wrong-ans">✗ Your answer: ${userAns}</span>` : ''}
+        <span class="rv-correct-ans">✓ Correct: ${q.opts[q.ans]}</span>
+        <span style="font-size:0.78rem;color:var(--muted);margin-top:0.2rem">${q.exp}</span>
+      </div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('results-content').innerHTML = `
+    <div class="score-hero">
+      <div class="score-circle" style="border-color:${gradeColor}">
+        <div class="score-number" style="color:${gradeColor}">${correct}</div>
+        <div class="score-label" style="color:${gradeColor}">/ ${total}</div>
+      </div>
+      <div class="score-grade">${grade}</div>
+      <div class="score-sub">${m.title}</div>
+    </div>
+    <div class="result-stats">
+      <div class="result-stat">
+        <div class="big" style="color:var(--accent3)">${correct}</div>
+        <div class="sm">Correct</div>
+      </div>
+      <div class="result-stat">
+        <div class="big" style="color:var(--accent5)">${total - correct}</div>
+        <div class="sm">Wrong</div>
+      </div>
+      <div class="result-stat">
+        <div class="big" style="color:${gradeColor}">${pct}%</div>
+        <div class="sm">Score</div>
+      </div>
+    </div>
+    <div class="result-actions">
+      <button class="quiz-btn primary" onclick="startQuiz(${moduleId})">Retry Quiz</button>
+      <button class="quiz-btn" onclick="goStudy(${moduleId})">Review Study Notes</button>
+      <button class="quiz-btn" onclick="showSection('home')">All Modules</button>
+    </div>
+    <div class="answers-review">
+      <h3>Question Review</h3>
+      ${reviewItems}
+    </div>`;
+
+  showSection('results');
+}
+
+/* ═══════════════════════════════════════════════════════ */
+/* INIT */
+renderHome();
+showSection('home');
+</script>
+</body>
+</html>
