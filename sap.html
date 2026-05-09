@@ -1,0 +1,1465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAP ERP — Integrated Business Processes Quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --surface: #111827;
+    --surface2: #1a2235;
+    --border: #1e2d4a;
+    --accent: #00c9a7;
+    --accent2: #7c6bff;
+    --gold: #f5c842;
+    --red: #ff4d6d;
+    --text: #e8edf5;
+    --muted: #6b7fa3;
+    --correct: #00c9a7;
+    --wrong: #ff4d6d;
+    --card-r: 18px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background ambient effect */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -30%;
+    left: -10%;
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(circle, rgba(0,201,167,.07) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -20%;
+    right: -10%;
+    width: 55vw;
+    height: 55vw;
+    background: radial-gradient(circle, rgba(124,107,255,.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  #app { position: relative; z-index: 1; }
+
+  /* ============ SCREEN SYSTEM ============ */
+  .screen { display: none; }
+  .screen.active { display: flex; }
+
+  /* ============ START SCREEN ============ */
+  #start-screen {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .logo-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: .4rem 1.1rem;
+    font-size: .78rem;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2rem;
+  }
+  .logo-badge::before { content: '●'; font-size: .6rem; }
+
+  .start-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 6vw, 4.2rem);
+    font-weight: 900;
+    line-height: 1.08;
+    background: linear-gradient(135deg, #e8edf5 30%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+  }
+
+  .start-sub {
+    color: var(--muted);
+    font-size: 1.05rem;
+    font-weight: 300;
+    max-width: 520px;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+  }
+
+  .stats-row {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .stat-pill {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: .5rem 1.2rem;
+    font-size: .9rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+  .stat-pill span { color: var(--accent); font-family: 'DM Mono', monospace; font-weight: 600; }
+
+  .topic-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+    max-width: 780px;
+    width: 100%;
+    margin-bottom: 3rem;
+  }
+  .topic-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--card-r);
+    padding: 1rem 1.2rem;
+    text-align: left;
+    transition: border-color .2s, transform .2s;
+  }
+  .topic-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .topic-card .num {
+    font-family: 'DM Mono', monospace;
+    font-size: .7rem;
+    color: var(--accent);
+    letter-spacing: .1em;
+    margin-bottom: .4rem;
+    font-weight: 500;
+  }
+  .topic-card h3 { font-size: .9rem; font-weight: 600; color: var(--text); line-height: 1.3; }
+
+  .btn-start {
+    background: linear-gradient(135deg, var(--accent), #00a88c);
+    color: #001a14;
+    border: none;
+    border-radius: 999px;
+    padding: 1rem 3rem;
+    font-size: 1.05rem;
+    font-weight: 700;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: transform .2s, box-shadow .2s;
+    letter-spacing: .02em;
+    box-shadow: 0 0 40px rgba(0,201,167,.3);
+  }
+  .btn-start:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 0 60px rgba(0,201,167,.45); }
+
+  /* ============ QUIZ SCREEN ============ */
+  #quiz-screen {
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 1.5rem;
+  }
+
+  .quiz-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 800px;
+    margin: 0 auto 2rem;
+    width: 100%;
+    gap: 1rem;
+  }
+
+  .progress-wrap { flex: 1; }
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: .78rem;
+    color: var(--muted);
+    margin-bottom: .4rem;
+    font-weight: 500;
+  }
+  .progress-bar {
+    background: var(--surface2);
+    border-radius: 999px;
+    height: 6px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 999px;
+    transition: width .5s cubic-bezier(.4,0,.2,1);
+  }
+
+  .score-badge {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: .4rem 1rem;
+    font-family: 'DM Mono', monospace;
+    font-size: .85rem;
+    font-weight: 500;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  .timer-ring {
+    position: relative;
+    width: 52px;
+    height: 52px;
+    flex-shrink: 0;
+  }
+  .timer-ring svg { transform: rotate(-90deg); }
+  .timer-ring circle { fill: none; }
+  .timer-ring .bg { stroke: var(--surface2); stroke-width: 4; }
+  .timer-ring .fill { stroke: var(--accent); stroke-width: 4; stroke-linecap: round; transition: stroke-dashoffset .9s linear, stroke .3s; }
+  .timer-ring .label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Mono', monospace;
+    font-size: .75rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .question-wrap {
+    max-width: 800px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .topic-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: .3rem .9rem;
+    font-size: .72rem;
+    font-weight: 600;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 1.2rem;
+  }
+
+  .question-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.2rem, 3vw, 1.6rem);
+    font-weight: 700;
+    line-height: 1.45;
+    color: var(--text);
+    margin-bottom: 2rem;
+  }
+
+  .options-list {
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .option-btn {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--card-r);
+    padding: 1.1rem 1.5rem;
+    text-align: left;
+    color: var(--text);
+    font-size: .95rem;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    cursor: pointer;
+    transition: border-color .18s, background .18s, transform .15s;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .option-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: transparent;
+    transition: background .18s;
+  }
+  .option-btn:hover:not(:disabled) { border-color: var(--accent2); background: var(--surface2); transform: translateX(4px); }
+  .option-btn .opt-key {
+    font-family: 'DM Mono', monospace;
+    font-size: .75rem;
+    font-weight: 600;
+    color: var(--muted);
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: .2rem .5rem;
+    min-width: 28px;
+    text-align: center;
+    flex-shrink: 0;
+    transition: background .18s, color .18s;
+  }
+  .option-btn.correct {
+    border-color: var(--correct);
+    background: rgba(0,201,167,.1);
+    animation: pulseGreen .4s ease;
+  }
+  .option-btn.correct .opt-key { background: var(--correct); color: #001a14; border-color: var(--correct); }
+  .option-btn.wrong {
+    border-color: var(--wrong);
+    background: rgba(255,77,109,.08);
+    animation: shakeX .35s ease;
+  }
+  .option-btn.wrong .opt-key { background: var(--wrong); color: white; border-color: var(--wrong); }
+  .option-btn:disabled { cursor: default; }
+
+  @keyframes pulseGreen {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.015); }
+    100% { transform: scale(1); }
+  }
+  @keyframes shakeX {
+    0%,100% { transform: translateX(0); }
+    20% { transform: translateX(-6px); }
+    40% { transform: translateX(6px); }
+    60% { transform: translateX(-4px); }
+    80% { transform: translateX(4px); }
+  }
+
+  .feedback-box {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--card-r);
+    padding: 1.2rem 1.5rem;
+    font-size: .9rem;
+    line-height: 1.65;
+    color: var(--muted);
+    animation: fadeSlideUp .35s ease;
+    display: none;
+    margin-bottom: 1rem;
+  }
+  .feedback-box.visible { display: block; }
+  .feedback-box strong { color: var(--text); }
+  .feedback-correct { border-left: 3px solid var(--correct); }
+  .feedback-wrong { border-left: 3px solid var(--wrong); }
+
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .btn-next {
+    background: var(--surface2);
+    border: 1.5px solid var(--accent);
+    border-radius: 999px;
+    padding: .8rem 2.5rem;
+    color: var(--accent);
+    font-size: .95rem;
+    font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: background .2s, color .2s, transform .15s;
+    display: none;
+  }
+  .btn-next.visible { display: inline-flex; align-items: center; gap: .5rem; }
+  .btn-next:hover { background: var(--accent); color: #001a14; transform: translateY(-1px); }
+
+  /* ============ RESULTS SCREEN ============ */
+  #results-screen {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .result-icon {
+    font-size: 4rem;
+    margin-bottom: 1.2rem;
+    animation: popIn .5s cubic-bezier(.34,1.56,.64,1);
+  }
+  @keyframes popIn {
+    from { transform: scale(0); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+  }
+
+  .result-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    font-weight: 900;
+    margin-bottom: .5rem;
+    background: linear-gradient(135deg, var(--text), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .result-score-big {
+    font-family: 'DM Mono', monospace;
+    font-size: clamp(3rem, 10vw, 6rem);
+    font-weight: 500;
+    color: var(--accent);
+    line-height: 1;
+    margin: 1rem 0;
+  }
+
+  .result-sub { color: var(--muted); font-size: 1rem; margin-bottom: 2.5rem; }
+
+  .topic-breakdown {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: .75rem;
+    max-width: 780px;
+    width: 100%;
+    margin-bottom: 2.5rem;
+    text-align: left;
+  }
+  .breakdown-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--card-r);
+    padding: .9rem 1.1rem;
+  }
+  .breakdown-card .bc-topic {
+    font-size: .75rem;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: .4rem;
+  }
+  .breakdown-card .bc-score {
+    font-family: 'DM Mono', monospace;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text);
+  }
+  .breakdown-card .bc-bar {
+    margin-top: .5rem;
+    height: 4px;
+    background: var(--surface2);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .breakdown-card .bc-bar-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+  }
+
+  .result-actions { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+  .btn-retry {
+    background: linear-gradient(135deg, var(--accent), #00a88c);
+    color: #001a14;
+    border: none;
+    border-radius: 999px;
+    padding: .85rem 2.5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: transform .2s, box-shadow .2s;
+    box-shadow: 0 0 30px rgba(0,201,167,.25);
+  }
+  .btn-retry:hover { transform: translateY(-2px); box-shadow: 0 0 50px rgba(0,201,167,.4); }
+
+  .btn-review {
+    background: var(--surface2);
+    color: var(--text);
+    border: 1.5px solid var(--border);
+    border-radius: 999px;
+    padding: .85rem 2.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: border-color .2s;
+  }
+  .btn-review:hover { border-color: var(--accent2); }
+
+  /* ============ REVIEW SCREEN ============ */
+  #review-screen {
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 2rem;
+  }
+  .review-header {
+    max-width: 800px;
+    margin: 0 auto 2rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .review-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    flex: 1;
+  }
+  .review-list {
+    max-width: 800px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+  .review-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--card-r);
+    padding: 1.4rem;
+  }
+  .review-item.was-correct { border-left: 3px solid var(--correct); }
+  .review-item.was-wrong   { border-left: 3px solid var(--wrong); }
+  .review-q {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: .8rem;
+    line-height: 1.45;
+  }
+  .review-meta { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: .6rem; }
+  .review-tag {
+    font-size: .72rem;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    padding: .2rem .7rem;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+  .review-answer { font-size: .88rem; color: var(--muted); line-height: 1.6; }
+  .review-answer .correct-ans { color: var(--correct); font-weight: 600; }
+  .review-answer .your-ans-wrong { color: var(--wrong); font-weight: 600; }
+
+  /* Question entrance animation */
+  .question-wrap { animation: fadeSlideUp .35s ease; }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- ===== START SCREEN ===== -->
+  <section id="start-screen" class="screen active">
+    <div class="logo-badge">CT104-3-2 · IBPSES</div>
+    <h1 class="start-title">SAP ERP<br>Knowledge Quiz</h1>
+    <p class="start-sub">Test your understanding of Integrated Business Processes with SAP — covering all eight lecture modules from the Global Bike case study.</p>
+
+    <div class="stats-row">
+      <div class="stat-pill"><span>48</span> Questions</div>
+      <div class="stat-pill"><span>8</span> Topics</div>
+      <div class="stat-pill"><span>20s</span> Per Question</div>
+    </div>
+
+    <div class="topic-grid">
+      <div class="topic-card"><div class="num">01</div><h3>Enterprise Systems &amp; SAP</h3></div>
+      <div class="topic-card"><div class="num">02</div><h3>GBI Case Study</h3></div>
+      <div class="topic-card"><div class="num">03</div><h3>Material Management</h3></div>
+      <div class="topic-card"><div class="num">04</div><h3>Warehouse Management</h3></div>
+      <div class="topic-card"><div class="num">05</div><h3>Sales &amp; Distribution</h3></div>
+      <div class="topic-card"><div class="num">06</div><h3>Production Planning</h3></div>
+      <div class="topic-card"><div class="num">07</div><h3>Financial Accounting</h3></div>
+      <div class="topic-card"><div class="num">08</div><h3>Data &amp; Integration</h3></div>
+    </div>
+
+    <button class="btn-start" onclick="startQuiz()">Begin Quiz →</button>
+  </section>
+
+  <!-- ===== QUIZ SCREEN ===== -->
+  <section id="quiz-screen" class="screen">
+    <div class="quiz-header">
+      <div class="progress-wrap">
+        <div class="progress-label">
+          <span id="q-counter">Question 1 of 48</span>
+          <span id="topic-label">Topic</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+      </div>
+      <div class="score-badge" id="live-score">Score: 0</div>
+      <div class="timer-ring">
+        <svg viewBox="0 0 52 52" width="52" height="52">
+          <circle class="bg" cx="26" cy="26" r="22"/>
+          <circle class="fill" id="timer-circle" cx="26" cy="26" r="22"
+            stroke-dasharray="138.2" stroke-dashoffset="0"/>
+        </svg>
+        <div class="label" id="timer-label">20</div>
+      </div>
+    </div>
+
+    <div class="question-wrap" id="question-wrap">
+      <div class="topic-chip" id="q-topic-chip">Topic</div>
+      <div class="question-text" id="q-text"></div>
+      <div class="options-list" id="options-list"></div>
+      <div class="feedback-box" id="feedback-box"></div>
+      <button class="btn-next" id="btn-next" onclick="nextQuestion()">Next Question →</button>
+    </div>
+  </section>
+
+  <!-- ===== RESULTS SCREEN ===== -->
+  <section id="results-screen" class="screen">
+    <div class="result-icon" id="result-icon">🎓</div>
+    <h2 class="result-title" id="result-title">Quiz Complete!</h2>
+    <div class="result-score-big" id="result-score-big"></div>
+    <p class="result-sub" id="result-sub"></p>
+    <div class="topic-breakdown" id="topic-breakdown"></div>
+    <div class="result-actions">
+      <button class="btn-retry" onclick="startQuiz()">Retry Quiz</button>
+      <button class="btn-review" onclick="showReview()">Review Answers</button>
+    </div>
+  </section>
+
+  <!-- ===== REVIEW SCREEN ===== -->
+  <section id="review-screen" class="screen">
+    <div class="review-header">
+      <h2>Answer Review</h2>
+      <button class="btn-review" onclick="showResults()">← Back to Results</button>
+    </div>
+    <div class="review-list" id="review-list"></div>
+  </section>
+
+</div>
+
+<script>
+// ======================================================
+// QUESTION BANK — 48 questions across 8 topics
+// ======================================================
+const QUESTIONS = [
+  // ——— TOPIC 1: Enterprise Systems & SAP ———
+  {
+    topic: "Enterprise Systems & SAP",
+    q: "What does the acronym SAP stand for?",
+    opts: [
+      "Systems, Applications, and Products in Data Processing",
+      "Software, Analytics, and Performance in Data Processing",
+      "Standard Accounting Procedures",
+      "Strategic Applications Platform"
+    ],
+    ans: 0,
+    exp: "SAP stands for <strong>Systeme, Anwendungen und Produkte in der Datenverarbeitung</strong> — in English, Systems, Applications, and Products in Data Processing. It was founded in Walldorf, Germany in 1972."
+  },
+  {
+    topic: "Enterprise Systems & SAP",
+    q: "What type of organizational structure can lead to poor communication and coordination across departments?",
+    opts: ["Cross-functional structure", "Flat structure", "Functional structure", "Matrix structure"],
+    ans: 2,
+    exp: "The <strong>Functional Organizational Structure</strong> groups employees by specialty (Sales, Accounting, Purchasing, etc.). While common, it leads to poor coordination across units, causing delays, competing interests, and wasted time."
+  },
+  {
+    topic: "Enterprise Systems & SAP",
+    q: "Which of the following is NOT a benefit of an ERP system?",
+    opts: [
+      "Integrated operations and information flows",
+      "Better decision-making through shared data",
+      "Creates isolated data silos per department",
+      "Reduced IT maintenance with a single system"
+    ],
+    ans: 2,
+    exp: "ERP systems are designed to <strong>eliminate data silos</strong>, not create them. Benefits include integrated operations, better decisions via shared data, and lower IT maintenance costs."
+  },
+  {
+    topic: "Enterprise Systems & SAP",
+    q: "Which SAP module is responsible for recording sales orders and managing customer information?",
+    opts: ["MM (Materials Management)", "SD (Sales and Distribution)", "WM (Warehouse Management)", "PP (Production Planning)"],
+    ans: 1,
+    exp: "<strong>SD — Sales and Distribution</strong> records sales orders, manages deliveries, and maintains customer information. MM handles procurement, WM handles storage, and PP handles production."
+  },
+  {
+    topic: "Enterprise Systems & SAP",
+    q: "In SAP, what programming language was developed specifically for building SAP applications?",
+    opts: ["Java", "Python", "ABAP", "COBOL"],
+    ans: 2,
+    exp: "<strong>ABAP (Advanced Business Application Programming)</strong> is a high-level programming language created by SAP for developing SAP applications. It runs within the SAP environment."
+  },
+  {
+    topic: "Enterprise Systems & SAP",
+    q: "Which of the following correctly describes the three types of data in an enterprise system?",
+    opts: [
+      "Input data, Process data, Output data",
+      "Organizational data, Master data, Transactional data",
+      "Static data, Dynamic data, Archived data",
+      "Financial data, Logistics data, HR data"
+    ],
+    ans: 1,
+    exp: "Data in an SAP enterprise system falls into three categories: <strong>Organizational data</strong> (company structure), <strong>Master data</strong> (entities like customers/vendors), and <strong>Transactional data</strong> (dates, payments, quantities from process execution)."
+  },
+
+  // ——— TOPIC 2: GBI Case Study ———
+  {
+    topic: "GBI Case Study",
+    q: "Who founded the company that eventually became Global Bike Inc.?",
+    opts: [
+      "Peter Schwarz (Heidelberg Composites) alone",
+      "John Davis (Frankenstein Bikes) alone",
+      "John Davis and Peter Schwarz merged their companies",
+      "A group of European investors in 2001"
+    ],
+    ans: 2,
+    exp: "In 2001, <strong>John Davis's Frankenstein Bikes</strong> (founded 1990, US) and <strong>Peter Schwarz's Heidelberg Composites</strong> (founded 1993, Germany) merged to form Global Bike Inc."
+  },
+  {
+    topic: "GBI Case Study",
+    q: "In Global Bike Inc., Co-CEO John Davis is responsible for which area?",
+    opts: [
+      "Research, Design, Procurement, and Manufacturing",
+      "Sales, Marketing, IT, Finance, and Human Resources",
+      "Logistics, Warehouse, and Production",
+      "Quality Assurance and Product Development"
+    ],
+    ans: 1,
+    exp: "John Davis oversees the revenue side: <strong>Sales, Marketing, Service & Support, IT, Finance, and HR</strong>. Peter Schwarz oversees the cost/build side: Research, Design, Procurement, and Manufacturing."
+  },
+  {
+    topic: "GBI Case Study",
+    q: "Global Bike Group consists of companies in which two countries?",
+    opts: ["US and UK", "US and Germany", "Germany and Australia", "US and Canada"],
+    ans: 1,
+    exp: "Global Bike Group consists of <strong>Global Bike Inc. (US)</strong> with locations in Dallas, Miami, and San Diego, and <strong>Global Bike Germany GmbH (DE)</strong> with locations in Heidelberg and Hamburg."
+  },
+  {
+    topic: "GBI Case Study",
+    q: "Which of the following best describes the 'Order-to-Cash' process integration?",
+    opts: [
+      "MM and FI only",
+      "SD, MM, and FI",
+      "PP and MM only",
+      "HR and FI"
+    ],
+    ans: 1,
+    exp: "The <strong>Order-to-Cash process</strong> integrates Sales & Distribution (SD), Materials Management (MM), and Financial Accounting (FI) — from receiving a customer order through delivery to receiving payment."
+  },
+  {
+    topic: "GBI Case Study",
+    q: "What types of finished goods does Global Bike produce?",
+    opts: [
+      "Mountain bikes and electric bikes",
+      "Touring Bikes (Deluxe, Professional) and Off-Road Bikes (Men, Women)",
+      "Road bikes and BMX bikes only",
+      "Only Touring Bikes in various colors"
+    ],
+    ans: 1,
+    exp: "Global Bike produces <strong>Touring Bikes</strong> (Deluxe and Professional in three colors) and <strong>Off-Road Bikes</strong> (Men's and Women's variants) as their finished goods."
+  },
+  {
+    topic: "GBI Case Study",
+    q: "Which business process in GBI is responsible for buying raw materials from suppliers?",
+    opts: ["Sell (Fulfillment)", "Buy (Procurement)", "Make (Production)", "Track (Financial Accounting)"],
+    ans: 1,
+    exp: "The <strong>Buy — Procurement</strong> process handles purchasing raw materials from suppliers. This is handled through the Materials Management (MM) module in SAP."
+  },
+
+  // ——— TOPIC 3: Material Management ———
+  {
+    topic: "Material Management",
+    q: "In the Procure-to-Pay process, what document immediately follows a Purchase Requisition?",
+    opts: ["Goods Receipt", "Invoice Receipt", "Purchase Order", "Payment to Vendor"],
+    ans: 2,
+    exp: "After the Purchase Requisition, the next step is a <strong>Purchase Order</strong>. The full flow is: Purchase Requisition → Vendor Selection → Purchase Order → Vendor Notification → Vendor Shipment → Goods Receipt → Invoice Receipt → Payment."
+  },
+  {
+    topic: "Material Management",
+    q: "What is the movement type used in SAP for a standard goods receipt into the warehouse?",
+    opts: ["231", "561", "101", "122"],
+    ans: 2,
+    exp: "Movement type <strong>101</strong> is used for a standard goods receipt into the warehouse. 122 is a return delivery to vendor, 231 is consumption for a sales order, and 561 is initial stock entry."
+  },
+  {
+    topic: "Material Management",
+    q: "Which master record in MM contains the relationship between a vendor and a material?",
+    opts: ["Vendor Master", "Material Master", "Purchasing Information Record", "Condition Master"],
+    ans: 2,
+    exp: "The <strong>Purchasing Information Record</strong> links a vendor and a material. It contains pricing conditions, the last purchase order, tolerance limits, lead times, and serves as default data for new purchase orders."
+  },
+  {
+    topic: "Material Management",
+    q: "What happens in SAP when a Goods Receipt is posted against a Purchase Order?",
+    opts: [
+      "Only the inventory quantity is updated",
+      "A material document, accounting document, and stock updates are created",
+      "Only the purchase order is marked complete",
+      "An automatic payment is triggered to the vendor"
+    ],
+    ans: 1,
+    exp: "When a Goods Receipt is posted, SAP creates a <strong>Material Document</strong>, an <strong>Accounting Document</strong>, updates stock quantities and values, and updates the Purchase Order history."
+  },
+  {
+    topic: "Material Management",
+    q: "An RFQ in SAP stands for:",
+    opts: [
+      "Request for Quantity",
+      "Record of Financial Query",
+      "Request for Quotation",
+      "Requisition for Quality"
+    ],
+    ans: 2,
+    exp: "An <strong>RFQ (Request for Quotation)</strong> is an invitation from a Purchasing Organization to vendors to submit a bid for supplying materials or services. Accepted quotations generate Purchasing Information Records."
+  },
+  {
+    topic: "Material Management",
+    q: "What is the correct accounting entry when a Goods Receipt is posted (assuming $100 value)?",
+    opts: [
+      "Dr Vendor A/P $100 / Cr GR/IR $100",
+      "Dr Inventory $100 / Cr GR/IR $100",
+      "Dr Bank $100 / Cr Inventory $100",
+      "Dr GR/IR $100 / Cr Bank $100"
+    ],
+    ans: 1,
+    exp: "At Goods Receipt: <strong>Dr Inventory $100 / Cr GR/IR $100</strong>. At Invoice Receipt: Dr GR/IR $100 / Cr Vendor A/P $100. At Payment: Dr Vendor A/P $100 / Cr Bank $100."
+  },
+  {
+    topic: "Material Management",
+    q: "The Vendor Master in SAP has business partner roles. Which role represents an FI Vendor?",
+    opts: ["FLVN01", "FLVN00", "FKUN00", "FLVN10"],
+    ans: 1,
+    exp: "In SAP S/4HANA, the supplier master record uses business partner roles. <strong>FLVN00</strong> represents the FI Vendor role, while FLVN01 represents the Vendor (purchasing) role."
+  },
+
+  // ——— TOPIC 4: Warehouse Management ———
+  {
+    topic: "Warehouse Management",
+    q: "What is the smallest addressable unit in a warehouse in SAP WM?",
+    opts: ["Storage Type", "Storage Section", "Storage Bin", "Quant"],
+    ans: 2,
+    exp: "The <strong>Storage Bin</strong> is the smallest addressable unit in a warehouse — it identifies the exact physical location where goods are stored (like a shelf address). A Quant is the smallest unit of measure for material within a bin."
+  },
+  {
+    topic: "Warehouse Management",
+    q: "Which of the following is a central document in Warehouse Management that is required for every material movement?",
+    opts: ["Transfer Requirement", "Posting Change Notice", "Transfer Order", "Stock Transport Order"],
+    ans: 2,
+    exp: "The <strong>Transfer Order (TO)</strong> is the central document in WM. Every material movement in the warehouse requires a transfer order. It can be created manually or automatically from a transfer request, delivery, or posting change notice."
+  },
+  {
+    topic: "Warehouse Management",
+    q: "What is a Stock Transport Order (STO) used for?",
+    opts: [
+      "Ordering from an external vendor",
+      "Moving material from one plant to another within the same company",
+      "Transferring stock between storage bins in the same warehouse",
+      "Recording quality inspection results"
+    ],
+    ans: 1,
+    exp: "A <strong>Stock Transport Order (STO)</strong> is a purchase order used to move material between plants within the same corporate enterprise (e.g., from Dallas to San Diego plant). It also allows delivery costs to be charged to the transferred material."
+  },
+  {
+    topic: "Warehouse Management",
+    q: "In WM, what is a 'Quant'?",
+    opts: [
+      "A type of storage bin",
+      "The smallest addressable unit of measure for a material in a storage bin",
+      "A picking strategy",
+      "A warehouse door location"
+    ],
+    ans: 1,
+    exp: "A <strong>Quant</strong> is the smallest addressable unit of measure for a material in SAP S/4HANA within a storage bin. It tracks total stock, available stock, batch, and blocking indicators for that specific material in a specific bin."
+  },
+  {
+    topic: "Warehouse Management",
+    q: "What is the purpose of a 'Transfer Requirement' in Warehouse Management?",
+    opts: [
+      "An order to pay a vendor",
+      "A request to move materials from a source bin to a destination bin at a specific time",
+      "A request to inspect goods for quality",
+      "An instruction to ship goods to a customer"
+    ],
+    ans: 1,
+    exp: "A <strong>Transfer Requirement (TR)</strong> is a request to transfer materials from a source storage bin to a destination storage bin at a particular time. It represents expected goods movements and is normally generated by inventory management postings."
+  },
+  {
+    topic: "Warehouse Management",
+    q: "Which WM inventory method counts stock continuously, checking individual bins throughout the year?",
+    opts: ["Periodic inventory", "Zero stock check", "Cycle-Counting", "Sample-based physical inventory"],
+    ans: 2,
+    exp: "<strong>Cycle-Counting</strong> is an ongoing inventory method where different storage bins are counted at different intervals throughout the year, ensuring continuous and accurate stock records without counting the entire warehouse at once."
+  },
+
+  // ——— TOPIC 5: Sales & Distribution ———
+  {
+    topic: "Sales & Distribution",
+    q: "What is a 'Sales Area' in SAP SD?",
+    opts: [
+      "A physical location where products are sold",
+      "The combination of Sales Organization, Distribution Channel, and Division",
+      "The area covered by a particular sales representative",
+      "A credit control region"
+    ],
+    ans: 1,
+    exp: "A <strong>Sales Area</strong> is the combination of <strong>Sales Organization + Distribution Channel + Division</strong>. It determines conditions like pricing for sales activities and is required for creating customer masters."
+  },
+  {
+    topic: "Sales & Distribution",
+    q: "What does 'Availability to Promise (ATP)' determine during the sales order process?",
+    opts: [
+      "The customer's credit limit",
+      "The shipping route from warehouse to customer",
+      "The date when the material will be available for delivery",
+      "The tax applicable to the order"
+    ],
+    ans: 2,
+    exp: "The <strong>ATP (Availability to Promise)</strong> check determines the <strong>material availability date</strong> — when the goods can actually be committed to the customer — considering all existing inward and outward inventory movements."
+  },
+  {
+    topic: "Sales & Distribution",
+    q: "In the Order-to-Cash process, which event reduces inventory and enters Cost of Goods Sold?",
+    opts: ["Sales Order creation", "Delivery document creation", "Post Goods Issue", "Invoice creation"],
+    ans: 2,
+    exp: "<strong>Post Goods Issue (PGI)</strong> signals that goods have left the seller's premises. It reduces inventory, enters Cost of Goods Sold, automatically updates General Ledger accounts, and ends the shipping process. It can also signal a legal change in ownership."
+  },
+  {
+    topic: "Sales & Distribution",
+    q: "What is the difference between backward scheduling and forward scheduling in SD?",
+    opts: [
+      "Backward scheduling plans from the order date forward; forward scheduling plans from the delivery date backward",
+      "Backward scheduling calculates from the requested delivery date back to find the material availability date; forward scheduling calculates from material availability forward to find the new delivery date",
+      "They are the same process with different names",
+      "Backward scheduling is used for international orders; forward scheduling for domestic"
+    ],
+    ans: 1,
+    exp: "<strong>Backward scheduling</strong> starts at the requested delivery date and works backward to determine when materials must be available. <strong>Forward scheduling</strong> starts from the material availability date and calculates forward to determine the earliest possible delivery date when backward scheduling is not feasible."
+  },
+  {
+    topic: "Sales & Distribution",
+    q: "Which pre-sales document presents a customer with a legally binding offer to supply products at a predefined price within a specified timeframe?",
+    opts: ["Inquiry", "Quotation", "Sales Order", "Contract"],
+    ans: 1,
+    exp: "A <strong>Quotation</strong> is a legally binding offer from the seller to deliver specific products at predefined prices within a specified timeframe. An Inquiry is a non-binding request for information from the customer."
+  },
+  {
+    topic: "Sales & Distribution",
+    q: "In SAP SD, the Billing document automatically creates which accounting entries?",
+    opts: [
+      "Debit to inventory, Credit to cost of goods sold",
+      "Debit to customer sub-ledger (A/R), Credit to revenue account",
+      "Debit to vendor A/P, Credit to bank",
+      "Debit to GR/IR, Credit to inventory"
+    ],
+    ans: 1,
+    exp: "The <strong>Billing document</strong> automatically creates a <strong>debit posting to the customer's A/R sub-ledger</strong> and a <strong>credit to the revenue account</strong>. This transfers the process to Financial Accounting to await customer payment."
+  },
+
+  // ——— TOPIC 6: Production Planning ———
+  {
+    topic: "Production Planning",
+    q: "In Production Planning, what is a Bill of Materials (BOM) analogous to in a cooking recipe?",
+    opts: [
+      "The cooking steps (routing)",
+      "The list of ingredients",
+      "The kitchen equipment",
+      "The serving instructions"
+    ],
+    ans: 1,
+    exp: "A <strong>BOM (Bill of Materials)</strong> lists all components needed to produce a product — like a <strong>list of ingredients</strong> in a recipe. The <strong>Routing</strong> describes the sequential steps (operations) needed to produce the product, like the cooking steps."
+  },
+  {
+    topic: "Production Planning",
+    q: "What is MRP used to calculate in Production Planning?",
+    opts: [
+      "Sales forecasts and market trends",
+      "Net requirements for materials while considering stock and scheduled receipts",
+      "Employee payroll and resource costs",
+      "Customer delivery routes"
+    ],
+    ans: 1,
+    exp: "<strong>MRP (Material Requirement Planning)</strong> calculates net material requirements while considering available warehouse stock and scheduled receipts from purchasing and production. Its output is a detailed production and/or purchasing plan."
+  },
+  {
+    topic: "Production Planning",
+    q: "Which production strategy is used when production is driven by actual sales orders rather than forecasts?",
+    opts: ["Make-to-Stock (MTS) — Strategy 10", "Make-to-Order (MTO) — Strategy 20", "Net Requirements Planning", "Gross Requirements Planning"],
+    ans: 1,
+    exp: "<strong>Make-to-Order (MTO)</strong> production — Strategy 20 — means production is triggered by actual customer orders. Sales are covered by producing specifically for each order rather than from pre-built stock."
+  },
+  {
+    topic: "Production Planning",
+    q: "What is 'Dependent Demand' in the context of MRP?",
+    opts: [
+      "Demand for finished products like bicycles",
+      "Demand derived from forecasting and historical data",
+      "Demand for component parts or subassemblies driven by demand for the finished product",
+      "Demand created by marketing campaigns"
+    ],
+    ans: 2,
+    exp: "<strong>Dependent Demand</strong> is demand for component parts or subassemblies that is derived from (dependent on) the demand for the finished product. For example, demand for wheels is dependent on demand for bicycles. Independent demand is demand for the finished product itself."
+  },
+  {
+    topic: "Production Planning",
+    q: "What does SOP stand for in Production Planning?",
+    opts: [
+      "Standard Operating Procedure",
+      "Sales and Operations Planning",
+      "Stock Order Processing",
+      "Scheduling and Output Planning"
+    ],
+    ans: 1,
+    exp: "<strong>SOP — Sales and Operations Planning</strong> is a flexible forecasting and planning tool that typically consists of three layers: Sales Plan, Production Plan, and Rough Cut Capacity Plan, planned at an aggregate level in time buckets."
+  },
+  {
+    topic: "Production Planning",
+    q: "When a production order is settled, what happens to the actual costs incurred?",
+    opts: [
+      "They are written off as losses",
+      "They are settled to one or more receiver cost objects such as a material or cost center",
+      "They are automatically charged to the customer",
+      "They remain in the production order indefinitely"
+    ],
+    ans: 1,
+    exp: "<strong>Order Settlement</strong> consists of settling the actual costs incurred in a production order to receiver cost objects such as a material, cost center, internal order, sales order, or project. Distribution rules define the cost receiver, settlement share, and type."
+  },
+
+  // ——— TOPIC 7: Financial Accounting ———
+  {
+    topic: "Financial Accounting",
+    q: "What is the primary goal of Financial Accounting (FI) in SAP?",
+    opts: [
+      "To manage employee payroll",
+      "To collect transactional data for preparing standard financial reports for external parties",
+      "To plan production quantities",
+      "To manage warehouse operations"
+    ],
+    ans: 1,
+    exp: "<strong>Financial Accounting (FI)</strong> is designed to collect transactional data that provides the foundation for preparing standard financial reports — primarily for external parties such as banks, auditors, shareholders, and legal authorities."
+  },
+  {
+    topic: "Financial Accounting",
+    q: "What is a 'Chart of Accounts' in SAP FI?",
+    opts: [
+      "A list of all customers and vendors",
+      "A classification scheme of G/L accounts providing a framework for recording financial values",
+      "A report showing profit and loss",
+      "A list of payment terms"
+    ],
+    ans: 1,
+    exp: "A <strong>Chart of Accounts</strong> is a classification scheme consisting of General Ledger (G/L) accounts that provides a framework for recording values. The same Chart of Accounts can be used by multiple company codes."
+  },
+  {
+    topic: "Financial Accounting",
+    q: "The fundamental accounting equation used in the Balance Sheet is:",
+    opts: [
+      "Revenue – Expenses = Net Income",
+      "Assets = Liabilities + Equity",
+      "Cash Inflows – Cash Outflows = Net Cash",
+      "Inventory + Receivables = Total Assets"
+    ],
+    ans: 1,
+    exp: "The <strong>Balance Sheet equation</strong> is: <strong>Assets = Liabilities + Equity</strong>. Assets are what the company owns, Liabilities are what it owes, and Equity is the difference between the two."
+  },
+  {
+    topic: "Financial Accounting",
+    q: "What is the 'SAP Document Principle' in Financial Accounting?",
+    opts: [
+      "Every transaction creates a uniquely numbered electronic document that cannot be deleted",
+      "All documents must be printed and signed",
+      "Financial documents expire after 7 years",
+      "Each department has its own document numbering system"
+    ],
+    ans: 0,
+    exp: "The <strong>SAP Document Principle</strong> states that every business transaction writes a <strong>uniquely numbered electronic document</strong> to the database. Once created, a financial document cannot be deleted (only changed to some extent), providing a strong audit trail and internal control framework."
+  },
+  {
+    topic: "Financial Accounting",
+    q: "The Accounts Receivable Sub-Ledger (FI-AR) has significant integration with which module?",
+    opts: [
+      "Production Planning (PP)",
+      "Materials Management (MM)",
+      "Sales and Distribution (SD)",
+      "Warehouse Management (WM)"
+    ],
+    ans: 2,
+    exp: "The <strong>Accounts Receivable (FI-AR)</strong> sub-ledger has critical integration with <strong>Sales and Distribution (SD)</strong>. Billings in SD generate FI journal entries for sales activity, automatically posting to A/R accounts."
+  },
+  {
+    topic: "Financial Accounting",
+    q: "An Income Statement presents:",
+    opts: [
+      "A snapshot of assets, liabilities, and equity at a point in time",
+      "Revenues and expenses over a given period of time, resulting in Net Income",
+      "Changes in cash inflows and outflows over a period",
+      "A list of all open customer invoices"
+    ],
+    ans: 1,
+    exp: "The <strong>Income Statement</strong> presents revenues and expenses for a given period (monthly, quarterly, or yearly). Net Income = Revenues – Expenses. It differs from the Balance Sheet (point-in-time snapshot) and Cash Flow Statement (cash movements)."
+  },
+
+  // ——— TOPIC 8: Data & Integration ———
+  {
+    topic: "Data & Integration",
+    q: "Which type of data in SAP represents the structure of an enterprise, such as Client, Company Code, and Plant?",
+    opts: ["Master data", "Transactional data", "Organizational data", "Configuration data"],
+    ans: 2,
+    exp: "<strong>Organizational data</strong> represents the structure of an enterprise. Examples include Client (independent system environment), Company Code (legal accounting unit), Plant (operating facility), and Storage Location."
+  },
+  {
+    topic: "Data & Integration",
+    q: "In SAP, a 'Company Code' represents:",
+    opts: [
+      "The highest level in the SAP organizational structure",
+      "The smallest organizational unit for maintaining a legal set of books",
+      "A group of plants in the same geographic region",
+      "A sales territory"
+    ],
+    ans: 1,
+    exp: "A <strong>Company Code</strong> is the smallest organizational unit in SAP for which a complete, balanced set of books (as required by law) can be maintained. It represents an independent legal accounting unit — e.g., Global Bike Inc. (US00) and Global Bike Germany GmbH (DE00)."
+  },
+  {
+    topic: "Data & Integration",
+    q: "Which integration point connects MM (Materials Management) with FI (Financial Accounting) automatically?",
+    opts: [
+      "Sales order creation",
+      "Goods Receipt and Invoice Receipt postings",
+      "Production order release",
+      "Work center creation"
+    ],
+    ans: 1,
+    exp: "<strong>Goods Receipt and Invoice Receipt postings</strong> in MM create automatic FI documents via account assignment. The GR/IR (Goods Receipt/Invoice Receipt) reconciliation account is a key integration point, along with vendor A/P and inventory accounts."
+  },
+  {
+    topic: "Data & Integration",
+    q: "Master data in SAP represents:",
+    opts: [
+      "Time-stamped records of individual transactions",
+      "The legal and organizational structure of the company",
+      "Long-lived entities associated with business processes, such as customers, vendors, and materials",
+      "Configuration settings for SAP modules"
+    ],
+    ans: 2,
+    exp: "<strong>Master data</strong> represents long-lived business entities such as customers, vendors, and materials. Unlike transactional data (which reflects individual events), master data is relatively permanent and reused across many transactions."
+  },
+  {
+    topic: "Data & Integration",
+    q: "The 'Procure-to-Pay' process integrates which SAP modules?",
+    opts: [
+      "SD and FI",
+      "PP and MM",
+      "MM and FI",
+      "WM and SD"
+    ],
+    ans: 2,
+    exp: "The <strong>Procure-to-Pay process</strong> primarily integrates <strong>Materials Management (MM)</strong> and <strong>Financial Accounting (FI)</strong>. MM handles purchasing and goods receipt, while FI handles invoice verification, vendor payment, and G/L account updates."
+  },
+  {
+    topic: "Data & Integration",
+    q: "In SAP, what does the 'FICO' abbreviation stand for?",
+    opts: [
+      "Financial Integration and Cost Optimization",
+      "Financial Accounting (FI) and Controlling (CO)",
+      "Fixed Income and Cost Operations",
+      "Financial Inventory Control Operations"
+    ],
+    ans: 1,
+    exp: "<strong>FICO</strong> refers to the combined <strong>Financial Accounting (FI)</strong> and <strong>Controlling (CO)</strong> modules in SAP. FI handles external financial reporting while CO handles internal management accounting and cost controlling."
+  }
+];
+
+// ======================================================
+// QUIZ ENGINE
+// ======================================================
+let shuffled = [];
+let currentIndex = 0;
+let score = 0;
+let userAnswers = []; // {qIndex, chosen, correct}
+let timer = null;
+let timeLeft = 20;
+const TOTAL_TIME = 20;
+const circumference = 2 * Math.PI * 22; // r=22
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function startQuiz() {
+  shuffled = shuffle(QUESTIONS);
+  currentIndex = 0;
+  score = 0;
+  userAnswers = [];
+  showScreen('quiz-screen');
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = shuffled[currentIndex];
+  const total = shuffled.length;
+
+  // Header
+  document.getElementById('q-counter').textContent = `Question ${currentIndex + 1} of ${total}`;
+  document.getElementById('topic-label').textContent = q.topic;
+  document.getElementById('progress-fill').style.width = `${(currentIndex / total) * 100}%`;
+  document.getElementById('live-score').textContent = `Score: ${score}`;
+
+  // Question & Topic chip
+  document.getElementById('q-topic-chip').textContent = q.topic;
+  document.getElementById('q-text').textContent = q.q;
+
+  // Options
+  const ol = document.getElementById('options-list');
+  ol.innerHTML = '';
+  const keys = ['A', 'B', 'C', 'D'];
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.innerHTML = `<span class="opt-key">${keys[i]}</span><span>${opt}</span>`;
+    btn.onclick = () => selectAnswer(i);
+    ol.appendChild(btn);
+  });
+
+  // Feedback & next
+  const fb = document.getElementById('feedback-box');
+  fb.className = 'feedback-box';
+  fb.style.display = 'none';
+  const btnNext = document.getElementById('btn-next');
+  btnNext.className = 'btn-next';
+
+  // Timer
+  startTimer();
+}
+
+function startTimer() {
+  clearInterval(timer);
+  timeLeft = TOTAL_TIME;
+  updateTimer();
+  timer = setInterval(() => {
+    timeLeft--;
+    updateTimer();
+    if (timeLeft <= 0) {
+      clearInterval(timer);
+      // Auto-select: time's up, no answer
+      lockOptions(-1);
+      showFeedback(-1);
+      userAnswers.push({ qIndex: currentIndex, chosen: -1, correct: false });
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const circle = document.getElementById('timer-circle');
+  const label = document.getElementById('timer-label');
+  const pct = timeLeft / TOTAL_TIME;
+  const offset = circumference * (1 - pct);
+  circle.style.strokeDashoffset = offset;
+  label.textContent = timeLeft;
+
+  // Color shift
+  if (timeLeft <= 5) circle.style.stroke = 'var(--red)';
+  else if (timeLeft <= 10) circle.style.stroke = 'var(--gold)';
+  else circle.style.stroke = 'var(--accent)';
+}
+
+function selectAnswer(chosen) {
+  clearInterval(timer);
+  const q = shuffled[currentIndex];
+  const isCorrect = chosen === q.ans;
+  if (isCorrect) score++;
+
+  userAnswers.push({ qIndex: currentIndex, chosen, correct: isCorrect });
+  lockOptions(chosen);
+  showFeedback(chosen);
+}
+
+function lockOptions(chosen) {
+  const q = shuffled[currentIndex];
+  const btns = document.querySelectorAll('.option-btn');
+  btns.forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === q.ans) btn.classList.add('correct');
+    else if (i === chosen && chosen !== q.ans) btn.classList.add('wrong');
+  });
+}
+
+function showFeedback(chosen) {
+  const q = shuffled[currentIndex];
+  const fb = document.getElementById('feedback-box');
+  const isCorrect = chosen === q.ans;
+
+  if (chosen === -1) {
+    fb.className = 'feedback-box feedback-wrong visible';
+    fb.style.display = 'block';
+    fb.innerHTML = `⏱ <strong>Time's up!</strong> The correct answer was: <strong>${q.opts[q.ans]}</strong><br><br>${q.exp}`;
+  } else if (isCorrect) {
+    fb.className = 'feedback-box feedback-correct visible';
+    fb.style.display = 'block';
+    fb.innerHTML = `✓ <strong>Correct!</strong> ${q.exp}`;
+  } else {
+    fb.className = 'feedback-box feedback-wrong visible';
+    fb.style.display = 'block';
+    fb.innerHTML = `✗ <strong>Incorrect.</strong> The correct answer was: <strong>${q.opts[q.ans]}</strong><br><br>${q.exp}`;
+  }
+
+  document.getElementById('live-score').textContent = `Score: ${score}`;
+  const btnNext = document.getElementById('btn-next');
+  btnNext.className = 'btn-next visible';
+  btnNext.textContent = currentIndex + 1 < shuffled.length ? 'Next Question →' : 'See Results →';
+}
+
+function nextQuestion() {
+  currentIndex++;
+  if (currentIndex >= shuffled.length) {
+    showResults();
+  } else {
+    renderQuestion();
+  }
+}
+
+// ======================================================
+// RESULTS
+// ======================================================
+function showResults() {
+  clearInterval(timer);
+  const total = shuffled.length;
+  const pct = Math.round((score / total) * 100);
+
+  // Emoji & title
+  let icon, title;
+  if (pct >= 90) { icon = '🏆'; title = 'Outstanding!'; }
+  else if (pct >= 75) { icon = '🎓'; title = 'Well Done!'; }
+  else if (pct >= 55) { icon = '📚'; title = 'Good Effort!'; }
+  else { icon = '🔄'; title = 'Keep Studying!'; }
+
+  document.getElementById('result-icon').textContent = icon;
+  document.getElementById('result-title').textContent = title;
+  document.getElementById('result-score-big').textContent = `${score}/${total}`;
+  document.getElementById('result-sub').textContent = `You answered ${pct}% correctly across all topics.`;
+
+  // Per-topic breakdown
+  const topicMap = {};
+  shuffled.forEach((q, i) => {
+    if (!topicMap[q.topic]) topicMap[q.topic] = { correct: 0, total: 0 };
+    topicMap[q.topic].total++;
+    const ua = userAnswers.find(a => a.qIndex === i);
+    if (ua && ua.correct) topicMap[q.topic].correct++;
+  });
+
+  const bd = document.getElementById('topic-breakdown');
+  bd.innerHTML = '';
+  Object.entries(topicMap).forEach(([topic, data]) => {
+    const p = Math.round((data.correct / data.total) * 100);
+    const card = document.createElement('div');
+    card.className = 'breakdown-card';
+    card.innerHTML = `
+      <div class="bc-topic">${topic}</div>
+      <div class="bc-score">${data.correct}/${data.total} &nbsp;<span style="color:var(--muted);font-size:.85rem">(${p}%)</span></div>
+      <div class="bc-bar"><div class="bc-bar-fill" style="width:${p}%"></div></div>
+    `;
+    bd.appendChild(card);
+  });
+
+  showScreen('results-screen');
+}
+
+function showReview() {
+  const list = document.getElementById('review-list');
+  list.innerHTML = '';
+  const keys = ['A', 'B', 'C', 'D'];
+
+  shuffled.forEach((q, i) => {
+    const ua = userAnswers.find(a => a.qIndex === i);
+    const chosen = ua ? ua.chosen : -1;
+    const isCorrect = ua ? ua.correct : false;
+
+    const item = document.createElement('div');
+    item.className = `review-item ${isCorrect ? 'was-correct' : 'was-wrong'}`;
+
+    let answerHtml = `<div class="review-answer">`;
+    answerHtml += `Correct answer: <span class="correct-ans">${keys[q.ans]}. ${q.opts[q.ans]}</span>`;
+    if (!isCorrect && chosen !== -1) {
+      answerHtml += `<br>Your answer: <span class="your-ans-wrong">${keys[chosen]}. ${q.opts[chosen]}</span>`;
+    } else if (chosen === -1) {
+      answerHtml += `<br><span class="your-ans-wrong">No answer (timed out)</span>`;
+    }
+    answerHtml += `<br><br>${q.exp}</div>`;
+
+    item.innerHTML = `
+      <div class="review-meta">
+        <span class="review-tag">${q.topic}</span>
+        <span class="review-tag" style="color:${isCorrect ? 'var(--correct)' : 'var(--wrong)'}">${isCorrect ? '✓ Correct' : '✗ Incorrect'}</span>
+      </div>
+      <div class="review-q">Q${i+1}. ${q.q}</div>
+      ${answerHtml}
+    `;
+    list.appendChild(item);
+  });
+
+  showScreen('review-screen');
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// Show results from review
+function showResults() {
+  clearInterval(timer);
+  const total = shuffled.length;
+  const pct = Math.round((score / total) * 100);
+
+  let icon, title;
+  if (pct >= 90) { icon = '🏆'; title = 'Outstanding!'; }
+  else if (pct >= 75) { icon = '🎓'; title = 'Well Done!'; }
+  else if (pct >= 55) { icon = '📚'; title = 'Good Effort!'; }
+  else { icon = '🔄'; title = 'Keep Studying!'; }
+
+  document.getElementById('result-icon').textContent = icon;
+  document.getElementById('result-title').textContent = title;
+  document.getElementById('result-score-big').textContent = `${score}/${total}`;
+  document.getElementById('result-sub').textContent = `You answered ${pct}% correctly across all topics.`;
+
+  const topicMap = {};
+  shuffled.forEach((q, i) => {
+    if (!topicMap[q.topic]) topicMap[q.topic] = { correct: 0, total: 0 };
+    topicMap[q.topic].total++;
+    const ua = userAnswers.find(a => a.qIndex === i);
+    if (ua && ua.correct) topicMap[q.topic].correct++;
+  });
+
+  const bd = document.getElementById('topic-breakdown');
+  bd.innerHTML = '';
+  Object.entries(topicMap).forEach(([topic, data]) => {
+    const p = Math.round((data.correct / data.total) * 100);
+    const card = document.createElement('div');
+    card.className = 'breakdown-card';
+    card.innerHTML = `
+      <div class="bc-topic">${topic}</div>
+      <div class="bc-score">${data.correct}/${data.total} &nbsp;<span style="color:var(--muted);font-size:.85rem">(${p}%)</span></div>
+      <div class="bc-bar"><div class="bc-bar-fill" style="width:${p}%"></div></div>
+    `;
+    bd.appendChild(card);
+  });
+
+  showScreen('results-screen');
+}
+</script>
+</body>
+</html>
