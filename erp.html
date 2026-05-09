@@ -1,0 +1,1666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAP ERP Complete Study Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c10;
+    --surface: #12151c;
+    --surface2: #1a1f2e;
+    --border: #252b3b;
+    --accent: #00e5ff;
+    --accent2: #ff6b35;
+    --accent3: #7c3aed;
+    --text: #e8ecf0;
+    --text-muted: #7a8499;
+    --green: #10b981;
+    --red: #ef4444;
+    --gold: #f59e0b;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Lora', Georgia, serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── BACKGROUND GRID ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none; z-index: 0;
+  }
+
+  /* ── SIDEBAR ── */
+  #sidebar {
+    position: fixed; left: 0; top: 0; bottom: 0;
+    width: 280px;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    z-index: 100;
+    transition: transform .3s ease;
+  }
+
+  #sidebar-header {
+    padding: 28px 20px 20px;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(135deg, #0f1219, #12151c);
+  }
+
+  #sidebar-header .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: .05em;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+
+  #sidebar-header .subtitle {
+    font-family: 'DM Mono', monospace;
+    font-size: .65rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+    letter-spacing: .1em;
+  }
+
+  .nav-section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: .6rem;
+    letter-spacing: .15em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    padding: 16px 20px 6px;
+  }
+
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: 'Syne', sans-serif;
+    font-size: .78rem;
+    color: var(--text-muted);
+    transition: all .2s;
+    border-left: 3px solid transparent;
+  }
+
+  .nav-item:hover { color: var(--text); background: var(--surface2); }
+  .nav-item.active { color: var(--accent); border-left-color: var(--accent); background: rgba(0,229,255,0.06); }
+
+  .nav-item .num {
+    font-family: 'DM Mono', monospace;
+    font-size: .65rem;
+    background: var(--surface2);
+    padding: 2px 6px;
+    border-radius: 4px;
+    min-width: 24px;
+    text-align: center;
+  }
+
+  .nav-item.active .num { background: rgba(0,229,255,0.2); color: var(--accent); }
+
+  /* ── MAIN CONTENT ── */
+  #main {
+    margin-left: 280px;
+    min-height: 100vh;
+    position: relative; z-index: 1;
+  }
+
+  /* ── HERO ── */
+  #hero {
+    padding: 80px 60px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #hero::before {
+    content: 'SAP';
+    position: absolute; right: -20px; top: -20px;
+    font-family: 'Syne', sans-serif;
+    font-size: 18rem;
+    font-weight: 800;
+    color: rgba(0,229,255,0.03);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .hero-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: .7rem;
+    letter-spacing: .2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    background: rgba(0,229,255,0.08);
+    border: 1px solid rgba(0,229,255,0.2);
+    padding: 4px 14px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 20px;
+  }
+
+  .hero-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 3.2rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+
+  .hero-title span { color: var(--accent); }
+
+  .hero-desc {
+    font-size: 1rem;
+    color: var(--text-muted);
+    max-width: 540px;
+    line-height: 1.7;
+  }
+
+  .stats-row {
+    display: flex; gap: 30px; margin-top: 40px; flex-wrap: wrap;
+  }
+
+  .stat {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 24px;
+    text-align: center;
+  }
+
+  .stat .val {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--accent);
+  }
+
+  .stat .lbl {
+    font-family: 'DM Mono', monospace;
+    font-size: .65rem;
+    color: var(--text-muted);
+    letter-spacing: .1em;
+    margin-top: 2px;
+  }
+
+  /* ── CHAPTER SECTION ── */
+  .chapter-section {
+    display: none;
+    padding: 40px 60px 80px;
+    animation: fadeIn .4s ease;
+  }
+
+  .chapter-section.active { display: block; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+
+  .chapter-header {
+    margin-bottom: 40px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .chapter-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: .65rem;
+    letter-spacing: .2em;
+    color: var(--accent2);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .chapter-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.4rem;
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 14px;
+  }
+
+  .chapter-intro {
+    color: var(--text-muted);
+    font-size: .95rem;
+    line-height: 1.8;
+    max-width: 700px;
+  }
+
+  /* ── CONTENT CARDS ── */
+  .content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 32px;
+  }
+
+  @media (max-width: 900px) { .content-grid { grid-template-columns: 1fr; } }
+
+  .content-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    transition: border-color .2s, transform .2s;
+  }
+
+  .content-card:hover { border-color: rgba(0,229,255,0.3); transform: translateY(-2px); }
+  .content-card.wide { grid-column: 1 / -1; }
+
+  .card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: .85rem;
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    margin-bottom: 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .card-title::before {
+    content: '';
+    width: 4px; height: 16px;
+    background: var(--accent);
+    border-radius: 2px;
+    display: inline-block;
+  }
+
+  .card-body {
+    font-size: .88rem;
+    line-height: 1.75;
+    color: var(--text);
+  }
+
+  .card-body p + p { margin-top: 10px; }
+
+  /* ── TABLE ── */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .83rem;
+    margin-top: 8px;
+  }
+
+  .data-table th {
+    font-family: 'DM Mono', monospace;
+    font-size: .65rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .data-table td {
+    padding: 9px 12px;
+    border-bottom: 1px solid rgba(37,43,59,0.5);
+    vertical-align: top;
+    line-height: 1.6;
+  }
+
+  .data-table td:first-child {
+    font-family: 'DM Mono', monospace;
+    font-size: .78rem;
+    color: var(--accent2);
+    white-space: nowrap;
+  }
+
+  .data-table tr:last-child td { border-bottom: none; }
+
+  /* ── BULLET LIST ── */
+  .bullet-list {
+    list-style: none;
+    display: flex; flex-direction: column; gap: 6px;
+    margin-top: 8px;
+  }
+
+  .bullet-list li {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: .87rem; line-height: 1.65;
+  }
+
+  .bullet-list li::before {
+    content: '›';
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 1.1rem;
+    line-height: 1.4;
+    flex-shrink: 0;
+  }
+
+  /* ── PROCESS FLOW ── */
+  .process-flow {
+    display: flex; flex-wrap: wrap; gap: 0;
+    align-items: center;
+    margin-top: 12px;
+  }
+
+  .process-step {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: .78rem;
+    font-family: 'DM Mono', monospace;
+    color: var(--text);
+    text-align: center;
+  }
+
+  .process-arrow {
+    color: var(--accent);
+    font-size: 1.2rem;
+    padding: 0 6px;
+    flex-shrink: 0;
+  }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box {
+    background: rgba(0,229,255,0.04);
+    border: 1px solid rgba(0,229,255,0.18);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+  }
+
+  .highlight-box .hl-label {
+    font-family: 'DM Mono', monospace;
+    font-size: .65rem;
+    letter-spacing: .15em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  /* ── SECTION DIVIDER ── */
+  .section-divider {
+    display: flex; align-items: center; gap: 16px;
+    margin: 32px 0 24px;
+  }
+
+  .section-divider .divider-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .section-divider::after {
+    content: '';
+    flex: 1; height: 1px;
+    background: linear-gradient(to right, var(--border), transparent);
+  }
+
+  /* ── QUIZ ── */
+  #quiz-area {
+    margin-top: 50px;
+    padding-top: 40px;
+    border-top: 1px solid var(--border);
+  }
+
+  .quiz-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 32px; flex-wrap: wrap; gap: 16px;
+  }
+
+  .quiz-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+  }
+
+  .quiz-progress {
+    font-family: 'DM Mono', monospace;
+    font-size: .75rem;
+    color: var(--text-muted);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 6px 14px;
+    border-radius: 20px;
+  }
+
+  .quiz-score-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: .75rem;
+    background: rgba(16,185,129,0.12);
+    border: 1px solid rgba(16,185,129,0.3);
+    color: var(--green);
+    padding: 6px 14px;
+    border-radius: 20px;
+    display: none;
+  }
+
+  .question-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 20px;
+    transition: border-color .3s;
+  }
+
+  .question-card.correct { border-color: var(--green); background: rgba(16,185,129,0.04); }
+  .question-card.wrong { border-color: var(--red); background: rgba(239,68,68,0.04); }
+
+  .q-num {
+    font-family: 'DM Mono', monospace;
+    font-size: .65rem;
+    letter-spacing: .15em;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+
+  .q-text {
+    font-size: .95rem;
+    font-weight: 600;
+    line-height: 1.6;
+    margin-bottom: 18px;
+    font-family: 'Lora', serif;
+  }
+
+  .options {
+    display: flex; flex-direction: column; gap: 10px;
+  }
+
+  .option {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px 16px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all .2s;
+    font-size: .87rem;
+    line-height: 1.55;
+  }
+
+  .option:hover:not(.disabled) { border-color: rgba(0,229,255,0.4); background: rgba(0,229,255,0.04); }
+  .option.selected { border-color: var(--accent); background: rgba(0,229,255,0.08); }
+  .option.correct-opt { border-color: var(--green) !important; background: rgba(16,185,129,0.1) !important; }
+  .option.wrong-opt { border-color: var(--red) !important; background: rgba(239,68,68,0.1) !important; }
+  .option.disabled { cursor: default; }
+
+  .option-letter {
+    font-family: 'DM Mono', monospace;
+    font-size: .7rem;
+    font-weight: 600;
+    background: var(--border);
+    color: var(--text-muted);
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .option.correct-opt .option-letter { background: var(--green); color: #fff; }
+  .option.wrong-opt .option-letter { background: var(--red); color: #fff; }
+  .option.selected .option-letter { background: var(--accent); color: var(--bg); }
+
+  .explanation {
+    display: none;
+    margin-top: 14px;
+    padding: 14px 16px;
+    background: rgba(0,229,255,0.05);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    font-size: .85rem;
+    line-height: 1.65;
+    color: var(--text-muted);
+  }
+
+  .explanation.show { display: block; }
+
+  /* ── QUIZ RESULT ── */
+  .quiz-result {
+    display: none;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 40px;
+    text-align: center;
+    margin-top: 24px;
+  }
+
+  .quiz-result.show { display: block; }
+
+  .result-score {
+    font-family: 'Syne', sans-serif;
+    font-size: 4rem;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .result-label {
+    font-family: 'DM Mono', monospace;
+    font-size: .75rem;
+    letter-spacing: .15em;
+    color: var(--text-muted);
+    margin-top: 4px;
+    text-transform: uppercase;
+  }
+
+  .result-msg {
+    font-size: 1rem;
+    color: var(--text);
+    margin-top: 16px;
+    line-height: 1.6;
+  }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 28px;
+    border-radius: 10px;
+    font-family: 'Syne', sans-serif;
+    font-size: .85rem;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    transition: all .2s;
+    letter-spacing: .04em;
+    margin-top: 20px;
+  }
+
+  .btn-primary { background: var(--accent); color: var(--bg); }
+  .btn-primary:hover { background: #00ccdd; transform: translateY(-1px); }
+  .btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--border); }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── MOBILE TOGGLE ── */
+  #menu-toggle {
+    display: none;
+    position: fixed; top: 16px; left: 16px;
+    z-index: 200;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    width: 42px; height: 42px;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    align-items: center; justify-content: center;
+  }
+
+  @media (max-width: 768px) {
+    #sidebar { transform: translateX(-100%); }
+    #sidebar.open { transform: none; }
+    #main { margin-left: 0; }
+    #menu-toggle { display: flex; }
+    #hero, .chapter-section { padding: 40px 20px 60px; }
+    .hero-title { font-size: 2rem; }
+    .chapter-title { font-size: 1.8rem; }
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--surface); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+</style>
+</head>
+<body>
+
+<button id="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <div class="logo">SAP ERP</div>
+    <div class="subtitle">CT104-3-2 // STUDY GUIDE</div>
+  </div>
+
+  <div class="nav-section-label">Overview</div>
+  <div class="nav-item active" onclick="showSection('home')">
+    <span class="num">0</span> Dashboard
+  </div>
+
+  <div class="nav-section-label">Chapters</div>
+  <div class="nav-item" onclick="showSection('ch1')"><span class="num">1</span> Enterprise Systems & SAP</div>
+  <div class="nav-item" onclick="showSection('ch2')"><span class="num">2</span> Global Bike Inc. (GBI)</div>
+  <div class="nav-item" onclick="showSection('ch3')"><span class="num">3</span> Material Management</div>
+  <div class="nav-item" onclick="showSection('ch4')"><span class="num">4</span> Warehouse Management</div>
+  <div class="nav-item" onclick="showSection('ch5')"><span class="num">5</span> Sales & Distribution</div>
+  <div class="nav-item" onclick="showSection('ch6')"><span class="num">6</span> Production Planning</div>
+  <div class="nav-item" onclick="showSection('ch7')"><span class="num">7</span> Financial Accounting</div>
+</nav>
+
+<!-- MAIN -->
+<main id="main">
+
+  <!-- HOME -->
+  <section id="home" class="chapter-section active" style="display:block; padding:60px 60px 80px;">
+    <div id="hero" style="padding:0; margin-bottom:40px;">
+      <div class="hero-tag">CT104-3-2 // Global Bike Inc. Case Study</div>
+      <h1 class="hero-title">Integrated Business<br>Processes with <span>SAP ERP</span></h1>
+      <p class="hero-desc">A comprehensive interactive study guide covering all 7 core lectures. Explore each chapter in depth, then test your knowledge with 20 quiz questions per chapter.</p>
+      <div class="stats-row">
+        <div class="stat"><div class="val">7</div><div class="lbl">Chapters</div></div>
+        <div class="stat"><div class="val">140</div><div class="lbl">Quiz Questions</div></div>
+        <div class="stat"><div class="val">9</div><div class="lbl">SAP Modules</div></div>
+        <div class="stat"><div class="val">GBI</div><div class="lbl">Case Study</div></div>
+      </div>
+    </div>
+
+    <div class="content-grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+      <div class="content-card" onclick="showSection('ch1')" style="cursor:pointer;">
+        <div class="card-title">Ch 1 — Enterprise Systems & SAP</div>
+        <div class="card-body">Information systems, ERP fundamentals, SAP modules, organizational & master data types.</div>
+      </div>
+      <div class="content-card" onclick="showSection('ch2')" style="cursor:pointer;">
+        <div class="card-title">Ch 2 — Global Bike Inc.</div>
+        <div class="card-body">GBI history, structure, products, business partners, and cross-functional SAP integration.</div>
+      </div>
+      <div class="content-card" onclick="showSection('ch3')" style="cursor:pointer;">
+        <div class="card-title">Ch 3 — Material Management</div>
+        <div class="card-body">Procure-to-Pay lifecycle: requisitions, purchase orders, goods receipt, invoice verification.</div>
+      </div>
+      <div class="content-card" onclick="showSection('ch4')" style="cursor:pointer;">
+        <div class="card-title">Ch 4 — Warehouse Management</div>
+        <div class="card-body">Physical warehouse structure, bin-level tracking, transfer orders, and inventory methods.</div>
+      </div>
+      <div class="content-card" onclick="showSection('ch5')" style="cursor:pointer;">
+        <div class="card-title">Ch 5 — Sales & Distribution</div>
+        <div class="card-body">Order-to-Cash: inquiries, quotations, sales orders, delivery, billing, and payment.</div>
+      </div>
+      <div class="content-card" onclick="showSection('ch6')" style="cursor:pointer;">
+        <div class="card-title">Ch 6 — Production Planning</div>
+        <div class="card-body">SOP, MRP, BOM, Routings, production orders, confirmations, and order settlement.</div>
+      </div>
+      <div class="content-card" onclick="showSection('ch7')" style="cursor:pointer;">
+        <div class="card-title">Ch 7 — Financial Accounting</div>
+        <div class="card-body">G/L accounts, Balance Sheet, Income Statement, SAP document principle & FI integration.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHAPTER 1 -->
+  <section id="ch1" class="chapter-section">
+    <div class="chapter-header">
+      <div class="chapter-tag">Lecture 1 // Chapter 01</div>
+      <h2 class="chapter-title">Introduction to Enterprise Systems & SAP</h2>
+      <p class="chapter-intro">This chapter establishes what information systems and ERP are, how SAP is structured, and how data is categorized within an enterprise system. These concepts underpin every subsequent chapter.</p>
+    </div>
+
+    <div class="content-grid">
+      <div class="content-card">
+        <div class="card-title">What is an Information System?</div>
+        <div class="card-body">
+          <p>An Information System (IS) is a set of interrelated components that collect, retrieve, process, store, and distribute information for planning, control, coordination, analysis, and decision-making.</p>
+          <p>IS types: <strong>General systems</strong> (broad-purpose) vs. <strong>Specialized systems</strong> (built for specific functions like accounting or HR).</p>
+          <p><strong>Centralized:</strong> All data in one place — easier to control but single point of failure.<br>
+          <strong>Decentralized:</strong> Multiple servers share data — more resilient but harder to synchronize.</p>
+        </div>
+      </div>
+      <div class="content-card">
+        <div class="card-title">What is ERP?</div>
+        <div class="card-body">
+          <p>Enterprise Resource Planning (ERP) is a large, integrated software package that manages a firm's business processes across the entire enterprise.</p>
+          <ul class="bullet-list">
+            <li>Integrates operations, processes, and information flows</li>
+            <li>Standard software configured to specific company needs</li>
+            <li>Database-driven: Input, Storage, Manipulation, Output</li>
+            <li>Promotes better decision-making through shared data</li>
+            <li>Reduces IT maintenance vs. siloed legacy systems</li>
+          </ul>
+          <p style="margin-top:10px;"><strong>ERP Types:</strong> On-Premise, Cloud-Based, Hybrid</p>
+        </div>
+      </div>
+      <div class="content-card">
+        <div class="card-title">About SAP</div>
+        <div class="card-body">
+          <p>SAP stands for <em>Systeme, Anwendungen und Produkte in der Datenverarbeitung</em> — "Systems, Applications, and Products in Data Processing."</p>
+          <p>Founded in Walldorf, Germany in 1972. World's largest business software company and third-largest independent software provider.</p>
+          <ul class="bullet-list">
+            <li>45,000+ employees in 50+ countries</li>
+            <li>95,000+ customers in 120+ countries</li>
+            <li>12 million users worldwide</li>
+          </ul>
+        </div>
+      </div>
+      <div class="content-card">
+        <div class="card-title">Functional vs. Cross-Functional Structure</div>
+        <div class="card-body">
+          <p><strong>Functional Structure:</strong> Departments (Sales, Accounting, Purchasing, Production) operate independently → silos cause delays, competing interests, project overruns.</p>
+          <p><strong>Cross-Functional Structure:</strong> Breaks down silos; different departments collaborate around shared processes. ERP is the technological backbone enabling this.</p>
+          <p>A <em>business process</em> is a collection of coherent activities that starts with a trigger and ends with delivery of products or services.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-card wide">
+      <div class="card-title">SAP Functional Modules</div>
+      <div class="card-body">
+        <table class="data-table">
+          <tr><th>Module</th><th>Name</th><th>Function</th></tr>
+          <tr><td>SD</td><td>Sales & Distribution</td><td>Records sales orders, manages deliveries, stores customer information</td></tr>
+          <tr><td>MM</td><td>Materials Management</td><td>Manages acquisition of raw materials from suppliers and handles materials</td></tr>
+          <tr><td>WM</td><td>Warehouse Management</td><td>Concerned with storage and movement of materials within warehouses</td></tr>
+          <tr><td>PP</td><td>Production Planning</td><td>Maintains production information — plans and schedules manufacturing</td></tr>
+          <tr><td>FI</td><td>Financial Accounting</td><td>Records financial transactions; produces balance sheet and income statement</td></tr>
+          <tr><td>CO</td><td>Controlling</td><td>Internal managerial accounting; cost centres, profit centres, overhead</td></tr>
+          <tr><td>HR/HCM</td><td>Human Capital Management</td><td>Personnel management, payroll, benefits</td></tr>
+          <tr><td>ABAP</td><td>Dev Language</td><td>SAP's proprietary Advanced Business Application Programming language</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="content-grid">
+      <div class="content-card">
+        <div class="card-title">SAP Business Suite</div>
+        <div class="card-body">
+          <table class="data-table">
+            <tr><th>Product</th><th>Purpose</th></tr>
+            <tr><td>SAP ERP</td><td>Core ERP — financials, logistics, HR</td></tr>
+            <tr><td>SAP SRM</td><td>Supplier Relationship Management</td></tr>
+            <tr><td>SAP CRM</td><td>Customer Relationship Management</td></tr>
+            <tr><td>SAP SCM</td><td>Supply Chain Management</td></tr>
+            <tr><td>SAP PLM</td><td>Product Lifecycle Management</td></tr>
+            <tr><td>SAP NetWeaver</td><td>Technology integration platform</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="content-card">
+        <div class="card-title">Three Types of Data in ERP</div>
+        <div class="card-body">
+          <ul class="bullet-list">
+            <li><strong>Organizational Data:</strong> Represents enterprise structure — Client, Company Code, Plant, Storage Location</li>
+            <li><strong>Master Data:</strong> Key business entities created once, reused many times — Customer Master, Vendor Master, Material Master</li>
+            <li><strong>Transactional Data:</strong> Reflects execution of process steps — dates, quantities, amounts recorded during sales orders or goods receipts</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="quiz-area">
+      <div class="quiz-header">
+        <div class="quiz-title">Chapter 1 Quiz</div>
+        <div class="quiz-progress" id="ch1-progress">0 / 20 answered</div>
+        <div class="quiz-score-badge" id="ch1-score"></div>
+      </div>
+      <div id="ch1-questions"></div>
+      <div class="quiz-result" id="ch1-result">
+        <div class="result-score" id="ch1-result-score"></div>
+        <div class="result-label">Score</div>
+        <div class="result-msg" id="ch1-result-msg"></div>
+        <button class="btn btn-ghost" onclick="resetQuiz('ch1')">Retake Quiz</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHAPTER 2 -->
+  <section id="ch2" class="chapter-section">
+    <div class="chapter-header">
+      <div class="chapter-tag">Lecture 2 // Chapter 02</div>
+      <h2 class="chapter-title">The Global Bike Inc. (GBI) Case Study</h2>
+      <p class="chapter-intro">GBI is the fictional but realistic company used as the SAP training environment. Understanding its history, organizational structure, products, and business processes is essential for all subsequent labs and concepts.</p>
+    </div>
+
+    <div class="content-grid">
+      <div class="content-card">
+        <div class="card-title">GBI History & Background</div>
+        <div class="card-body">
+          <ul class="bullet-list">
+            <li><strong>1990:</strong> John Davis (US mountain bike champion) founded Frankenstein Bikes</li>
+            <li><strong>1993:</strong> Peter Schwarz (German composite engineer) founded Heidelberg Composites</li>
+            <li><strong>2000:</strong> John and Peter met</li>
+            <li><strong>2001:</strong> Merger created Global Bike Inc.</li>
+          </ul>
+          <p style="margin-top:12px;">GBI operates as a global concern with entities in the US and Germany, using the full capabilities of SAP ERP.</p>
+        </div>
+      </div>
+      <div class="content-card">
+        <div class="card-title">Leadership & Strategy</div>
+        <div class="card-body">
+          <p><strong>John Davis (Co-CEO):</strong> Sales, Marketing, Service & Support, IT, Finance, HR — "sells products and brings in money."</p>
+          <p style="margin-top:10px;"><strong>Peter Schwarz (Co-CEO):</strong> Research, Design, Procurement, Manufacturing — "builds products and spends money."</p>
+          <p style="margin-top:10px;"><strong>Strategic Focus:</strong> World-class bicycle company for professional athletes and prosumers — emphasizing Quality, Toughness, and Performance.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-card wide">
+      <div class="card-title">GBI Organizational Structure (SAP Hierarchy)</div>
+      <div class="card-body">
+        <table class="data-table">
+          <tr><th>Level</th><th>Entity</th><th>Details</th></tr>
+          <tr><td>Concern (Client)</td><td>Global Bike Group</td><td>The entire enterprise in SAP</td></tr>
+          <tr><td>Company Code US</td><td>Global Bike Inc.</td><td>US legal entity</td></tr>
+          <tr><td>Company Code DE</td><td>Global Bike Germany GmbH</td><td>German legal entity</td></tr>
+          <tr><td>US Locations</td><td>Dallas, Miami, San Diego</td><td>US plants / offices</td></tr>
+          <tr><td>DE Locations</td><td>Heidelberg, Hamburg</td><td>German plants / offices</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="content-grid">
+      <div class="content-card">
+        <div class="card-title">GBI Products Portfolio</div>
+        <div class="card-body">
+          <table class="data-table">
+            <tr><th>Category</th><th>Examples</th></tr>
+            <tr><td>Trading Goods</td><td>Helmets, gloves, safety gear (bought for resale)</td></tr>
+            <tr><td>Raw Materials</td><td>Aluminum tubes, carbon fiber, bolts, chain links</td></tr>
+            <tr><td>Semi-Finished</td><td>Wheel assemblies, frame sets</td></tr>
+            <tr><td>Finished — Touring</td><td>Deluxe & Professional bikes (Red, Black, Silver)</td></tr>
+            <tr><td>Finished — Off-Road</td><td>Men's and Women's off-road variants</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="content-card">
+        <div class="card-title">Cross-Functional Integration</div>
+        <div class="card-body">
+          <p><strong>Order-to-Cash (OTC):</strong> Customer order → payment. Integrates SD, MM, and FI. A single sales order triggers activities in all three modules automatically.</p>
+          <p style="margin-top:10px;"><strong>Procure-to-Pay (P2P):</strong> Need identified → vendor paid. Integrates MM and FI. A purchase order triggers goods receipt, inventory updates, and automatic journal entries.</p>
+          <p style="margin-top:10px;">This real-time integration eliminates manual re-keying and ensures data consistency across the entire enterprise.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="quiz-area">
+      <div class="quiz-header">
+        <div class="quiz-title">Chapter 2 Quiz</div>
+        <div class="quiz-progress" id="ch2-progress">0 / 20 answered</div>
+        <div class="quiz-score-badge" id="ch2-score"></div>
+      </div>
+      <div id="ch2-questions"></div>
+      <div class="quiz-result" id="ch2-result">
+        <div class="result-score" id="ch2-result-score"></div>
+        <div class="result-label">Score</div>
+        <div class="result-msg" id="ch2-result-msg"></div>
+        <button class="btn btn-ghost" onclick="resetQuiz('ch2')">Retake Quiz</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHAPTER 3 -->
+  <section id="ch3" class="chapter-section">
+    <div class="chapter-header">
+      <div class="chapter-tag">Lecture 3 // Chapter 03</div>
+      <h2 class="chapter-title">Material Management (MM)</h2>
+      <p class="chapter-intro">MM covers the entire procurement lifecycle from planning through to payment. It is one of SAP's most central modules, ensuring the right materials are available in the right quantities at the right time.</p>
+    </div>
+
+    <div class="content-card wide">
+      <div class="card-title">Procure-to-Pay Process Flow</div>
+      <div class="card-body">
+        <div class="process-flow">
+          <div class="process-step">Purchase<br>Requisition</div><div class="process-arrow">→</div>
+          <div class="process-step">Vendor<br>Selection</div><div class="process-arrow">→</div>
+          <div class="process-step">Purchase<br>Order</div><div class="process-arrow">→</div>
+          <div class="process-step">Notify<br>Vendor</div><div class="process-arrow">→</div>
+          <div class="process-step">Vendor<br>Shipment</div><div class="process-arrow">→</div>
+          <div class="process-step">Goods<br>Receipt</div><div class="process-arrow">→</div>
+          <div class="process-step">Invoice<br>Verification</div><div class="process-arrow">→</div>
+          <div class="process-step">Payment<br>to Vendor</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-grid">
+      <div class="content-card">
+        <div class="card-title">MM Organizational Structure</div>
+        <div class="card-body">
+          <table class="data-table">
+            <tr><th>Unit</th><th>Purpose</th></tr>
+            <tr><td>Client</td><td>Entire GBI group — top-level environment</td></tr>
+            <tr><td>Company Code</td><td>Smallest unit with a legal set of books</td></tr>
+            <tr><td>Plant</td><td>Operating area (manufacturing, distribution, purchasing)</td></tr>
+            <tr><td>Storage Location</td><td>Differentiate stock within a plant (RM, FG, etc.)</td></tr>
+            <tr><td>Purchasing Org</td><td>Procures materials; negotiates vendor conditions (GL00, US, DE)</td></tr>
+            <tr><td>Purchasing Group</td><td>Buyer or group; communication channel with vendors (N00, E00)</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="content-card">
+        <div class="card-title">MM Master Data</div>
+        <div class="card-body">
+          <p><strong>Vendor Master:</strong> All info for business activities with an external supplier. Used by Purchasing and Accounting. Created as Business Partner with roles FLVN00 (FI) and FLVN01 (Purchasing). Contains General Data, Company Code Data, and Purchasing Org Data.</p>
+          <p style="margin-top:10px;"><strong>Material Master:</strong> All information to manage a material throughout its lifecycle. Used by SD, MM, PP, FI/CO, QM. Organized into functional Views: Basic Data, Sales, Purchasing, MRP, Storage, Accounting, Quality.</p>
+          <p style="margin-top:10px;"><strong>Purchasing Info Record:</strong> Links a specific vendor to a specific material. Stores pricing, last PO number, delivery tolerances, and lead times.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-grid">
+      <div class="content-card">
+        <div class="card-title">Purchase Order Structure</div>
+        <div class="card-body">
+          <p>A PO is a formal, legally binding request to a vendor. Three structural levels:</p>
+          <table class="data-table" style="margin-top:10px;">
+            <tr><th>Level</th><th>Contains</th></tr>
+            <tr><td>Header</td><td>Vendor, doc number, date, currency, payment terms, total value</td></tr>
+            <tr><td>Item Overview</td><td>Materials, quantities, delivery dates, price per UoM</td></tr>
+            <tr><td>Line Item Detail</td><td>PO history, tolerances, line price, delivery schedule</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="content-card">
+        <div class="card-title">Goods Receipt & Invoice Verification</div>
+        <div class="card-body">
+          <p><strong>Goods Receipt (GR):</strong> Physical acceptance of goods into SAP. Creates Material Document, Accounting Document. Updates stock quantities/values and PO history.</p>
+          <p style="margin-top:8px;">Key movement types: 101 (GR into warehouse), 103 (GR blocked stock), 122 (return to vendor), 561 (initial stock entry).</p>
+          <p style="margin-top:10px;"><strong>Three-Way Match:</strong> Invoice verified against PO (target) and GR (actual). Discrepancies generate warnings or block payment.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-card wide">
+      <div class="card-title">MM–FI Integration: Accounting Flow</div>
+      <div class="card-body">
+        <table class="data-table">
+          <tr><th>Step</th><th>Debit</th><th>Credit</th><th>Effect</th></tr>
+          <tr><td>Goods Receipt</td><td>Inventory $100</td><td>GR/IR Clearing $100</td><td>Stock recognized; no AP yet</td></tr>
+          <tr><td>Invoice Receipt</td><td>GR/IR Clearing $100</td><td>Vendor AP $100</td><td>Liability recognized</td></tr>
+          <tr><td>Vendor Payment</td><td>Vendor AP $100</td><td>Bank $100</td><td>Liability cleared; cash reduced</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div id="quiz-area">
+      <div class="quiz-header">
+        <div class="quiz-title">Chapter 3 Quiz</div>
+        <div class="quiz-progress" id="ch3-progress">0 / 20 answered</div>
+        <div class="quiz-score-badge" id="ch3-score"></div>
+      </div>
+      <div id="ch3-questions"></div>
+      <div class="quiz-result" id="ch3-result">
+        <div class="result-score" id="ch3-result-score"></div>
+        <div class="result-label">Score</div>
+        <div class="result-msg" id="ch3-result-msg"></div>
+        <button class="btn btn-ghost" onclick="resetQuiz('ch3')">Retake Quiz</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHAPTER 4 -->
+  <section id="ch4" class="chapter-section">
+    <div class="chapter-header">
+      <div class="chapter-tag">Lecture 4 // Chapter 04</div>
+      <h2 class="chapter-title">Warehouse Management (WM)</h2>
+      <p class="chapter-intro">WM manages the physical storage and movement of materials within a warehouse complex at bin level — far more granular than Inventory Management (MM), which only tracks at the storage location level.</p>
+    </div>
+
+    <div class="content-card wide">
+      <div class="card-title">WM Organizational Hierarchy</div>
+      <div class="card-body">
+        <table class="data-table">
+          <tr><th>Unit</th><th>Description</th><th>GBI Example</th></tr>
+          <tr><td>Client</td><td>Entire SAP system</td><td>Global Bike Group</td></tr>
+          <tr><td>Company Code</td><td>Legal entity</td><td>GBI Inc. (US) / GBI Germany GmbH</td></tr>
+          <tr><td>Plant</td><td>Operating location</td><td>Dallas, Miami, San Diego, Heidelberg, Hamburg</td></tr>
+          <tr><td>Storage Location</td><td>Logical stock grouping within a plant</td><td>FG00, TG00, RM00</td></tr>
+          <tr><td>Warehouse Number</td><td>Physical warehouse complex</td><td>San Diego Warehouse</td></tr>
+          <tr><td>Storage Type</td><td>Subdivision by technique/function</td><td>Shelf Storage, Pallet Storage, GR Area, Shipping Area</td></tr>
+          <tr><td>Storage Section</td><td>Logical subdivision of storage type</td><td>Total Section, product-specific sections</td></tr>
+          <tr><td>Storage Bin</td><td>Smallest addressable location (exact bin)</td><td>STBN-2-000 through STBN-2-999</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="content-grid">
+      <div class="content-card">
+        <div class="card-title">Key WM Documents</div>
+        <div class="card-body">
+          <p><strong>Transfer Requirement (TR):</strong> A request to transfer materials from source to destination bin at a specific time. Represents expected/scheduled movements. Auto-generated by IM postings.</p>
+          <p style="margin-top:10px;"><strong>Transfer Order (TO):</strong> The central execution document in WM. Every material movement — real or logical — requires a TO. Contains source bin, destination bin, material, quantity.</p>
+          <p style="margin-top:10px;"><strong>Posting Change Notice (PCN):</strong> Generated by posting change processes for WM-administered stocks — similar to TR but not always combined with physical movement.</p>
+        </div>
+      </div>
+      <div class="content-card">
+        <div class="card-title">Types of Goods Movements</div>
+        <div class="card-body">
+          <p><strong>Transfer Posting:</strong> Changes stock type, material number, or batch. May involve physical movement. Types: material-to-material, stock type-to-stock type, consignment to own stock, plant-to-plant.</p>
+          <p style="margin-top:10px;"><strong>Stock Transfer:</strong> Physical material movement. Done in one step (simultaneous remove + place) or two steps (separate remove from storage and place in storage).</p>
+          <p style="margin-top:10px;"><strong>Stock Transport Order (STO):</strong> Purchase order used to transfer material from one plant to another within the same enterprise.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-grid">
+      <div class="content-card">
+        <div class="card-title">WM Process: Goods Receipt</div>
+        <div class="card-body">
+          <div class="process-flow" style="flex-direction:column; align-items:flex-start; gap:8px;">
+            <div style="display:flex;align-items:center;gap:8px;"><div class="process-step">GR Posting in MM</div></div>
+            <div style="padding-left:20px; color:var(--accent);">↓ generates</div>
+            <div style="display:flex;align-items:center;gap:8px;"><div class="process-step">Transfer Requirement (TR)</div></div>
+            <div style="padding-left:20px; color:var(--accent);">↓ converted to</div>
+            <div style="display:flex;align-items:center;gap:8px;"><div class="process-step">Transfer Order (TO) — putaway instruction</div></div>
+            <div style="padding-left:20px; color:var(--accent);">↓ physical action</div>
+            <div style="display:flex;align-items:center;gap:8px;"><div class="process-step">TO Confirmed — goods placed in bin</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="content-card">
+        <div class="card-title">Physical Inventory Methods</div>
+        <div class="card-body">
+          <table class="data-table">
+            <tr><th>Method</th><th>Description</th></tr>
+            <tr><td>Periodic</td><td>All stock counted at fixed point (year-end)</td></tr>
+            <tr><td>Continuous</td><td>Different bins counted throughout the year</td></tr>
+            <tr><td>Inventory on Putaway</td><td>Bin counted when goods are put away</td></tr>
+            <tr><td>Zero Stock Check</td><td>Confirms bin is empty when system says so</td></tr>
+            <tr><td>Sample-Based</td><td>Statistically representative sample of bins</td></tr>
+            <tr><td>Cycle Counting</td><td>High-velocity items counted more frequently (ABC)</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div id="quiz-area">
+      <div class="quiz-header">
+        <div class="quiz-title">Chapter 4 Quiz</div>
+        <div class="quiz-progress" id="ch4-progress">0 / 20 answered</div>
+        <div class="quiz-score-badge" id="ch4-score"></div>
+      </div>
+      <div id="ch4-questions"></div>
+      <div class="quiz-result" id="ch4-result">
+        <div class="result-score" id="ch4-result-score"></div>
+        <div class="result-label">Score</div>
+        <div class="result-msg" id="ch4-result-msg"></div>
+        <button class="btn btn-ghost" onclick="resetQuiz('ch4')">Retake Quiz</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHAPTER 5 -->
+  <section id="ch5" class="chapter-section">
+    <div class="chapter-header">
+      <div class="chapter-tag">Lecture 5 // Chapter 05</div>
+      <h2 class="chapter-title">Sales & Distribution (SD)</h2>
+      <p class="chapter-intro">SD is responsible for the entire Order-to-Cash (OTC) process — from first customer contact through receipt of payment. It manages how GBI's products and services reach customers.</p>
+    </div>
+
+    <div class="content-card wide">
+      <div class="card-title">Order-to-Cash Process Flow</div>
+      <div class="card-body">
+        <div class="process-flow">
+          <div class="process-step">Inquiry</div><div class="process-arrow">→</div>
+          <div class="process-step">Quotation</div><div class="process-arrow">→</div>
+          <div class="process-step">Sales Order</div><div class="process-arrow">→</div>
+          <div class="process-step">Delivery</div><div class="process-arrow">→</div>
+          <div class="process-step">Post Goods Issue</div><div class="process-arrow">→</div>
+          <div class="process-step">Billing</div><div class="process-arrow">→</div>
+          <div class="process-step">Payment</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-grid">
+      <div class="content-card">
+        <div class="card-title">SD Organizational Structure</div>
+        <div class="card-body">
+          <table class="data-table">
+            <tr><th>Unit</th><th>Description</th></tr>
+            <tr><td>Sales Organization</td><td>Responsible for selling; holds legal liability for customer claims (US East, US West, DE North, DE South)</td></tr>
+            <tr><td>Distribution Channel</td><td>How products reach customers — Wholesale (WH) or Internet (IN)</td></tr>
+            <tr><td>Division</td><td>Product grouping — Bicycles (BI), Accessories (AS), Cross (00)</td></tr>
+            <tr><td>Sales Area</td><td>Sales Org + Channel + Division → drives all pricing</td></tr>
+            <tr><td>Credit Control Area</td><td>Grants/monitors customer credit limits — GBI uses global GL00</td></tr>
+            <tr><td>Shipping Point</td><td>Organizational unit processing outbound shipments</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="content-card">
+        <div class="card-title">Delivery Scheduling</div>
+        <div class="card-body">
+          <p><strong>Backward Scheduling:</strong> Starts from customer's requested delivery date, works backward to calculate material availability, loading, picking, and transportation dates → gives required order date.</p>
+          <p style="margin-top:10px;"><strong>Forward Scheduling:</strong> Used when requested date cannot be met. Starts from earliest material availability, works forward to find earliest possible delivery.</p>
+          <p style="margin-top:10px;"><strong>GBI Standard Parameters:</strong><br>Transit Time: 2 days | Loading: 1 day<br>Transport Scheduling: 1 day | Pick & Pack: 2 days</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-grid">
+      <div class="content-card">
+        <div class="card-title">Sales Order Automatic Determinations</div>
+        <div class="card-body">
+          <p>When a sales order is created, SAP automatically determines:</p>
+          <ul class="bullet-list">
+            <li><strong>Delivery Scheduling</strong> — confirmed delivery date via backward/forward scheduling</li>
+            <li><strong>Shipping Point</strong> — which plant location processes the shipment</li>
+            <li><strong>Route</strong> — transportation path from GBI warehouse to customer</li>
+            <li><strong>ATP Check</strong> — confirms stock availability on the required date</li>
+            <li><strong>Transfer to MRP</strong> — insufficient stock triggers planning</li>
+            <li><strong>Pricing</strong> — price, discounts, surcharges, taxes, freight</li>
+            <li><strong>Credit Limit Check</strong> — verifies customer's credit exposure</li>
+          </ul>
+        </div>
+      </div>
+      <div class="content-card">
+        <div class="card-title">Post Goods Issue & Billing</div>
+        <div class="card-body">
+          <p><strong>Post Goods Issue (PGI):</strong> The critical event in the shipping process that:</p>
+          <ul class="bullet-list">
+            <li>Reduces inventory in the system</li>
+            <li>Records Cost of Goods Sold</li>
+            <li>Updates the General Ledger</li>
+            <li>Signals legal transfer of ownership to the customer</li>
+          </ul>
+          <p style="margin-top:10px;"><strong>Billing:</strong> Creates Accounts Receivable debit to customer sub-ledger and credit to revenue account. Can be order-based, delivery-based, collective, or split invoicing.</p>
+          <p style="margin-top:10px;"><strong>Document Flow:</strong> Inquiry → Quotation → Sales Order → Delivery → Billing → Accounting Document. Provides full audit trail.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="quiz-area">
+      <div class="quiz-header">
+        <div class="quiz-title">Chapter 5 Quiz</div>
+        <div class="quiz-progress" id="ch5-progress">0 / 20 answered</div>
+        <div class="quiz-score-badge" id="ch5-score"></div>
+      </div>
+      <div id="ch5-questions"></div>
+      <div class="quiz-result" id="ch5-result">
+        <div class="result-score" id="ch5-result-score"></div>
+        <div class="result-label">Score</div>
+        <div class="result-msg" id="ch5-result-msg"></div>
+        <button class="btn btn-ghost" onclick="resetQuiz('ch5')">Retake Quiz</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHAPTER 6 -->
+  <section id="ch6" class="chapter-section">
+    <div class="chapter-header">
+      <div class="chapter-tag">Lecture 6 // Chapter 06</div>
+      <h2 class="chapter-title">Production Planning (PP)</h2>
+      <p class="chapter-intro">PP manages the entire manufacturing cycle — from forecasting demand through to settling production costs. For GBI, PP handles the planning and execution of bicycle assembly from raw materials to finished bikes.</p>
+    </div>
+
+    <div class="content-grid">
+      <div class="content-card">
+        <div class="card-title">PP Planning Hierarchy</div>
+        <div class="card-body">
+          <div class="process-flow" style="flex-direction:column; align-items:flex-start; gap:8px;">
+            <div class="process-step">Forecasting (historical demand → projections)</div>
+            <div style="color:var(--accent); padding-left:16px;">↓</div>
+            <div class="process-step">SOP — Sales & Operations Planning (aggregate)</div>
+            <div style="color:var(--accent); padding-left:16px;">↓</div>
+            <div class="process-step">Demand Management (PIR / CIR)</div>
+            <div style="color:var(--accent); padding-left:16px;">↓</div>
+            <div class="process-step">MPS — Master Production Scheduling</div>
+            <div style="color:var(--accent); padding-left:16px;">↓</div>
+            <div class="process-step">MRP — Material Requirements Planning</div>
+            <div style="color:var(--accent); padding-left:16px;">↓</div>
+            <div class="process-step">Production Orders → Manufacturing → Settlement</div>
+          </div>
+        </div>
+      </div>
+      <div class="content-card">
+        <div class="card-title">Bill of Materials (BOM)</div>
+        <div class="card-body">
+          <p>A BOM is the structured list of all components needed to produce a product — like a recipe's ingredients list.</p>
+          <p style="margin-top:10px;"><strong>Example GBI Bike BOM includes:</strong> Wheel Assembly, Frame, Handle Bar, Seat Kit, Pedal Assembly, Chain, Derailleur Gear Assembly, Brake Kit, Warranty Document, Packaging.</p>
+          <p style="margin-top:10px;"><strong>BOM Types:</strong><br>
+          <em>Single-Level:</em> Only direct components<br>
+          <em>Multi-Level:</em> Explodes all levels (finished → sub-assembly → raw material)<br>
+          <em>Variant BOM:</em> Multiple product variants sharing common parts</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-grid">
+      <div class="content-card">
+        <div class="card-title">MRP — 5 Logical Steps</div>
+        <div class="card-body">
+          <table class="data-table">
+            <tr><th>Step</th><th>Action</th></tr>
+            <tr><td>1. Net Requirements</td><td>Available stock + scheduled receipts − gross requirements = shortage</td></tr>
+            <tr><td>2. Lot Size</td><td>Determines how much to order/produce (Static, Periodic, Optimized)</td></tr>
+            <tr><td>3. Procurement Type</td><td>Buy externally (→ Purchase Requisition) or produce internally (→ Planned Order)</td></tr>
+            <tr><td>4. Scheduling</td><td>Calculates start/finish dates working backward from requirement date</td></tr>
+            <tr><td>5. BOM Explosion</td><td>Generates dependent requirements for all sub-assemblies and raw materials</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="content-card">
+        <div class="card-title">Routing & Work Centers</div>
+        <div class="card-body">
+          <p>If BOM = ingredients list, <strong>Routing</strong> = cooking instructions. Defines what operation to perform, at which Work Center, for how long, in what sequence.</p>
+          <p style="margin-top:10px;"><strong>Work Center:</strong> Where and when an operation is performed — can be a machine, person, production line, or group. Defines available capacity and charge rates.</p>
+          <p style="margin-top:10px;">Example: Operation 20 = "Attach seat to frame" → Work Center ASSY1000 → Time = 1 minute.</p>
+          <p style="margin-top:10px;"><strong>Planning Strategies:</strong><br>
+          <em>Make-to-Stock (MTS):</em> Build ahead of orders using forecasts<br>
+          <em>Make-to-Order (MTO):</em> Produce only when customer orders</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-card wide">
+      <div class="card-title">Production Order Lifecycle</div>
+      <div class="card-body">
+        <table class="data-table">
+          <tr><th>Stage</th><th>Action</th><th>System Effect</th></tr>
+          <tr><td>Create</td><td>Convert Planned Order to Production Order</td><td>Calculates dates, reservations, capacity needs</td></tr>
+          <tr><td>Release</td><td>Authorize execution (header or operation level)</td><td>Status changes to REL; shop floor documents printed</td></tr>
+          <tr><td>Availability Check</td><td>System checks components, PRTs, capacities</td><td>Availability log generated; missing parts identified</td></tr>
+          <tr><td>Material Withdrawal</td><td>Components physically drawn from warehouse</td><td>Inventory reduced; actual costs charged to order</td></tr>
+          <tr><td>Confirmations</td><td>Track progress per operation — yield, scrap, time</td><td>Actual vs. planned costs recorded per operation</td></tr>
+          <tr><td>Goods Receipt</td><td>Finished goods received into stock</td><td>Creates Material Doc, Accounting Doc, CO Doc</td></tr>
+          <tr><td>Order Settlement</td><td>Settle actual costs to receiver objects</td><td>Variances posted; order balance zeroed out</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div id="quiz-area">
+      <div class="quiz-header">
+        <div class="quiz-title">Chapter 6 Quiz</div>
+        <div class="quiz-progress" id="ch6-progress">0 / 20 answered</div>
+        <div class="quiz-score-badge" id="ch6-score"></div>
+      </div>
+      <div id="ch6-questions"></div>
+      <div class="quiz-result" id="ch6-result">
+        <div class="result-score" id="ch6-result-score"></div>
+        <div class="result-label">Score</div>
+        <div class="result-msg" id="ch6-result-msg"></div>
+        <button class="btn btn-ghost" onclick="resetQuiz('ch6')">Retake Quiz</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHAPTER 7 -->
+  <section id="ch7" class="chapter-section">
+    <div class="chapter-header">
+      <div class="chapter-tag">Lecture 7 // Chapter 07</div>
+      <h2 class="chapter-title">Financial Accounting (FI)</h2>
+      <p class="chapter-intro">FI collects all transactional data and provides the foundation for statutory financial reports. It integrates seamlessly with MM, SD, and PP to eliminate manual re-keying while providing a complete audit trail.</p>
+    </div>
+
+    <div class="content-grid">
+      <div class="content-card">
+        <div class="card-title">FI Organizational Structure</div>
+        <div class="card-body">
+          <table class="data-table">
+            <tr><th>Unit</th><th>Description / GBI Example</th></tr>
+            <tr><td>Client</td><td>Entire GBI system — highest level</td></tr>
+            <tr><td>Company Code</td><td>Independent legal accounting unit (US00, DE00, GB00, CA00, AU00)</td></tr>
+            <tr><td>Chart of Accounts</td><td>Classification scheme for all G/L accounts — GBI uses global GL00</td></tr>
+            <tr><td>Credit Control Area</td><td>Grants & monitors customer credit limits — GBI uses global GL00</td></tr>
+            <tr><td>Business Area</td><td>Separate area of operations — GBI Bikes (BI00)</td></tr>
+            <tr><td>Controlling Area</td><td>Internal cost accounting unit — NA00, EU00, AS00</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="content-card">
+        <div class="card-title">The Three Core Financial Statements</div>
+        <div class="card-body">
+          <p><strong>Balance Sheet:</strong> Snapshot of financial position at a point in time. Assets = Liabilities + Equity</p>
+          <ul class="bullet-list">
+            <li>Assets: cash, receivables, inventory, equipment</li>
+            <li>Liabilities: accounts payable, accruals, long-term debt</li>
+            <li>Equity: share capital + retained earnings</li>
+          </ul>
+          <p style="margin-top:10px;"><strong>Income Statement (P&L):</strong> Performance over a period. Net Income = Revenues − Expenses</p>
+          <p style="margin-top:10px;"><strong>Statement of Cash Flows:</strong> Cash changes in Operating, Investing, and Financing activities.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-grid">
+      <div class="content-card">
+        <div class="card-title">SAP Document Principle</div>
+        <div class="card-body">
+          <p>A core architectural concept ensuring internal controls:</p>
+          <ul class="bullet-list">
+            <li>Every business transaction creates a uniquely numbered electronic document stored permanently</li>
+            <li>Documents cannot be deleted — only reversed (original remains)</li>
+            <li>Each document records: responsible person, date/time, commercial content</li>
+            <li>Full Audit Trails — trace any balance back to individual transactions</li>
+            <li>Required by law in most countries worldwide</li>
+          </ul>
+        </div>
+      </div>
+      <div class="content-card">
+        <div class="card-title">FI Integration with Other Modules</div>
+        <div class="card-body">
+          <table class="data-table">
+            <tr><th>Module → FI</th><th>Automatic Posting Generated</th></tr>
+            <tr><td>SD → FI</td><td>Billing → AR debit + Revenue credit</td></tr>
+            <tr><td>MM (GR) → FI</td><td>Inventory debit + GR/IR credit</td></tr>
+            <tr><td>MM (IR) → FI</td><td>GR/IR debit + Vendor AP credit</td></tr>
+            <tr><td>MM (Pay) → FI</td><td>Vendor AP debit + Bank credit</td></tr>
+            <tr><td>PP (GI) → FI</td><td>Cost posting on production order</td></tr>
+            <tr><td>PP (GR) → FI</td><td>Finished goods inventory entry</td></tr>
+            <tr><td>CO → FI</td><td>CO docs accompany FI docs for reconciliation</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <div class="hl-label">Key Concept — G/L & Sub-Ledger Relationship</div>
+      <div class="card-body">The General Ledger contains the total balance for each account (e.g., Accounts Receivable = $850). Individual customer sub-ledgers break this down (Customer 142: $100, Customer 189: $400, Customer 135: $150, Customer 123: $200). Postings to sub-ledgers automatically update the G/L reconciliation account — both are always in sync.</div>
+    </div>
+
+    <div id="quiz-area">
+      <div class="quiz-header">
+        <div class="quiz-title">Chapter 7 Quiz</div>
+        <div class="quiz-progress" id="ch7-progress">0 / 20 answered</div>
+        <div class="quiz-score-badge" id="ch7-score"></div>
+      </div>
+      <div id="ch7-questions"></div>
+      <div class="quiz-result" id="ch7-result">
+        <div class="result-score" id="ch7-result-score"></div>
+        <div class="result-label">Score</div>
+        <div class="result-msg" id="ch7-result-msg"></div>
+        <button class="btn btn-ghost" onclick="resetQuiz('ch7')">Retake Quiz</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+// ── QUIZ DATA ─────────────────────────────────────────────────────────────────
+
+const quizData = {
+  ch1: [
+    { q: "What does ERP stand for?", opts: ["Enterprise Resource Planning","Enterprise Reporting Platform","Extended Resource Protocol","Enterprise Retail Processing"], ans: 0, exp: "ERP = Enterprise Resource Planning — large integrated software managing a firm's business processes." },
+    { q: "SAP was founded in which country and year?", opts: ["USA, 1980","India, 1990","Germany, 1972","UK, 1968"], ans: 2, exp: "SAP was founded in Walldorf, Germany in 1972." },
+    { q: "What does SAP stand for in German?", opts: ["Systems Automation Protocols","Systeme Anwendungen und Produkte in der Datenverarbeitung","Software Applications and Productivity","Standard Accounting Procedures"], ans: 1, exp: "SAP stands for 'Systeme, Anwendungen und Produkte in der Datenverarbeitung' — Systems, Applications, and Products in Data Processing." },
+    { q: "Which of these is NOT a type of ERP implementation?", opts: ["On-Premise","Cloud-Based","Hybrid","Blockchain-Based"], ans: 3, exp: "ERP implementations are On-Premise, Cloud-Based, or Hybrid. Blockchain-Based is not a recognized ERP implementation type." },
+    { q: "What is the problem with a purely Functional organizational structure?", opts: ["Too expensive to maintain","Poor communication and coordination across units causing delays","Too many employees in each department","Lack of technology support"], ans: 1, exp: "Functional structures create silos — separate departments operate independently, leading to poor communication, competing interests, delays, and project overruns." },
+    { q: "Which SAP module handles the acquisition of raw materials from suppliers?", opts: ["SD — Sales & Distribution","PP — Production Planning","MM — Materials Management","FI — Financial Accounting"], ans: 2, exp: "MM (Materials Management) manages the acquisition of raw materials from suppliers and handles materials throughout the supply chain." },
+    { q: "What type of data is a Customer Master in SAP?", opts: ["Transactional Data","Organizational Data","Master Data","Reporting Data"], ans: 2, exp: "Customer Master is Master Data — key business entity created once and reused across many transactions." },
+    { q: "In a centralized information system, what is the main risk?", opts: ["Data is too secure","Single point of failure","Too many servers to manage","Data is hard to synchronize"], ans: 1, exp: "In a centralized system, all data is in one place — easier to control but represents a single point of failure if that system goes down." },
+    { q: "How many customers does SAP have in over 120 countries (approximate)?", opts: ["10,000+","50,000+","95,000+","200,000+"], ans: 2, exp: "SAP has more than 95,000 customers in over 120 countries worldwide." },
+    { q: "Which data type in SAP represents the structure of the enterprise?", opts: ["Master Data","Transactional Data","Organizational Data","Reporting Data"], ans: 2, exp: "Organizational Data represents the structure of the enterprise — how it is organized legally and operationally (Client, Company Code, Plant, Storage Location)." },
+    { q: "What is the SAP module CO responsible for?", opts: ["Customer-facing operations","Internal managerial accounting — cost centres, profit centres","Warehouse bin management","Human resources payroll"], ans: 1, exp: "CO (Controlling) is responsible for internal managerial accounting including cost centres, profit centres, and overhead management." },
+    { q: "SAP NetWeaver serves as:", opts: ["A standalone HR system","The technology platform integrating all SAP and non-SAP components","A customer relationship tool","A manufacturing execution system"], ans: 1, exp: "SAP NetWeaver is the technology platform that integrates all SAP and non-SAP components across the Business Suite." },
+    { q: "Which major ERP vendor produces the Dynamics product line (Great Plains, Navision, Axapta)?", opts: ["Oracle","SAP","Microsoft","Sage Group"], ans: 2, exp: "Microsoft produces the Dynamics ERP product line, which includes Great Plains, Navision, Axapta, and Solomon." },
+    { q: "Transactional data in an ERP system captures:", opts: ["The enterprise organizational hierarchy","Key business entities like customers and vendors","The consequences of executing process steps — dates, quantities, amounts","System configuration settings"], ans: 2, exp: "Transactional data reflects the execution of process steps — capturing what happened, when, and in what quantity." },
+    { q: "SAP ERP is organized into three major pillars. Which of these is NOT one of them?", opts: ["Logistics","Finance","Human Capital Management","Marketing & Sales Analytics"], ans: 3, exp: "SAP ERP's three pillars are Logistics (SD, MM, PP), Finance (FI, CO), and Human Capital Management (HCM). Marketing Analytics is not a pillar." },
+    { q: "How many SAP users are there worldwide approximately?", opts: ["1 million","5 million","12 million","50 million"], ans: 2, exp: "SAP has approximately 12 million users worldwide." },
+    { q: "What is a key benefit of ERP over siloed legacy systems?", opts: ["Higher licensing costs","Reduced IT maintenance due to a single integrated system","More complex user interfaces","Each department has its own database"], ans: 1, exp: "A single integrated ERP system is easier to support than many siloed systems, significantly reducing IT maintenance costs." },
+    { q: "The SAP module ABAP stands for:", opts: ["Advanced Business Analytics Platform","Advanced Business Application Programming","Automated Batch And Processing","Application-Based Accounting Procedures"], ans: 1, exp: "ABAP stands for Advanced Business Application Programming — SAP's proprietary development language." },
+    { q: "Which SAP product manages Supplier Relationship (procurement and vendor collaboration)?", opts: ["SAP CRM","SAP SRM","SAP SCM","SAP PLM"], ans: 1, exp: "SAP SRM (Supplier Relationship Management) handles procurement and vendor collaboration." },
+    { q: "A business process in ERP is defined as:", opts: ["A software module configuration","A collection of coherent activities starting with a trigger and ending with product/service delivery","An employee training program","A database backup procedure"], ans: 1, exp: "A business process is a collection of coherent activities that starts with a trigger and ends with the delivery of one or several products or services." }
+  ],
+  ch2: [
+    { q: "When did Frankenstein Bikes and Heidelberg Composites merge to form Global Bike Inc.?", opts: ["1999","2000","2001","2003"], ans: 2, exp: "Frankenstein Bikes and Heidelberg Composites merged to form Global Bike Inc. in 2001, after John Davis and Peter Schwarz met in 2000." },
+    { q: "Who is responsible for Research, Design, Procurement, and Manufacturing at GBI?", opts: ["John Davis","Peter Schwarz","Both Co-CEOs equally","The Board of Directors"], ans: 1, exp: "Peter Schwarz (Co-CEO) is responsible for Research, Design, Procurement, and Manufacturing — he 'builds products and spends money.'" },
+    { q: "In SAP, the 'Client' level in GBI represents:", opts: ["A single company code","An individual customer","The entire Global Bike Group enterprise","A specific warehouse location"], ans: 2, exp: "The Client is the highest level in SAP and represents the entire enterprise — in GBI's case, the Global Bike Group." },
+    { q: "Which of these is a Semi-Finished Good in GBI's product portfolio?", opts: ["Touring Bike Deluxe Red","Helmet (trading good)","Wheel Assembly","Aluminum Tube (raw material)"], ans: 2, exp: "Wheel Assemblies are Semi-Finished Goods — assembled sub-components that go into the finished bicycle." },
+    { q: "GBI's strategic focus emphasizes which three characteristics?", opts: ["Speed, Variety, and Low Cost","Quality, Toughness, and Performance","Innovation, Sustainability, and Value","Customization, Durability, and Service"], ans: 1, exp: "GBI's strategic focus is on Quality, Toughness, and Performance for professional athletes and prosumers." },
+    { q: "The Order-to-Cash process in GBI integrates which SAP modules?", opts: ["MM and PP only","SD, MM, and FI","FI, CO, and HR","WM, SD, and PP"], ans: 1, exp: "The Order-to-Cash process integrates SD (Sales & Distribution), MM (Materials Management), and FI (Financial Accounting)." },
+    { q: "What does 'prosumer' mean in GBI's target market context?", opts: ["A professional procurement specialist","An enthusiast consumer who demands professional-level products","A person who produces and consumes","A retail distribution partner"], ans: 1, exp: "Prosumer refers to enthusiast consumers who demand professional-level quality — GBI targets both professional athletes and prosumers." },
+    { q: "GBI's German company code is called:", opts: ["Global Bike AG","Global Bike Deutschland","Global Bike Germany GmbH","Heidelberg Composites GmbH"], ans: 2, exp: "The German entity is Global Bike Germany GmbH, which is the German company code in SAP (DE00)." },
+    { q: "Which US locations does GBI have?", opts: ["New York, Chicago, Los Angeles","Dallas, Miami, San Diego","Houston, Atlanta, Boston","Seattle, Denver, Phoenix"], ans: 1, exp: "GBI has three US locations: Dallas, Miami, and San Diego." },
+    { q: "The Procure-to-Pay process spans from:", opts: ["Customer order to cash receipt","Identifying a material need to paying the vendor","Production planning to goods receipt","Sales inquiry to delivery"],  ans: 1, exp: "The Procure-to-Pay process spans from the moment GBI identifies a need for materials to the moment it pays the vendor." },
+    { q: "John Davis started his first company in:", opts: ["1985","1988","1990","1993"], ans: 2, exp: "John Davis won mountain bike championships and started Frankenstein Bikes in 1990." },
+    { q: "Which GBI process involves planning and executing the manufacturing of finished bikes?", opts: ["Sell — Fulfilment","Buy — Procurement","Make — Production","Track — Financial Accounting"], ans: 2, exp: "The 'Make — Production' process handles planning and executing the manufacturing of finished bikes in SAP PP." },
+    { q: "How many company codes does GBI primarily operate with in the module?", opts: ["One (global)","Two (US and Germany)","Four (US, Germany, UK, Australia)","Five"], ans: 1, exp: "GBI primarily operates with two company codes in this module: Global Bike Inc. (US) and Global Bike Germany GmbH (DE)." },
+    { q: "Trading Goods in GBI's product portfolio are:", opts: ["Raw materials purchased for manufacturing","Products manufactured at GBI plants","Items like helmets and gloves purchased for resale","Semi-finished sub-assemblies"], ans: 2, exp: "Trading Goods are accessories (helmets, gloves), safety gear, and other items purchased from vendors and resold without transformation." },
+    { q: "Peter Schwarz's company before the merger was called:", opts: ["Frankenstein Bikes","Schwarz Performance","Heidelberg Composites","Black Forest Frames"], ans: 2, exp: "Peter Schwarz founded Heidelberg Composites — a company making ultra-light composite bike frames — which later merged with Frankenstein Bikes." },
+    { q: "What is the most powerful feature of SAP according to the GBI chapter?", opts: ["Its user interface design","Seamless cross-functional real-time integration","Low implementation cost","Its built-in reporting tools"], ans: 1, exp: "Seamless cross-functional integration is described as one of SAP's most powerful features — a single sales order automatically triggers activities across SD, MM, and FI." },
+    { q: "GBI targets which types of bike markets?", opts: ["Children's bikes only","Commuter and city bikes","Touring and off-road racing","Road racing and track cycling"], ans: 2, exp: "GBI focuses on two markets: Touring (Deluxe and Professional variants) and Off-Road racing (Men's and Women's variants)." },
+    { q: "In SAP hierarchy, what is directly below the Client level?", opts: ["Plant","Storage Location","Company Code","Purchasing Organization"], ans: 2, exp: "The Company Code is directly below the Client level in the SAP organizational hierarchy. It represents an independent legal accounting unit." },
+    { q: "John Davis is responsible for which business areas at GBI?", opts: ["Research, Design, Procurement, and Manufacturing","Sales, Marketing, Service & Support, IT, Finance, and HR","Only Finance and IT","Only Sales and Marketing"], ans: 1, exp: "John Davis (Co-CEO) is responsible for Sales, Marketing, Service & Support, IT, Finance, and Human Resources — he 'sells products and brings in money.'" },
+    { q: "GBI's German locations are:", opts: ["Berlin and Munich","Frankfurt and Stuttgart","Heidelberg and Hamburg","Cologne and Dresden"], ans: 2, exp: "GBI has two German locations: Heidelberg (the historic home of Heidelberg Composites) and Hamburg." }
+  ],
+  ch3: [
+    { q: "What is the correct sequence of the Procure-to-Pay process?", opts: ["PO → PR → GR → IV → Payment","PR → Vendor Selection → PO → Notify Vendor → GR → IV → Payment","GR → PO → PR → IV → Payment","IV → PR → PO → GR → Payment"], ans: 1, exp: "P2P: Purchase Requisition → Vendor Selection → Purchase Order → Notify Vendor → Vendor Shipment → Goods Receipt → Invoice Verification → Payment." },
+    { q: "A Purchase Requisition is:", opts: ["Sent directly to the vendor","A legally binding order","An internal document instructing purchasing to procure something","A financial payment authorization"], ans: 2, exp: "A Purchase Requisition is an INTERNAL document — it is NOT sent to the vendor. It instructs the purchasing department to procure a specific good or service." },
+    { q: "What does GR/IR stand for in the accounting entries?", opts: ["General Rate / Internal Revenue","Goods Receipt / Invoice Receipt","Gross Revenue / Income Report","Goods Return / Item Refund"], ans: 1, exp: "GR/IR stands for Goods Receipt / Invoice Receipt — a clearing account used as an intermediary between inventory and accounts payable." },
+    { q: "Which three-way match is performed during Invoice Verification?", opts: ["Customer Order vs. Delivery vs. Invoice","PO target vs. GR actual vs. Invoice actual","Budget vs. Forecast vs. Actual","Quote vs. PO vs. Payment"], ans: 1, exp: "Invoice Verification performs a three-way match: PO (target quantity and price) vs. GR (actual quantity received) vs. Invoice (actual price charged)." },
+    { q: "The Vendor Master in SAP S/4HANA is created as a:", opts: ["Simple address book entry","Central Business Partner master record with specific roles","Internal material record","Financial journal entry"], ans: 1, exp: "In SAP S/4HANA, vendors are created as central Business Partner master records with roles FLVN00 (FI Vendor) and FLVN01 (Vendor/Purchasing)." },
+    { q: "What is a Purchasing Information Record?", opts: ["A record of all past purchases by a buyer","A link between a specific vendor and a specific material, storing pricing and conditions","A financial document for accounts payable","A warehouse bin assignment record"], ans: 1, exp: "A Purchasing Info Record creates a linkage between a specific Vendor and a specific Material, serving as the default framework for a Purchase Order." },
+    { q: "Movement Type 101 in SAP MM means:", opts: ["Goods issue to production","Return to vendor","Goods receipt into warehouse","Initial stock entry"], ans: 2, exp: "Movement Type 101 = Goods Receipt into warehouse (unrestricted stock). Other key types: 103 (blocked stock GR), 122 (return to vendor), 561 (initial stock entry)." },
+    { q: "How many structural levels does a Purchase Order have?", opts: ["One","Two","Three","Four"], ans: 2, exp: "A Purchase Order has three structural levels: Header (vendor/date/currency), Item Overview (materials/quantities), and Line Item Detail (history/tolerances/schedule)." },
+    { q: "Which sourcing method is used when no existing vendor agreement exists and GBI wants competitive bids?", opts: ["Source List","Outline Agreement","Request for Quotation (RFQ)","Stock Transport Order"], ans: 2, exp: "An RFQ (Request for Quotation) is used when no existing agreement exists — GBI invites vendors to bid, compares quotations, then selects a vendor." },
+    { q: "In the MM-FI integration, when a Goods Receipt is posted, what accounting entry is created?", opts: ["Dr Vendor AP / Cr Bank","Dr Inventory / Cr GR/IR Clearing Account","Dr GR/IR / Cr Vendor AP","Dr Revenue / Cr Inventory"], ans: 1, exp: "Goods Receipt: Dr Inventory $100 / Cr GR/IR Clearing Account $100. No AP impact yet — that comes at Invoice Receipt." },
+    { q: "The Purchasing Organization in MM is responsible for:", opts: ["Warehouse bin assignments","Procuring materials and negotiating conditions with vendors","Managing customer credit limits","Recording financial journal entries"], ans: 1, exp: "The Purchasing Organization is the unit responsible for procuring materials and services, and negotiates conditions (pricing, terms) with vendors." },
+    { q: "What happens to stock quantities after a successful Goods Receipt posting?", opts: ["They decrease","They remain the same","They increase","They are moved to blocked stock only"], ans: 2, exp: "After a Goods Receipt, stock quantities and values are updated (increased), a Material Document is created, an Accounting Document is created, and the PO history is updated." },
+    { q: "Vendor Evaluation in SAP uses scores ranging from:", opts: ["0–10","1–100","0–50","A–F grade scale"], ans: 1, exp: "SAP vendor evaluation uses scores from 1–100 with configurable weight factors per criterion including Price, Quality, and Delivery." },
+    { q: "A Stock Transport Order (STO) is used to:", opts: ["Transfer material from one plant to another within the same enterprise","Order goods from an external vendor","Return goods to a customer","Issue goods to a production order"], ans: 0, exp: "An STO is a purchase order used to transfer material from one plant to another within the same corporate enterprise (internal sourcing)." },
+    { q: "Which of these is data stored in the 'Purchasing Organization Data' section of the Vendor Master?", opts: ["Vendor name and address","Reconciliation account and payment terms","Purchasing currency, incoterms, and vendor partners","Bank account details only"], ans: 2, exp: "Purchasing Organization Data includes purchasing currency, incoterms, salesman's name, and vendor partners — specific to each purchasing organization." },
+    { q: "When the vendor payment is processed, which accounting entry is made?", opts: ["Dr Inventory / Cr Bank","Dr Vendor AP / Cr Bank","Dr GR/IR / Cr Bank","Dr Revenue / Cr Vendor AP"], ans: 1, exp: "Vendor Payment: Dr Vendor AP / Cr Bank — this clears the accounts payable liability and reduces the bank account balance." },
+    { q: "What does MAP stand for in the Material Master Accounting view?", opts: ["Material Allocation Price","Moving Average Price","Maximum Allowable Payment","Material Audit Parameter"], ans: 1, exp: "MAP = Moving Average Price — the material valuation method that updates automatically based on each goods receipt, recalculating the average cost." },
+    { q: "Which MM functionality handles Material Requirements Planning?", opts: ["Invoice Verification","Inventory Management","MRP / Material Requirements Planning","Purchasing Information Records"], ans: 2, exp: "MRP (Material Requirements Planning) is a key MM functionality that calculates what materials are needed, in what quantities, and by when." },
+    { q: "A Purchase Order can be created in which ways?", opts: ["Only manually","Only automatically by MRP","Manually (with or without reference) or automatically by the system","Only from an approved quotation"], ans: 2, exp: "POs can be created manually (with or without reference to a requisition, RFQ, or prior PO) or automatically generated by the system." },
+    { q: "Goods can be received into three destinations. Which of these is NOT one of them?", opts: ["Unrestricted Use","Quality Inspection","GR Blocked Stock","Customer Consignment Stock"], ans: 3, exp: "The three GR destinations are: Unrestricted Use, Quality Inspection, and GR Blocked Stock. Customer Consignment Stock is not a GR destination." }
+  ],
+  ch4: [
+    { q: "What is the smallest addressable location unit in a SAP WM warehouse?", opts: ["Storage Location","Warehouse Number","Storage Bin","Storage Type"], ans: 2, exp: "The Storage Bin is the smallest addressable unit in a warehouse — it identifies the exact physical location (e.g., STBN-2-000 through STBN-2-999 in GBI)." },
+    { q: "How does WM differ from Inventory Management (MM) in terms of granularity?", opts: ["WM tracks only financial values; IM tracks quantities","IM tracks at Storage Location level; WM tracks down to the exact bin","WM is less precise than IM","They track at the same level"], ans: 1, exp: "Inventory Management (part of MM) tracks quantities at the Storage Location level. WM provides much finer granularity — tracking materials to the exact bin." },
+    { q: "What is a Transfer Order (TO) in WM?", opts: ["A purchase order for inter-plant transfers","The central execution document requiring every material movement — real or logical","A document requesting a vendor transfer","A financial document for stock transfers"], ans: 1, exp: "The Transfer Order (TO) is the central execution document in WM. Every material movement requires a TO — it contains source bin, destination bin, material, and quantity." },
+    { q: "A Transfer Requirement (TR) in WM is:", opts: ["A request to transfer materials from source to destination bin at a specific time","An accounting document for stock movements","A document sent to vendors","A physical counting sheet"], ans: 0, exp: "A TR is a request to transfer materials from a source bin to a destination bin at a specific time — it represents expected/scheduled movements and is normally auto-generated." },
+    { q: "Which WM organizational unit is responsible for processing outbound shipments?", opts: ["Storage Location","Shipping Point","Warehouse Number","Allocation Zone"], ans: 1, exp: "The Shipping Point is the organizational unit responsible for determining shipping type, shipping materials, and means of transport for outbound shipments." },
+    { q: "What is a 'Quant' in SAP S/4HANA WM?", opts: ["A unit of warehouse capacity","The smallest addressable unit for a specific material in a storage bin","A physical inventory counting method","A type of transfer order"], ans: 1, exp: "A Quant is the smallest addressable unit of measure for a specific material in a storage bin. It holds total stock, available stock, batch, plant/storage location information." },
+    { q: "In the WM Goods Receipt process, what does the system generate after a GR posting in MM?", opts: ["A Purchase Order","A Transfer Order directly","A Transfer Requirement","A Posting Change Notice"], ans: 2, exp: "After a GR posting in Inventory Management, the system automatically generates a Transfer Requirement (TR) in WM, which is then converted to a Transfer Order." },
+    { q: "A Stock Transport Order (STO) is used in WM for:", opts: ["Purchasing from external vendors","Transferring material from one plant to another within the same enterprise","Processing customer returns","Physical inventory counting"], ans: 1, exp: "An STO is a purchase order used to transfer material from one plant to another within the same corporate enterprise — allowing delivery costs to be charged to the material." },
+    { q: "What type of WM inventory method counts the highest-velocity materials most frequently?", opts: ["Periodic Inventory","Continuous Inventory","Zero Stock Check","Cycle Counting"], ans: 3, exp: "Cycle Counting counts high-velocity materials more frequently than slow-moving ones, based on ABC classification of material turnover rates." },
+    { q: "Hazard Master Data in WM stores which of the following?", opts: ["Material pricing history","Storage class, water pollution class, flash point, and aggregate state","Customer credit limits","Vendor evaluation scores"], ans: 1, exp: "Hazard Master Data stores: Storage class, Water pollution class, Flash point, Aggregate state (solid/liquid/gas), hazardous material warning text for proper storage segregation." },
+    { q: "A Transfer Posting in WM:", opts: ["Physically moves goods from one location to another","Changes stock type, material number, or batch — may involve physical move","Creates a purchase order for transfers","Is always combined with a physical movement"], ans: 1, exp: "A Transfer Posting changes the stock type, material number, or batch number. It may or may not involve a physical move (e.g., changing quality inspection stock to unrestricted)." },
+    { q: "Which physical inventory method counts all stock at a fixed point in time (typically year-end)?", opts: ["Continuous Inventory","Cycle Counting","Periodic Inventory","Sample-Based Inventory"], ans: 2, exp: "Periodic Inventory counts all stock at a fixed point in time — typically at year-end — covering the entire warehouse in one counting exercise." },
+    { q: "What is an Allocation Zone in WM?", opts: ["A zone for hazardous materials only","A temporary staging area for goods just arrived or about to be shipped","The permanent storage area for finished goods","The administrative area for WM staff"], ans: 1, exp: "An Allocation Zone is a temporary staging area for goods that have just arrived at the warehouse or are about to be shipped out." },
+    { q: "In GBI's WM, what are examples of Storage Types?", opts: ["Dallas, Miami, San Diego","FG00, TG00, RM00","Shelf Storage, Pallet Storage, GR Area, Stock Transfer Area, Shipping Area","STBN-2-000, STBN-2-001, STBN-2-002"], ans: 2, exp: "GBI's Storage Types include: Shelf Storage, Pallet Storage, GR Area for External Receipts, Stock Transfer Area, and Shipping Area — each with different physical characteristics." },
+    { q: "Batch Master Data in WM includes:", opts: ["Material pricing and vendor details","Expiration date, inspection date, basic data, trading data — enabling full traceability","Storage bin coordinates and capacity","Customer delivery preferences"], ans: 1, exp: "Batch Master Data includes Basic Data (expiration date, inspection date), Trading data, Administration data, and Classification data — enabling full batch traceability." },
+    { q: "How can a Transfer Order be created?", opts: ["Only manually by a warehouse supervisor","Only automatically by the system","Manual, direct TO creation, automatic, or from Delivery Monitor","Only from a Transfer Requirement"], ans: 2, exp: "TOs can be created: manually (from TR/PCN/material doc), directly without a preceding TR, automatically based on configured rules, or from the Delivery Monitor." },
+    { q: "What does a Warehouse Door represent in WM?", opts: ["The main entrance to the company building","The point where means of transport changes from external to internal (e.g., truck to forklift)","A security checkpoint in the warehouse","A type of storage bin"], ans: 1, exp: "A Warehouse Door is the point where the means of transport changes — e.g., where a delivery truck hands off to an internal forklift for goods to move into storage." },
+    { q: "Zero Stock Check in WM is triggered when:", opts: ["Stock falls below the safety stock level","The system shows a bin as empty — triggering a physical check to confirm","A material expires","A new vendor delivers goods"], ans: 1, exp: "Zero Stock Check: when the system indicates a bin is empty, a physical check is automatically triggered to confirm the bin is actually empty in reality." },
+    { q: "What is a Posting Change Notice (PCN) in WM?", opts: ["A GR document from a vendor","Similar to a TR but generated by posting change processes — not necessarily combined with physical movement","A purchase order for stock movements","A financial accounting document"], ans: 1, exp: "A PCN is generated by posting change processes in WM-administered stocks. Like a TR but may not involve physical movement (e.g., changing stock type without moving goods)." },
+    { q: "In GBI, the San Diego warehouse is represented as which WM organizational unit?", opts: ["Storage Location","Storage Type","Warehouse Number","Storage Section"], ans: 2, exp: "The San Diego Warehouse is identified as a distinct Warehouse Number in WM — representing the complex physical warehouse structure at that location." }
+  ],
+  ch5: [
+    { q: "What is the correct sequence of the Order-to-Cash process?", opts: ["Sales Order → Inquiry → Delivery → Billing → Payment","Inquiry → Quotation → Sales Order → Delivery → PGI → Billing → Payment","Quotation → Sales Order → Billing → Delivery → Payment","Sales Order → Delivery → Inquiry → Billing → Payment"], ans: 1, exp: "OTC sequence: Inquiry (optional) → Quotation (optional) → Sales Order → Delivery → Post Goods Issue → Billing → Payment." },
+    { q: "What is a Sales Area in SAP SD?", opts: ["A physical location where sales happen","The combination of Sales Organization + Distribution Channel + Division","A customer segment classification","The geographic territory of a salesperson"], ans: 1, exp: "A Sales Area = Sales Organization + Distribution Channel + Division. This combination drives all pricing and conditions for sales transactions." },
+    { q: "Post Goods Issue (PGI) is significant because it:", opts: ["Creates the customer's invoice","Registers the customer's order in the system","Reduces inventory, records COGS, updates G/L, and signals legal transfer of ownership","Confirms the customer's payment was received"], ans: 2, exp: "PGI is the critical shipping event that: reduces inventory, records Cost of Goods Sold, updates the General Ledger, and signals the legal transfer of ownership to the customer." },
+    { q: "In Backward Scheduling, the system starts from:", opts: ["Today's date and works forward","The earliest possible material availability date","The customer's requested delivery date and works backward","The shipping point's schedule"], ans: 2, exp: "Backward Scheduling starts from the customer's requested delivery date and works backward to calculate material availability, loading, picking, and transportation dates." },
+    { q: "What is an ATP check in the SD Order-to-Cash process?", opts: ["An automated tax processing check","An Available-to-Promise check that determines material availability on the required date","An accounts payable verification","An authority to pay authorization"], ans: 1, exp: "ATP (Available-to-Promise) check determines the material availability date by considering all inward and outward inventory movements to confirm stock will be available." },
+    { q: "Which SD organizational unit grants and monitors customer credit limits?", opts: ["Sales Organization","Distribution Channel","Credit Control Area","Shipping Point"], ans: 2, exp: "The Credit Control Area is the organizational entity that grants and monitors credit limits for customers. GBI has one global credit control area (GL00)." },
+    { q: "GBI's Distribution Channels are:", opts: ["Bicycles and Accessories","Wholesale and Internet","Dallas and Miami","US East and US West"], ans: 1, exp: "GBI uses two Distribution Channels: Wholesale (WH) for business customers and Internet (IN) for online sales." },
+    { q: "A Quotation in SD is:", opts: ["An informal price estimate with no commitment","A legally binding offer from GBI to deliver specific products at a defined price in a specific timeframe","A customer request for information only","An internal document for pricing analysis"], ans: 1, exp: "A Quotation is a legally binding offer — once issued, GBI is committed to the stated terms (product, price, delivery date)." },
+    { q: "The Sales Order document has three structural levels. What are they?", opts: ["Header, Line Items, and Schedule Lines","Quote, Order, and Invoice","Customer, Material, and Price","Pre-Sales, Sales, and Post-Sales"], ans: 0, exp: "Sales Order structure: Header (customer data, total value, terms), Line Items (individual products and pricing), and Schedule Lines (delivery quantities and dates per item)." },
+    { q: "Forward Scheduling is used when:", opts: ["The customer requests a future date","The requested delivery date can be met","The requested delivery date cannot be met — system finds earliest possible delivery","The sales order is cancelled"], ans: 2, exp: "Forward Scheduling is used when the requested delivery date cannot be met. The system starts from earliest material availability and works forward to find the earliest possible delivery." },
+    { q: "What does GBI's standard Pick & Pack Time equal?", opts: ["1 day","2 days","3 days","5 days"], ans: 1, exp: "GBI's standard scheduling parameters include Pick & Pack Time of 2 days, Transit Time of 2 days, Loading Time of 1 day, and Transportation Scheduling Time of 1 day." },
+    { q: "An Inquiry in SD is:", opts: ["A legally binding offer from GBI","A customer's request for information about availability, pricing, or delivery — no obligation to purchase","A sales order with payment terms","A delivery document"], ans: 1, exp: "An Inquiry is a customer's request for information (availability, pricing, delivery) without any obligation to purchase. It serves as the basis for creating a quotation." },
+    { q: "When a billing document is created, what accounting posting is made to the customer's account?", opts: ["Credit to Accounts Receivable","Debit to Accounts Receivable sub-ledger and credit to revenue account","Debit to bank and credit to revenue","Debit to inventory and credit to cost of goods sold"], ans: 1, exp: "Billing creates: a debit to the customer's Accounts Receivable sub-ledger, a credit to the revenue account, and updates the customer's credit status." },
+    { q: "What is the purpose of SAP's Document Flow feature in SD?", opts: ["To manage warehouse bin assignments","To provide a complete audit trail of linked documents from inquiry to accounting document","To calculate optimal delivery routes","To process customer refunds"], ans: 1, exp: "Document Flow provides a complete audit trail: Inquiry → Quotation → Sales Order → Delivery → Billing Document → Accounting Document. Status updates automatically." },
+    { q: "Which GBI Divisions are used in SD?", opts: ["North America, Europe, Asia","Bicycles (BI), Accessories (AS), Cross-Division (00)","Touring, Off-Road, Accessories","Wholesale, Internet, Direct"], ans: 1, exp: "GBI uses three Divisions: Bicycles (BI), Accessories (AS), and a Cross-Division (00) used for products that span divisions." },
+    { q: "Collective invoicing in SD means:", opts: ["One invoice per customer per month only","Multiple deliveries combined into a single invoice","One delivery split into multiple invoices","Invoices sent automatically without review"], ans: 1, exp: "Collective invoicing = multiple deliveries combined into a single invoice. Conversely, split invoicing = one delivery split into multiple invoices." },
+    { q: "The Customer Master in SD is organized into three data areas. Which is at the client level?", opts: ["Sales Area Data","Company Code Data","General Data (name, address, communication)","Credit Control Data"], ans: 2, exp: "General Data (customer name, address, communication details) is at the Client level — applying to all company codes and sales areas. The other two areas are Company Code Data and Sales Area Data." },
+    { q: "Which SD condition type could include VAT or sales tax?", opts: ["Price","Surcharge","Discount","Tax"], ans: 3, exp: "Tax is a condition type in SAP SD's pricing engine, determined by customer location. Other condition types include Prices, Surcharges, Discounts, and Freight." },
+    { q: "The Shipping process is initiated by creating:", opts: ["A billing document","A sales order","An Outbound Delivery document","A goods issue posting"], ans: 2, exp: "The shipping process begins with creating an Outbound Delivery document from the sales order. This controls picking, packing, loading, and Post Goods Issue." },
+    { q: "When does a credit limit check occur in the SD process?", opts: ["During delivery","When the billing document is created","During sales order creation","After payment is received"], ans: 2, exp: "The credit limit check occurs during sales order creation — it verifies the customer's credit exposure and can block the order if the credit limit would be exceeded." }
+  ],
+  ch6: [
+    { q: "What is a Bill of Materials (BOM) in SAP PP?", opts: ["The cost breakdown of a production order","A structured list of all components, sub-assemblies, and raw materials needed to produce a product","The production schedule for a week","A list of approved vendors for raw materials"], ans: 1, exp: "A BOM is the structured list of all components, sub-assemblies, and raw materials that make up a product — think of it as the 'ingredients list' for manufacturing." },
+    { q: "If BOM is the ingredients list, what is a Routing?", opts: ["The storage location for finished goods","The cooking instructions — the sequence of operations required to produce a product","The procurement list for raw materials","The quality inspection checklist"], ans: 1, exp: "A Routing is the production 'recipe method' — the sequence of operations (steps) required to produce a product, defining what, where, how long, and in what sequence." },
+    { q: "What does MRP stand for in PP?", opts: ["Master Resource Protocol","Manufacturing Review Process","Material Requirements Planning","Master Routing Plan"], ans: 2, exp: "MRP = Material Requirements Planning — the engine that calculates what materials to procure/produce, in what quantities, and by when." },
+    { q: "In Make-to-Stock (MTS) production, what drives the production plan?", opts: ["Actual customer sales orders","Forecasted independent requirements built up before orders arrive","Engineering change requests","Vendor availability calendars"], ans: 1, exp: "Make-to-Stock is driven by forecasted Planned Independent Requirements (PIR) — inventory is built in advance of actual customer orders." },
+    { q: "What is the difference between Independent and Dependent Demand?", opts: ["Independent demand comes from internal departments; dependent from external customers","Independent demand originates externally (customers ordering bikes); dependent demand derives from it (wheels needed because bikes are ordered)","There is no difference in SAP","Independent demand is forecasted; dependent is real"], ans: 1, exp: "Independent Demand: external demand for finished goods (customer orders 100 bikes). Dependent Demand: derived from independent demand (100 bikes needs 200 wheels)." },
+    { q: "MRP executes how many logical steps?", opts: ["Three","Four","Five","Seven"], ans: 2, exp: "MRP executes 5 logical steps: 1) Net Requirements Calculation, 2) Lot Size Calculation, 3) Procurement Type, 4) Scheduling, 5) BOM Explosion." },
+    { q: "What does BOM Explosion do in the MRP process?", opts: ["Deletes the BOM after use","Generates dependent requirements for all sub-assemblies and raw materials from a planned production order","Creates the production order","Calculates the cost of production"], ans: 1, exp: "BOM Explosion: MRP explodes the BOM to generate dependent requirements for all sub-assemblies and raw materials needed to produce the planned quantity." },
+    { q: "A Production Order must be 'Released' before it can be executed. What status does it get?", opts: ["CRTD (Created)","PREL (Partially Released)","REL (Released)","CONF (Confirmed)"], ans: 2, exp: "Upon release at the header level, the Production Order status changes to REL (Released), authorizing shop floor execution. PREL indicates partial/operation-level release." },
+    { q: "What is a Work Center in SAP PP?", opts: ["A physical storage location for finished goods","An organizational unit defining where and when an operation is performed — has available capacity","A planning calendar for MRP runs","A cost center for financial accounting"], ans: 1, exp: "A Work Center is where value-added work is performed — it can be a machine, person, production line, or group. It defines capacity for planning and charge rates for costing." },
+    { q: "Planned Independent Requirements (PIR) are used in which planning strategy?", opts: ["Make-to-Order only","Make-to-Stock — demand forecasted independent of actual customer orders","Both Make-to-Order and Make-to-Stock equally","Neither — PIR is used in MRP only"], ans: 1, exp: "PIR (Planned Independent Requirements) are used in Make-to-Stock strategies — representing demand forecasted independent of actual customer orders." },
+    { q: "Sales and Operations Planning (SOP) consists of which three planning layers?", opts: ["Material Plan, Capacity Plan, Financial Plan","Sales Plan, Production Plan, and Rough-Cut Capacity Plan","Demand Plan, Supply Plan, Resource Plan","Forecast, MPS, MRP"], ans: 1, exp: "SOP's three layers: Sales Plan (how many units to sell?), Production Plan (how many to produce?), and Rough-Cut Capacity Plan (do we have enough capacity?)." },
+    { q: "What is Order Settlement in PP?", opts: ["Creating a purchase order for raw materials","The process of closing out a Production Order by settling actual costs to receiver objects","Confirming the quantity produced on the shop floor","Releasing a production order for execution"], ans: 1, exp: "Order Settlement closes out a Production Order by settling all actual costs to receivers (material, cost center, internal order, etc.) and zeroing the order balance." },
+    { q: "A Variant BOM is used when:", opts: ["Only one product variant exists","Multiple product variants share a large proportion of identical parts","Raw materials vary by season","The BOM changes every production run"], ans: 1, exp: "A Variant BOM is used when multiple product variants share many identical parts — e.g., GBI's Deluxe Bike Red vs. Professional Bike Black differ mainly in frame color and wheel type." },
+    { q: "MRP Type 'VB' in the Material Master means:", opts: ["Standard MRP driven by planned requirements","Reorder Point Planning — triggered when stock falls below a fixed reorder point","Forecast-Based planning","No MRP/consumption-based planning"], ans: 1, exp: "MRP Type VB = Reorder Point Planning — replenishment is triggered automatically when stock falls below a fixed reorder point level defined in the Material Master." },
+    { q: "What do Confirmations capture in the Production Order lifecycle?", opts: ["Financial journal entries only","Quantities (yield, scrap, rework), actual times, dates, personnel, and goods movements per operation","Customer delivery status","Vendor invoice data"], ans: 1, exp: "Confirmations track progress per operation: quantities (yield, scrap, rework), actual setup/machine times, start/finish dates, personnel data, and any unplanned material consumptions." },
+    { q: "Demand Management is described as 'the link between':", opts: ["Vendors and customers","SOP (strategic planning) and MPS/MRP (detailed planning)","Production and Financial Accounting","MM and SD modules"], ans: 1, exp: "Demand Management is the link between strategic planning (SOP) and detailed planning (MPS/MRP). It defines what to produce, when, how much, and the planning strategy." },
+    { q: "What happens to inventory when Material Withdrawal (Goods Issue to Production) is posted?", opts: ["Inventory increases","Inventory remains unchanged","Inventory decreases; actual costs are charged to the Production Order","A vendor payment is triggered"], ans: 2, exp: "Material Withdrawal: updates the reservation (reducing reserved quantity), reduces inventory stock, and assigns actual material costs to the Production Order." },
+    { q: "Which MRP type means 'Forecast-Based Planning'?", opts: ["PD","VB","VV","RP"], ans: 2, exp: "MRP Type VV = Forecast-Based Planning — replenishment is based on consumption forecasts rather than planned requirements or a fixed reorder point." },
+    { q: "What does 'Discrete Manufacturing' mean in the context of SAP PP?", opts: ["Manufacturing chemical or pharmaceutical products in batches","Producing distinct, countable units — the primary GBI scenario (individual bicycles)","High-volume standardized production on assembly lines","Signal-based lean manufacturing (KANBAN)"], ans: 1, exp: "Discrete Manufacturing produces distinct, countable units (e.g., individual bicycles) — this is GBI's primary manufacturing scenario, as opposed to process industries or repetitive manufacturing." },
+    { q: "A Goods Receipt from Production creates how many documents?", opts: ["One document only","Two documents","Three documents: Material Document, Accounting Document, and Controlling Document","Four documents including a vendor invoice"], ans: 2, exp: "Goods Receipt from Production creates THREE documents: a Material Document (physical movement), an Accounting Document (inventory value), and a Controlling Document (CO posting)." }
+  ],
+  ch7: [
+    { q: "What is the fundamental accounting equation in the Balance Sheet?", opts: ["Revenue = Assets − Liabilities","Assets = Liabilities + Equity","Net Income = Revenue − Expenses","Cash = Inflows − Outflows"], ans: 1, exp: "The fundamental accounting equation is: Assets = Liabilities + Equity. The Balance Sheet always balances because of this equation." },
+    { q: "What is a Company Code in SAP FI?", opts: ["A code for classifying customers","An independent legal accounting unit maintaining a complete set of books","A number assigned to each transaction","A warehouse code for inventory tracking"], ans: 1, exp: "A Company Code represents an independent legal accounting unit. A balanced set of books (as required by law) is maintained at this level. GBI has codes US00, DE00, GB00, CA00, AU00." },
+    { q: "The SAP Document Principle states that posted documents:", opts: ["Can be deleted by managers","Are automatically archived after 7 years","Cannot be deleted — only reversed; the original record remains permanently","Are shared across all company codes automatically"], ans: 2, exp: "The SAP Document Principle: documents cannot be deleted. They are permanent once written. They can be reversed but the original record always remains in the database." },
+    { q: "GBI uses which Chart of Accounts for all company codes?", opts: ["One per country (US, DE, UK, etc.)","A separate one for each company code","A single global Chart of Accounts (GL00)","Two — one for the US entity and one for Germany"], ans: 2, exp: "GBI uses a single global Chart of Accounts (GL00) shared across all company codes, ensuring consistent G/L account classification across the entire enterprise." },
+    { q: "Financial Accounting (FI) primarily produces reports for which audience?", opts: ["Only internal management","Only employees","Primarily external parties (auditors, banks, shareholders, tax authorities)","Only the SAP system administrators"], ans: 2, exp: "FI is designed for external parties — legal authorities, banks, auditors, shareholders, insurance companies, tax authorities, and financial analysts — though it also serves internal audiences." },
+    { q: "When SD creates a billing document, what FI posting is automatically generated?", opts: ["Dr Bank / Cr Revenue","Dr Accounts Receivable / Cr Revenue","Dr Inventory / Cr Cost of Goods Sold","Dr Vendor AP / Cr Bank"], ans: 1, exp: "SD Billing → FI: Debit to the customer's Accounts Receivable sub-ledger and Credit to the Revenue account. This is generated automatically without manual entry." },
+    { q: "The Statement of Cash Flows categorizes cash movements into which three activities?", opts: ["Sales, Procurement, and Production","Operating, Investing, and Financing Activities","Revenue, Expense, and Capital Activities","Inflow, Outflow, and Net Change"], ans: 1, exp: "The Statement of Cash Flows categorizes: Operating Activities (core business), Investing Activities (long-term assets), and Financing Activities (debt and equity transactions)." },
+    { q: "What is the purpose of Audit Trails in SAP FI?", opts: ["To track employee clock-in times","To allow auditors to trace any balance on a financial statement back to individual transactions","To monitor warehouse bin movements","To compare budgets to actuals"], ans: 1, exp: "Audit Trails enable tracing from any financial statement balance back through the individual transactions that created it. Required by law in most countries worldwide." },
+    { q: "In the G/L sub-ledger relationship, if total AR = $850, which statement is true?", opts: ["Each customer owes $850","Individual customer accounts sum to $850, reconciling to the G/L AR account","The bank account holds $850","$850 must be paid to vendors"], ans: 1, exp: "The G/L AR account shows the total ($850), while individual customer sub-ledger accounts break this down (Customer 142: $100, Customer 189: $400, etc.) — always in sync." },
+    { q: "Which of these is a Financing Activity in the Statement of Cash Flows?", opts: ["Purchasing new machinery","Collecting cash from customers","Issuing shares of stock or repaying debt","Paying employee salaries"], ans: 2, exp: "Financing Activities include debt and equity transactions — issuing shares, repaying loans, paying dividends. Purchasing machinery = Investing. Collecting cash = Operating." },
+    { q: "GBI's Controlling Areas are:", opts: ["US00 and DE00","GL00 only","NA00 (North America), EU00 (Europe), AS00 (Asia)","BI00, AS00, and 00 (Cross-Division)"], ans: 2, exp: "GBI has separate Controlling Areas for: North America (NA00), Europe (EU00), and Asia (AS00) — used for internal cost accounting in the CO module." },
+    { q: "What does the Income Statement show?", opts: ["Assets and liabilities at a point in time","Financial performance over a period — revenues minus expenses = net income","Changes in cash position over a period","Capital expenditures and depreciation only"], ans: 1, exp: "The Income Statement (P&L) shows financial performance over a period. Net Income = Revenues − Expenses. It covers a period (monthly, quarterly, or annually)." },
+    { q: "When PP posts a Material Withdrawal (Goods Issue to Production), what FI posting occurs?", opts: ["Dr Inventory / Cr Bank","Dr Cost on Production Order / Cr Inventory","Dr Vendor AP / Cr Inventory","Dr Revenue / Cr Inventory"], ans: 1, exp: "PP Material Withdrawal → FI: Cost is debited to the Production Order (reducing inventory value) and credited from Inventory stock accounts." },
+    { q: "What is the Business Area 'BI00' in GBI?", opts: ["A billing identification code","A bank institution code","Business Area Bikes — representing a separate area of operations for internal reporting","A budget item code"], ans: 2, exp: "Business Area BI00 represents Bikes — a separate area of operations within GBI. Financial statements can be created at the Business Area level for internal reporting purposes." },
+    { q: "In SAP FI, journal entries can be posted in which ways?", opts: ["Only manually by accountants","Only automatically by other modules","Manually (journal entries, period-end adjustments) or automatically (triggered by goods receipts, billing, payroll)","Only via batch import files"], ans: 2, exp: "FI postings can be manual (journal entries, adjustments) or automatic (triggered by MM goods receipts, SD billing, PP production activities, HR payroll)." },
+    { q: "Fixed Assets (property, equipment) appear in which section of the Balance Sheet?", opts: ["Current Assets","Long-term Liabilities","Equity","Non-current/Fixed Assets"], ans: 3, exp: "Fixed Assets (property, plant, equipment) appear in the Non-current/Fixed Assets section of the Balance Sheet, as opposed to Current Assets (cash, receivables, inventory)." },
+    { q: "MM Invoice Receipt generates which FI posting automatically?", opts: ["Dr Inventory / Cr GR/IR","Dr GR/IR Clearing / Cr Vendor AP","Dr Bank / Cr Vendor AP","Dr Revenue / Cr Vendor AP"], ans: 1, exp: "MM Invoice Receipt → FI: Dr GR/IR Clearing / Cr Vendor AP $100. This recognizes the liability to the vendor after the three-way match is confirmed." },
+    { q: "Retained Earnings in the Balance Sheet represent:", opts: ["Cash available in the bank","Profits accumulated from prior periods minus dividends paid","Total revenue for the year","The par value of shares issued"], ans: 1, exp: "Retained Earnings are the accumulated profits from prior periods that have not been distributed as dividends — they form part of Owners' Equity on the Balance Sheet." },
+    { q: "Why are Audit Trails 'required by law' in most countries?", opts: ["To meet SAP licensing requirements","Because laws require companies to maintain verifiable records of all financial transactions for regulators and auditors","To satisfy internal IT security policies","Because ABAP programming requires it"], ans: 1, exp: "Most countries' accounting laws require companies to maintain complete, verifiable records of all financial transactions. SAP's document principle ensures this legal compliance." },
+    { q: "What accounting entry is made when a customer pays their invoice?", opts: ["Dr Revenue / Cr Accounts Receivable","Dr Bank / Cr Accounts Receivable (clearing the AR balance)","Dr Accounts Payable / Cr Bank","Dr Inventory / Cr Revenue"], ans: 1, exp: "Customer Payment: Dr Bank / Cr Accounts Receivable — this creates a clearing posting that reduces the AR balance (liability clears) and increases the bank account." }
+  ]
+};
+
+// ── STATE ──────────────────────────────────────────────────────────────────────
+const state = {};
+['ch1','ch2','ch3','ch4','ch5','ch6','ch7'].forEach(ch => {
+  state[ch] = { answered: 0, score: 0, done: false, userAnswers: {} };
+});
+
+// ── RENDER QUESTIONS ──────────────────────────────────────────────────────────
+function renderQuestions(ch) {
+  const container = document.getElementById(`${ch}-questions`);
+  if (container.children.length > 0) return; // already rendered
+  const qs = quizData[ch];
+  container.innerHTML = qs.map((q, i) => `
+    <div class="question-card" id="${ch}-q${i}">
+      <div class="q-num">QUESTION ${i+1} OF ${qs.length}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="options">
+        ${q.opts.map((opt, j) => `
+          <div class="option" id="${ch}-q${i}-opt${j}" onclick="selectAnswer('${ch}', ${i}, ${j})">
+            <span class="option-letter">${String.fromCharCode(65+j)}</span>
+            <span>${opt}</span>
+          </div>
+        `).join('')}
+      </div>
+      <div class="explanation" id="${ch}-q${i}-exp">${q.exp}</div>
+    </div>
+  `).join('');
+}
+
+// ── SELECT ANSWER ──────────────────────────────────────────────────────────────
+function selectAnswer(ch, qIdx, optIdx) {
+  if (state[ch].userAnswers[qIdx] !== undefined) return; // already answered
+  const q = quizData[ch][qIdx];
+  const isCorrect = optIdx === q.ans;
+
+  state[ch].userAnswers[qIdx] = optIdx;
+  state[ch].answered++;
+  if (isCorrect) state[ch].score++;
+
+  // Mark options
+  const opts = document.querySelectorAll(`[id^="${ch}-q${qIdx}-opt"]`);
+  opts.forEach((el, j) => {
+    el.classList.add('disabled');
+    if (j === q.ans) el.classList.add('correct-opt');
+    if (j === optIdx && !isCorrect) el.classList.add('wrong-opt');
+    if (j === optIdx) el.classList.add('selected');
+  });
+
+  // Card border
+  const card = document.getElementById(`${ch}-q${qIdx}`);
+  card.classList.add(isCorrect ? 'correct' : 'wrong');
+
+  // Show explanation
+  document.getElementById(`${ch}-q${qIdx}-exp`).classList.add('show');
+
+  // Update progress
+  updateProgress(ch);
+
+  // Show result if all done
+  if (state[ch].answered === quizData[ch].length) showResult(ch);
+}
+
+// ── PROGRESS ──────────────────────────────────────────────────────────────────
+function updateProgress(ch) {
+  const { answered, score } = state[ch];
+  const total = quizData[ch].length;
+  document.getElementById(`${ch}-progress`).textContent = `${answered} / ${total} answered`;
+  if (answered > 0) {
+    const badge = document.getElementById(`${ch}-score`);
+    badge.style.display = 'block';
+    badge.textContent = `Score: ${score} / ${answered}`;
+  }
+}
+
+// ── RESULT ────────────────────────────────────────────────────────────────────
+function showResult(ch) {
+  const { score } = state[ch];
+  const total = quizData[ch].length;
+  const pct = Math.round(score / total * 100);
+  const resultEl = document.getElementById(`${ch}-result`);
+  document.getElementById(`${ch}-result-score`).textContent = `${score}/${total}`;
+  let msg = '';
+  if (pct >= 90) msg = '🎉 Excellent! You have mastered this chapter.';
+  else if (pct >= 70) msg = '👍 Good work! Review the questions you missed.';
+  else if (pct >= 50) msg = '📚 Passing. Revisit the chapter content and try again.';
+  else msg = '🔄 Keep studying! Read through the chapter carefully and retake.';
+  document.getElementById(`${ch}-result-msg`).textContent = `${pct}% — ${msg}`;
+  resultEl.classList.add('show');
+  state[ch].done = true;
+}
+
+// ── RESET ─────────────────────────────────────────────────────────────────────
+function resetQuiz(ch) {
+  state[ch] = { answered: 0, score: 0, done: false, userAnswers: {} };
+  document.getElementById(`${ch}-questions`).innerHTML = '';
+  document.getElementById(`${ch}-result`).classList.remove('show');
+  document.getElementById(`${ch}-progress`).textContent = '0 / 20 answered';
+  document.getElementById(`${ch}-score`).style.display = 'none';
+  renderQuestions(ch);
+}
+
+// ── NAVIGATION ────────────────────────────────────────────────────────────────
+function showSection(id) {
+  document.querySelectorAll('.chapter-section').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+
+  const sec = document.getElementById(id);
+  sec.classList.add('active');
+
+  // Find nav item
+  document.querySelectorAll('.nav-item').forEach(el => {
+    if (el.getAttribute('onclick') && el.getAttribute('onclick').includes(`'${id}'`)) {
+      el.classList.add('active');
+    }
+  });
+
+  // Render quiz questions
+  if (id !== 'home') renderQuestions(id);
+
+  // Close sidebar on mobile
+  if (window.innerWidth <= 768) {
+    document.getElementById('sidebar').classList.remove('open');
+  }
+
+  window.scrollTo(0, 0);
+}
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+}
+
+// Close sidebar on outside click
+document.addEventListener('click', e => {
+  if (window.innerWidth > 768) return;
+  const sidebar = document.getElementById('sidebar');
+  const toggle = document.getElementById('menu-toggle');
+  if (!sidebar.contains(e.target) && !toggle.contains(e.target)) {
+    sidebar.classList.remove('open');
+  }
+});
+</script>
+</body>
+</html>
