@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kareena Acharya ✦ Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Dancing+Script:wght@600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+  <!-- Custom Cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursor-follower"></div>
+
+  <!-- Floating Petals -->
+  <div class="petals-container" id="petals-container"></div>
+
+  <!-- Sparkles -->
+  <div class="sparkles-container" id="sparkles-container"></div>
+
+  <!-- ───── NAVBAR ───── -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-logo">
+      <span class="logo-k">K</span>areena
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Toggle Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#home"   class="nav-link">Home</a></li>
+      <li><a href="#about"  class="nav-link">About</a></li>
+      <li><a href="#skills" class="nav-link">Skills</a></li>
+      <li><a href="#projects" class="nav-link">Projects</a></li>
+      <li><a href="#contact" class="nav-link">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ───── HERO ───── -->
+  <section class="hero" id="home">
+    <div class="hero-bg-blob blob1"></div>
+    <div class="hero-bg-blob blob2"></div>
+    <div class="hero-bg-blob blob3"></div>
+
+    <div class="hero-content">
+      <p class="hero-greeting reveal">✦ Hello, I'm</p>
+      <h1 class="hero-name reveal">
+        <span class="name-line">Kareena</span>
+        <span class="name-line italic">Acharya</span>
+      </h1>
+      <div class="hero-tagline reveal">
+        <span class="tagline-text" id="tagline-text"></span><span class="cursor-blink">|</span>
+      </div>
+      <p class="hero-sub reveal">Based in Kathmandu, Nepal 🌸</p>
+      <div class="hero-cta reveal">
+        <a href="#projects" class="btn btn-primary">See My Work</a>
+        <a href="#contact"  class="btn btn-outline">Say Hello ✦</a>
+      </div>
+    </div>
+
+    <div class="hero-visual reveal">
+      <div class="avatar-frame">
+        <div class="avatar-ring ring1"></div>
+        <div class="avatar-ring ring2"></div>
+        <div class="avatar-inner">
+          <span class="avatar-initial">K</span>
+          <div class="avatar-glow"></div>
+        </div>
+        <div class="avatar-badge">✦ Open to work</div>
+      </div>
+    </div>
+
+    <a href="#about" class="scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </a>
+  </section>
+
+  <!-- ───── ABOUT ───── -->
+  <section class="section about" id="about">
+    <div class="section-label reveal">— 01 / About Me</div>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <h2 class="section-title">A little bit<br/><em>about me</em></h2>
+        <p>Hi! I'm Kareena — a creative thinker and passionate individual based in the beautiful city of Kathmandu, Nepal. I love building things that are not just functional, but truly delightful.</p>
+        <p>When I'm not creating, you'll find me exploring mountain trails, sipping masala tea, or getting lost in a good book. I believe every great project starts with a great story.</p>
+        <div class="about-stats">
+          <div class="stat">
+            <span class="stat-num" data-target="10">0</span><span>+</span>
+            <span class="stat-label">Projects</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num" data-target="3">0</span><span>+</span>
+            <span class="stat-label">Years Exp.</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num" data-target="100">0</span><span>%</span>
+            <span class="stat-label">Passion</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-cards reveal">
+        <div class="info-card">
+          <div class="info-icon">🎨</div>
+          <h4>Design</h4>
+          <p>I craft interfaces that feel as good as they look.</p>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">💻</div>
+          <h4>Development</h4>
+          <p>Turning ideas into clean, efficient code.</p>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">✨</div>
+          <h4>Creative</h4>
+          <p>Finding beauty in every detail of a project.</p>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">🌸</div>
+          <h4>Passion</h4>
+          <p>Loving every step of the creative process.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───── SKILLS ───── -->
+  <section class="section skills" id="skills">
+    <div class="section-label reveal">— 02 / Skills</div>
+    <h2 class="section-title centered reveal">What I <em>bring to the table</em></h2>
+
+    <div class="skills-grid reveal">
+
+      <div class="skill-category">
+        <h3><span class="cat-icon">🖥️</span> Development</h3>
+        <div class="skill-items">
+          <div class="skill-pill" data-level="90">HTML / CSS<span class="pill-bar"><span style="--w:90%"></span></span></div>
+          <div class="skill-pill" data-level="80">JavaScript<span class="pill-bar"><span style="--w:80%"></span></span></div>
+          <div class="skill-pill" data-level="70">React<span class="pill-bar"><span style="--w:70%"></span></span></div>
+          <div class="skill-pill" data-level="65">Python<span class="pill-bar"><span style="--w:65%"></span></span></div>
+        </div>
+      </div>
+
+      <div class="skill-category">
+        <h3><span class="cat-icon">🎨</span> Design</h3>
+        <div class="skill-items">
+          <div class="skill-pill">Figma<span class="pill-bar"><span style="--w:85%"></span></span></div>
+          <div class="skill-pill">UI / UX<span class="pill-bar"><span style="--w:80%"></span></span></div>
+          <div class="skill-pill">Canva<span class="pill-bar"><span style="--w:90%"></span></span></div>
+          <div class="skill-pill">Prototyping<span class="pill-bar"><span style="--w:75%"></span></span></div>
+        </div>
+      </div>
+
+      <div class="skill-category">
+        <h3><span class="cat-icon">💡</span> Tools & More</h3>
+        <div class="skill-items">
+          <div class="skill-pill">Git / GitHub<span class="pill-bar"><span style="--w:75%"></span></span></div>
+          <div class="skill-pill">VS Code<span class="pill-bar"><span style="--w:95%"></span></span></div>
+          <div class="skill-pill">Problem Solving<span class="pill-bar"><span style="--w:85%"></span></span></div>
+          <div class="skill-pill">Communication<span class="pill-bar"><span style="--w:90%"></span></span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- floating tags -->
+    <div class="tag-cloud reveal">
+      <span class="tag">Creative Thinker</span>
+      <span class="tag">Detail Oriented</span>
+      <span class="tag">Team Player</span>
+      <span class="tag">Fast Learner</span>
+      <span class="tag">Problem Solver</span>
+      <span class="tag">Curious Mind</span>
+    </div>
+  </section>
+
+  <!-- ───── PROJECTS ───── -->
+  <section class="section projects" id="projects">
+    <div class="section-label reveal">— 03 / Projects</div>
+    <h2 class="section-title centered reveal">Things I've <em>built with love</em></h2>
+
+    <div class="projects-grid">
+
+      <div class="project-card reveal" data-color="#ffb6c1">
+        <div class="card-top">
+          <span class="project-num">01</span>
+          <div class="card-links">
+            <a href="#" class="card-link" title="View Live"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+            <a href="#" class="card-link" title="GitHub"><i class="fa-brands fa-github"></i></a>
+          </div>
+        </div>
+        <h3 class="project-title">Bloom — E-Commerce App</h3>
+        <p class="project-desc">A flower & plant shop UI built with React. Features smooth animations, cart functionality, and a dreamy pastel aesthetic.</p>
+        <div class="project-tags">
+          <span>React</span><span>CSS</span><span>Firebase</span>
+        </div>
+        <div class="card-hover-effect"></div>
+      </div>
+
+      <div class="project-card reveal" data-color="#f9a8d4">
+        <div class="card-top">
+          <span class="project-num">02</span>
+          <div class="card-links">
+            <a href="#" class="card-link"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+            <a href="#" class="card-link"><i class="fa-brands fa-github"></i></a>
+          </div>
+        </div>
+        <h3 class="project-title">Wanderlust — Travel Blog</h3>
+        <p class="project-desc">A travel journal website documenting adventures around Nepal and beyond, with an interactive map and photo gallery.</p>
+        <div class="project-tags">
+          <span>HTML</span><span>CSS</span><span>JavaScript</span>
+        </div>
+        <div class="card-hover-effect"></div>
+      </div>
+
+      <div class="project-card reveal" data-color="#fca5a5">
+        <div class="card-top">
+          <span class="project-num">03</span>
+          <div class="card-links">
+            <a href="#" class="card-link"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+            <a href="#" class="card-link"><i class="fa-brands fa-github"></i></a>
+          </div>
+        </div>
+        <h3 class="project-title">StudyBuddy — Productivity App</h3>
+        <p class="project-desc">A Pomodoro-based study tracker with mood logging, to-do lists, and ambient sound player to boost focus.</p>
+        <div class="project-tags">
+          <span>Python</span><span>Tkinter</span><span>SQLite</span>
+        </div>
+        <div class="card-hover-effect"></div>
+      </div>
+
+      <div class="project-card reveal" data-color="#fbcfe8">
+        <div class="card-top">
+          <span class="project-num">04</span>
+          <div class="card-links">
+            <a href="#" class="card-link"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+            <a href="#" class="card-link"><i class="fa-brands fa-github"></i></a>
+          </div>
+        </div>
+        <h3 class="project-title">Petal UI — Design System</h3>
+        <p class="project-desc">A soft, feminine design system with reusable components, color tokens, and Figma-to-code documentation.</p>
+        <div class="project-tags">
+          <span>Figma</span><span>CSS Vars</span><span>Storybook</span>
+        </div>
+        <div class="card-hover-effect"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ───── CONTACT ───── -->
+  <section class="section contact" id="contact">
+    <div class="section-label reveal">— 04 / Contact</div>
+
+    <div class="contact-wrapper">
+      <div class="contact-left reveal">
+        <h2 class="section-title">Let's create<br/><em>something beautiful</em></h2>
+        <p>Have a project in mind? Want to collaborate? Or just want to say hi? My inbox is always open! 💌</p>
+        <div class="contact-links">
+          <a href="mailto:kareena@email.com" class="contact-item">
+            <span class="ci-icon"><i class="fa-solid fa-envelope"></i></span>
+            <span>kareena@email.com</span>
+          </a>
+          <a href="#" class="contact-item">
+            <span class="ci-icon"><i class="fa-brands fa-linkedin"></i></span>
+            <span>linkedin.com/in/kareena</span>
+          </a>
+          <a href="#" class="contact-item">
+            <span class="ci-icon"><i class="fa-brands fa-github"></i></span>
+            <span>github.com/kareena</span>
+          </a>
+          <a href="#" class="contact-item">
+            <span class="ci-icon"><i class="fa-brands fa-instagram"></i></span>
+            <span>@kareena.acharya</span>
+          </a>
+        </div>
+      </div>
+
+      <form class="contact-form reveal" id="contact-form" novalidate>
+        <div class="form-group">
+          <input type="text" id="name" name="name" placeholder=" " required />
+          <label for="name">Your Name ✦</label>
+          <div class="form-line"></div>
+        </div>
+        <div class="form-group">
+          <input type="email" id="email" name="email" placeholder=" " required />
+          <label for="email">Your Email ✦</label>
+          <div class="form-line"></div>
+        </div>
+        <div class="form-group">
+          <textarea id="message" name="message" rows="4" placeholder=" " required></textarea>
+          <label for="message">Your Message ✦</label>
+          <div class="form-line"></div>
+        </div>
+        <button type="submit" class="btn btn-primary full-width">
+          Send Message 🌸
+        </button>
+        <div class="form-success" id="form-success">
+          ✦ Message sent! I'll get back to you soon 🌸
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ───── FOOTER ───── -->
+  <footer class="footer">
+    <div class="footer-blossom">🌸 🌸 🌸</div>
+    <p>Made with <span class="heart">♥</span> by <strong>Kareena Acharya</strong> — Kathmandu, Nepal</p>
+    <p class="footer-sub">© 2025 All rights reserved ✦</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
