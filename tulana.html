@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tulana Kart - तुलना कार्ट</title>
+  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --red:    #C0392B;
+      --blue:   #003893;
+      --white:  #FFFFFF;
+      --cream:  #FDF8F2;
+      --dark:   #1A1A2E;
+      --gray:   #6B7280;
+      --light:  #F3F4F6;
+      --green:  #16A34A;
+      --border: #E5E7EB;
+      --shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', 'Mukta', sans-serif;
+      background: var(--cream);
+      color: var(--dark);
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--white);
+      border-bottom: 3px solid var(--red);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .logo-flag {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue) 50%, var(--red) 50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 18px;
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .logo-en { font-size: 1.1rem; font-weight: 700; color: var(--red); }
+    .logo-np { font-size: 0.75rem; font-weight: 600; color: var(--blue); font-family: 'Mukta', sans-serif; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--gray);
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--red); }
+    .nav-links a.active { color: var(--red); border-bottom: 2px solid var(--red); padding-bottom: 2px; }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    /* Language toggle */
+    .lang-toggle {
+      display: flex;
+      background: var(--light);
+      border-radius: 20px;
+      padding: 3px;
+      gap: 2px;
+    }
+
+    .lang-btn {
+      border: none;
+      background: transparent;
+      padding: 4px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: var(--gray);
+    }
+
+    .lang-btn.active {
+      background: var(--white);
+      color: var(--blue);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+
+    .btn-login {
+      border: 1.5px solid var(--blue);
+      background: transparent;
+      color: var(--blue);
+      padding: 6px 16px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-login:hover { background: var(--blue); color: white; }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, var(--blue) 0%, #1a4a8a 50%, var(--red) 100%);
+      padding: 4rem 2rem 3rem;
+      text-align: center;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .hero-tag {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+      font-family: 'Mukta', sans-serif;
+    }
+
+    .hero h1 {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero h1 span { color: #FFD700; }
+
+    .hero-sub {
+      font-size: 1rem;
+      opacity: 0.85;
+      margin-bottom: 2rem;
+      font-family: 'Mukta', sans-serif;
+    }
+
+    /* ── SEARCH BOX ── */
+    .search-box {
+      max-width: 640px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      padding: 6px 6px 6px 16px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    }
+
+    .search-box input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-size: 1rem;
+      color: var(--dark);
+      background: transparent;
+      font-family: 'Inter', 'Mukta', sans-serif;
+    }
+
+    .search-box input::placeholder { color: #aaa; }
+
+    .search-select {
+      border: none;
+      border-left: 1px solid var(--border);
+      outline: none;
+      padding: 0 12px;
+      font-size: 0.85rem;
+      color: var(--gray);
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .btn-search {
+      background: var(--red);
+      color: white;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn-search:hover { background: #a93226; }
+
+    .hero-stores {
+      margin-top: 1.5rem;
+      font-size: 0.8rem;
+      opacity: 0.7;
+    }
+
+    .hero-stores span {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      padding: 3px 10px;
+      border-radius: 12px;
+      margin: 2px 3px;
+    }
+
+    /* ── CATEGORIES ── */
+    .section { padding: 3rem 2rem; max-width: 1200px; margin: 0 auto; }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--dark);
+    }
+
+    .section-title-np {
+      font-size: 0.85rem;
+      color: var(--gray);
+      font-family: 'Mukta', sans-serif;
+      font-weight: 400;
+    }
+
+    .see-all {
+      font-size: 0.85rem;
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: 1rem;
+    }
+
+    .cat-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.2rem 0.8rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 1.5px solid var(--border);
+      text-decoration: none;
+      color: var(--dark);
+    }
+
+    .cat-card:hover {
+      border-color: var(--red);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .cat-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+    .cat-name { font-size: 0.8rem; font-weight: 600; }
+    .cat-name-np { font-size: 0.7rem; color: var(--gray); font-family: 'Mukta', sans-serif; }
+
+    /* ── FEATURED PRODUCTS ── */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .product-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1.5px solid var(--border);
+      transition: all 0.2s;
+    }
+
+    .product-card:hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      transform: translateY(-2px);
+    }
+
+    .product-img {
+      width: 100%;
+      height: 140px;
+      background: var(--light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+    }
+
+    .product-body { padding: 1rem; }
+
+    .product-name { font-size: 0.95rem; font-weight: 600; margin-bottom: 2px; }
+    .product-name-np { font-size: 0.8rem; color: var(--gray); font-family: 'Mukta', sans-serif; margin-bottom: 0.8rem; }
+
+    .price-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.8rem;
+    }
+
+    .store-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .store-bigmart    { background: #FEF3C7; color: #92400E; }
+    .store-bhatbhateni { background: #DBEAFE; color: #1E40AF; }
+    .store-saleways   { background: #D1FAE5; color: #065F46; }
+
+    .best-price {
+      font-size: 0.7rem;
+      background: var(--green);
+      color: white;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    .product-footer {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-compare {
+      flex: 1;
+      background: var(--blue);
+      color: white;
+      border: none;
+      padding: 8px;
+      border-radius: 7px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-compare:hover { background: #002a7a; }
+
+    .btn-wish {
+      background: var(--light);
+      border: 1.5px solid var(--border);
+      width: 36px;
+      border-radius: 7px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.2s;
+    }
+
+    .btn-wish:hover { background: #FEE2E2; border-color: var(--red); }
+    .btn-wish.active { background: #FEE2E2; border-color: var(--red); }
+
+    /* ── STORES BANNER ── */
+    .stores-section {
+      background: var(--dark);
+      padding: 2.5rem 2rem;
+      text-align: center;
+    }
+
+    .stores-section h2 {
+      color: white;
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .stores-section h2 span {
+      color: #FFD700;
+      font-family: 'Mukta', sans-serif;
+    }
+
+    .store-logos {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .store-logo-card {
+      background: white;
+      border-radius: 10px;
+      padding: 1rem 2rem;
+      font-weight: 700;
+      font-size: 1rem;
+      min-width: 150px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .store-logo-card:hover { transform: scale(1.04); }
+    .store-logo-card.bigmart { color: #92400E; border-bottom: 3px solid #F59E0B; }
+    .store-logo-card.bhat { color: #1E40AF; border-bottom: 3px solid #3B82F6; }
+    .store-logo-card.saleways { color: #065F46; border-bottom: 3px solid #10B981; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark);
+      color: rgba(255,255,255,0.6);
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.8rem;
+      border-top: 2px solid var(--red);
+    }
+
+    footer span { color: var(--red); }
+
+    /* ── NEPALI HIDDEN ── */
+    .np { display: none; }
+    body.lang-np .en { display: none; }
+    body.lang-np .np { display: block; }
+    body.lang-np span.np { display: inline; }
+    body.lang-np span.en { display: none; }
+
+    @media (max-width: 640px) {
+      nav { padding: 0 1rem; }
+      .nav-links { display: none; }
+      .hero { padding: 2.5rem 1rem 2rem; }
+      .search-box { flex-wrap: wrap; padding: 10px; }
+      .search-select { border-left: none; border-top: 1px solid var(--border); padding: 6px 0; }
+      .btn-search { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAVBAR ── -->
+<nav>
+  <a href="/" class="logo">
+    <div class="logo-flag">🛒</div>
+    <div class="logo-text">
+      <span class="logo-en">Tulana Kart</span>
+      <span class="logo-np">तुलना कार्ट</span>
+    </div>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="/" class="active"><span class="en">Home</span><span class="np">गृहपृष्ठ</span></a></li>
+    <li><a href="/compare"><span class="en">Compare</span><span class="np">तुलना</span></a></li>
+    <li><a href="/wishlist"><span class="en">Wishlist</span><span class="np">इच्छासूची</span></a></li>
+    <li><a href="/admin"><span class="en">Admin</span><span class="np">प्रशासन</span></a></li>
+  </ul>
+
+  <div class="nav-right">
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('np')">नेपाली</button>
+    </div>
+    <button class="btn-login">
+      <span class="en">Login</span>
+      <span class="np">लगइन</span>
+    </button>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-tag">🇳🇵 <span class="en">Made for Nepal</span><span class="np">नेपालका लागि बनाइएको</span></div>
+  <h1 class="en">Compare Grocery Prices<br>Across <span>Nepal's Top Stores</span></h1>
+  <h1 class="np" style="display:none">नेपालका शीर्ष पसलहरूको<br><span>किराना मूल्य तुलना गर्नुहोस्</span></h1>
+  <p class="hero-sub en">Find the best deals at BigMart, Bhat-Bhateni & Saleways — all in one place.</p>
+  <p class="hero-sub np" style="display:none">बिगमार्ट, भट्टभटेनी र सेलवेजमा सबैभन्दा सस्तो मूल्य खोज्नुहोस्।</p>
+
+  <div class="search-box">
+    <span style="font-size:1.1rem">🔍</span>
+    <input type="text" id="searchInput"
+      placeholder="Search for rice, oil, sugar... / चामल, तेल, चिनी खोज्नुहोस्..."
+      onkeyup="handleSearch(event)"
+    />
+    <select class="search-select" id="categoryFilter">
+      <option value=""><span class="en">All Categories</span></option>
+      <option value="Grains">Grains / अन्न</option>
+      <option value="Oils">Oils / तेल</option>
+      <option value="Essentials">Essentials / आवश्यक</option>
+      <option value="Dairy">Dairy / दूध</option>
+      <option value="Vegetables">Vegetables / तरकारी</option>
+      <option value="Snacks">Snacks / खाजा</option>
+    </select>
+    <button class="btn-search" onclick="doSearch()">
+      <span class="en">Search</span><span class="np" style="display:none">खोज्नुहोस्</span>
+    </button>
+  </div>
+
+  <div class="hero-stores">
+    <span class="en">Comparing prices from:</span>
+    <span class="np" style="display:none">मूल्य तुलना गरिँदैछ:</span>
+    <span>🏪 BigMart</span>
+    <span>🏬 Bhat-Bhateni</span>
+    <span>🛍️ Saleways</span>
+  </div>
+</section>
+
+<!-- ── CATEGORIES ── -->
+<div style="max-width:1200px;margin:0 auto;padding:2.5rem 2rem 0">
+  <div class="section-header">
+    <div>
+      <div class="section-title en">Shop by Category</div>
+      <div class="section-title np" style="display:none">श्रेणी अनुसार किनमेल</div>
+      <div class="section-title-np">वर्ग / Category</div>
+    </div>
+  </div>
+  <div class="categories">
+    <a class="cat-card" href="/compare?category=Grains">
+      <div class="cat-icon">🌾</div>
+      <div class="cat-name en">Grains</div>
+      <div class="cat-name np" style="display:none">अन्न</div>
+      <div class="cat-name-np">अन्न</div>
+    </a>
+    <a class="cat-card" href="/compare?category=Oils">
+      <div class="cat-icon">🫙</div>
+      <div class="cat-name en">Oils</div>
+      <div class="cat-name np" style="display:none">तेल</div>
+      <div class="cat-name-np">तेल</div>
+    </a>
+    <a class="cat-card" href="/compare?category=Dairy">
+      <div class="cat-icon">🥛</div>
+      <div class="cat-name en">Dairy</div>
+      <div class="cat-name np" style="display:none">दूध</div>
+      <div class="cat-name-np">दूध</div>
+    </a>
+    <a class="cat-card" href="/compare?category=Vegetables">
+      <div class="cat-icon">🥦</div>
+      <div class="cat-name en">Vegetables</div>
+      <div class="cat-name np" style="display:none">तरकारी</div>
+      <div class="cat-name-np">तरकारी</div>
+    </a>
+    <a class="cat-card" href="/compare?category=Essentials">
+      <div class="cat-icon">🧂</div>
+      <div class="cat-name en">Essentials</div>
+      <div class="cat-name np" style="display:none">आवश्यक</div>
+      <div class="cat-name-np">आवश्यक</div>
+    </a>
+    <a class="cat-card" href="/compare?category=Snacks">
+      <div class="cat-icon">🍪</div>
+      <div class="cat-name en">Snacks</div>
+      <div class="cat-name np" style="display:none">खाजा</div>
+      <div class="cat-name-np">खाजा</div>
+    </a>
+    <a class="cat-card" href="/compare?category=Beverages">
+      <div class="cat-icon">☕</div>
+      <div class="cat-name en">Beverages</div>
+      <div class="cat-name np" style="display:none">पेय</div>
+      <div class="cat-name-np">पेय</div>
+    </a>
+    <a class="cat-card" href="/compare?category=Cleaning">
+      <div class="cat-icon">🧹</div>
+      <div class="cat-name en">Cleaning</div>
+      <div class="cat-name np" style="display:none">सफाई</div>
+      <div class="cat-name-np">सफाई</div>
+    </a>
+  </div>
+</div>
+
+<!-- ── FEATURED PRODUCTS ── -->
+<div class="section">
+  <div class="section-header">
+    <div>
+      <div class="section-title en">Popular Products</div>
+      <div class="section-title np" style="display:none">लोकप्रिय उत्पादनहरू</div>
+      <div class="section-title-np">लोकप्रिय / Popular</div>
+    </div>
+    <a href="/compare" class="see-all en">See all →</a>
+    <a href="/compare" class="see-all np" style="display:none">सबै हेर्नुहोस् →</a>
+  </div>
+
+  <div class="products-grid" id="productsGrid">
+    <!-- Product Card 1 -->
+    <div class="product-card">
+      <div class="product-img">🌾</div>
+      <div class="product-body">
+        <div class="product-name en">Basmati Rice 5kg</div>
+        <div class="product-name np" style="display:none">बासमती चामल ५ केजी</div>
+        <div class="product-name-np">बासमती चामल</div>
+        <div class="price-row">
+          <span class="store-badge store-bhatbhateni">Bhat-Bhateni — Rs. 820</span>
+          <span class="best-price en">Best Price</span>
+          <span class="best-price np" style="display:none">सस्तो</span>
+        </div>
+        <div class="price-row">
+          <span class="store-badge store-bigmart">BigMart — Rs. 850</span>
+          <span class="store-badge store-saleways">Saleways — Rs. 870</span>
+        </div>
+        <div class="product-footer">
+          <button class="btn-compare" onclick="window.location='/compare?q=Basmati+Rice'">
+            <span class="en">Compare</span><span class="np" style="display:none">तुलना</span>
+          </button>
+          <button class="btn-wish" onclick="toggleWish(this)" title="Add to Wishlist">🤍</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Card 2 -->
+    <div class="product-card">
+      <div class="product-img">🫙</div>
+      <div class="product-body">
+        <div class="product-name en">Mustard Oil 1L</div>
+        <div class="product-name np" style="display:none">तोरीको तेल १ लिटर</div>
+        <div class="product-name-np">तोरीको तेल</div>
+        <div class="price-row">
+          <span class="store-badge store-bhatbhateni">Bhat-Bhateni — Rs. 295</span>
+          <span class="best-price en">Best Price</span>
+          <span class="best-price np" style="display:none">सस्तो</span>
+        </div>
+        <div class="price-row">
+          <span class="store-badge store-bigmart">BigMart — Rs. 310</span>
+          <span class="store-badge store-saleways">Saleways — Rs. 320</span>
+        </div>
+        <div class="product-footer">
+          <button class="btn-compare" onclick="window.location='/compare?q=Mustard+Oil'">
+            <span class="en">Compare</span><span class="np" style="display:none">तुलना</span>
+          </button>
+          <button class="btn-wish" onclick="toggleWish(this)" title="Add to Wishlist">🤍</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Card 3 -->
+    <div class="product-card">
+      <div class="product-img">🧂</div>
+      <div class="product-body">
+        <div class="product-name en">Sugar 1kg</div>
+        <div class="product-name np" style="display:none">चिनी १ केजी</div>
+        <div class="product-name-np">चिनी</div>
+        <div class="price-row">
+          <span class="store-badge store-bhatbhateni">Bhat-Bhateni — Rs. 85</span>
+          <span class="best-price en">Best Price</span>
+          <span class="best-price np" style="display:none">सस्तो</span>
+        </div>
+        <div class="price-row">
+          <span class="store-badge store-bigmart">BigMart — Rs. 90</span>
+          <span class="store-badge store-saleways">Saleways — Rs. 92</span>
+        </div>
+        <div class="product-footer">
+          <button class="btn-compare" onclick="window.location='/compare?q=Sugar'">
+            <span class="en">Compare</span><span class="np" style="display:none">तुलना</span>
+          </button>
+          <button class="btn-wish" onclick="toggleWish(this)" title="Add to Wishlist">🤍</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Card 4 -->
+    <div class="product-card">
+      <div class="product-img">🥛</div>
+      <div class="product-body">
+        <div class="product-name en">Full Cream Milk 1L</div>
+        <div class="product-name np" style="display:none">फुल क्रिम दूध १ लिटर</div>
+        <div class="product-name-np">फुल क्रिम दूध</div>
+        <div class="price-row">
+          <span class="store-badge store-bigmart">BigMart — Rs. 95</span>
+          <span class="best-price en">Best Price</span>
+          <span class="best-price np" style="display:none">सस्तो</span>
+        </div>
+        <div class="price-row">
+          <span class="store-badge store-bhatbhateni">Bhat-Bhateni — Rs. 98</span>
+          <span class="store-badge store-saleways">Saleways — Rs. 100</span>
+        </div>
+        <div class="product-footer">
+          <button class="btn-compare" onclick="window.location='/compare?q=Milk'">
+            <span class="en">Compare</span><span class="np" style="display:none">तुलना</span>
+          </button>
+          <button class="btn-wish" onclick="toggleWish(this)" title="Add to Wishlist">🤍</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── STORES ── -->
+<div class="stores-section">
+  <h2 class="en">Stores We Compare <span>· हामीले तुलना गर्ने पसलहरू</span></h2>
+  <h2 class="np" style="display:none">हामीले तुलना गर्ने पसलहरू <span>· Stores We Compare</span></h2>
+  <div class="store-logos">
+    <div class="store-logo-card bigmart" onclick="window.open('https://bigmart.com.np','_blank')">
+      🏪 BigMart
+    </div>
+    <div class="store-logo-card bhat" onclick="window.open('https://bhatbhateni.com','_blank')">
+      🏬 Bhat-Bhateni
+    </div>
+    <div class="store-logo-card saleways" onclick="window.open('https://saleways.com.np','_blank')">
+      🛍️ Saleways
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <p>© 2026 <span>Tulana Kart · तुलना कार्ट</span> — Built for Nepal 🇳🇵 | FYP by Kareena Acharya (NP069680)</p>
+</footer>
+
+<script>
+  // ── Language Toggle ──
+  function setLang(lang) {
+    document.body.classList.toggle('lang-np', lang === 'np');
+    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
+
+    if (lang === 'np') {
+      document.querySelectorAll('.np').forEach(el => el.style.display = '');
+      document.querySelectorAll('.en').forEach(el => el.style.display = 'none');
+    } else {
+      document.querySelectorAll('.en').forEach(el => el.style.display = '');
+      document.querySelectorAll('.np').forEach(el => el.style.display = 'none');
+    }
+
+    localStorage.setItem('tulana_lang', lang);
+  }
+
+  // Restore saved language
+  const savedLang = localStorage.getItem('tulana_lang') || 'en';
+  if (savedLang === 'np') setLang('np');
+
+  // ── Search ──
+  function handleSearch(e) {
+    if (e.key === 'Enter') doSearch();
+  }
+
+  function doSearch() {
+    const q = document.getElementById('searchInput').value.trim();
+    const cat = document.getElementById('categoryFilter').value;
+    if (q || cat) {
+      window.location = `/compare?q=${encodeURIComponent(q)}&category=${encodeURIComponent(cat)}`;
+    }
+  }
+
+  // ── Wishlist toggle ──
+  function toggleWish(btn) {
+    const isActive = btn.classList.toggle('active');
+    btn.textContent = isActive ? '❤️' : '🤍';
+  }
+</script>
+
+</body>
+</html>
